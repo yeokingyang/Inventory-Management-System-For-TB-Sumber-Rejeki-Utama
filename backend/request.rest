@@ -69,3 +69,21 @@ Content-Type: application/json
 
 ###
 DELETE  http://localhost:5000/users/ee6c7357-aead-4238-9799-a6475cfd54b4
+
+
+###
+POST http://localhost:5000/items
+Content-Type: application/json
+
+{
+    "uuid": "CH100",
+    "name": "Clamp Hose",
+    "debit": "4000",
+    "credit": "7000"
+}
+
+###
+GET http://localhost:5000/items/
+
+###
+GET http://localhost:5000/items/CH100

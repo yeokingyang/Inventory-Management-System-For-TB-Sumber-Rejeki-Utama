@@ -1,27 +1,71 @@
 GET http://localhost:5000/users
 
 ###
-GET http://localhost:5000/users/1
+GET http://localhost:5000/users/ca28bbb9-6d91-4c9a-95dc-2d894e85a564
+
+###
+GET http://localhost:5000/me
+
+###
+DELETE  http://localhost:5000/logout
+
+
+
+###
+POST http://localhost:5000/login
+Content-Type: application/json
+
+{
+    "email": "yeokingyang@yahoo.com",
+    "password": "123456"
+}
+
+
+###
+POST http://localhost:5000/login
+Content-Type: application/json
+
+{
+    "email": "yennykwok@yahoo.com",
+    "password": "123456"
+}
+
 
 ###
 POST http://localhost:5000/users
 Content-Type: application/json
 
 {
-    "name": "Yong",
-    "email": "yongyea@gmail.com",
-    "gender": "Male"
+    "name": "Yeo King",
+    "email": "yeeokingyang@yahoo.com",
+    "password": "123456",
+    "confPassword": "123456",
+    "role":"admin"
 }
 
 ###
-PATCH http://localhost:5000/users/1
+POST http://localhost:5000/users
 Content-Type: application/json
 
 {
-    "name": "Yong Yea",
-    "email": "yongyea@gmail.com",
-    "gender": "Male"
+    "name": "Yenny",
+    "email": "yennykwok@yahoo.com",
+    "password": "123456",
+    "confPassword": "123456",
+    "role":"staff"
 }
 
 ###
-DELETE  http://localhost:5000/users/1
+PATCH http://localhost:5000/users/ca28bbb9-6d91-4c9a-95dc-2d894e85a564
+Content-Type: application/json
+
+{
+    "name": "Yeo King",
+    "email": "yeokingyang@yahoo.com",
+    "password": "",
+    "confPassword": "",
+    "role":"admin"
+}
+
+###
+DELETE  http://localhost:5000/users/ee6c7357-aead-4238-9799-a6475cfd54b4

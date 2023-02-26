@@ -5,13 +5,14 @@ import { RiSettings4Line } from "react-icons/ri";
 import { TbReportAnalytics } from "react-icons/tb";
 import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
 import { FiMessageSquare, FiFolder, FiShoppingCart } from "react-icons/fi";
+import { IoPerson, IoPricetag, IoHome, IoLogOut } from "react-icons/io5";
 import { Link } from "react-router-dom";
 
 const Sidebar = () => {
   const menus = [
     { name: "dashboard", link: "/dashboard", icon: MdOutlineDashboard },
     { name: "user", link: "/users", icon: AiOutlineUser },
-    { name: "Items", link: "/items", icon: FiMessageSquare },
+    { name: "Items", link: "/items", icon: IoPricetag  },
     { name: "analytics", link: "/", icon: TbReportAnalytics, margin: true },
     { name: "File Manager", link: "/", icon: FiFolder },
     { name: "Cart", link: "/", icon: FiShoppingCart },

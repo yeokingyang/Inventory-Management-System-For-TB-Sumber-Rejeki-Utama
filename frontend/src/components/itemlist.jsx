@@ -5,10 +5,10 @@ const Userlist = () => {
 
     return (
         <div>
-            <h1 className="title text-4xl font-bold">Items</h1>
-            <h2 className="subtitle">List of Items</h2>
+            <h1 className="title text-4xl font-bold text-white">Items</h1>
+            <h2 className="subtitle text-white">List of Items</h2>
 
-            <table className="table-auto w-full">
+            <table className="table-auto w-full text-white">
                 <thead>
                     <tr>
                         <th className="px-4 py-2">No</th>
@@ -22,6 +22,7 @@ const Userlist = () => {
                 </thead>
                 <tbody>
                     <tr className="border">
+                        <td className="px-4 py-2 border"></td>
                         <td className="px-4 py-2 border"></td>
                         <td className="px-4 py-2 border"></td>
                         <td className="px-4 py-2 border"></td>

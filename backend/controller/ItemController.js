@@ -13,7 +13,7 @@ export const getItems = async (req, res) => {
             });
         } else {
             response = await Items.findAll({
-                attributes: ['uuid', 'name', 'credit', 'quantityOnHand'],
+                attributes: ['iuid', 'name', 'credit', 'quantityOnHand'],
                 include: [{
                     model: User,
                     attributes: ['name', 'email']
@@ -30,7 +30,7 @@ export const getItemsById = async (req, res) => {
     try {
         const items = await Items.findOne({
             where:{
-                uuid: req.params.id
+                iuid: req.params.id
             }
         });
         if(!items) return res.status(404).json({msg: "Data tidak ditemukan"});
@@ -47,7 +47,7 @@ export const getItemsById = async (req, res) => {
             });
         }else{
             response = await Items.findOne({
-                attributes:['uuid','name','credit'],
+                attributes:['iuid','name','credit'],
                 where:{
                     id: items.id
                 },
@@ -64,10 +64,10 @@ export const getItemsById = async (req, res) => {
 }
 
 export const createItems = async (req, res) => {
-    const { uuid, name, debit, credit } = req.body;
+    const { iuid, name, debit, credit } = req.body;
     try {
         await Items.create({
-            uuid: uuid,
+            iuid: iuid,
             name: name,
             debit: debit,
             credit: credit,
@@ -83,13 +83,13 @@ export const updateItems = async(req, res) => {
     try {
         const items = await Items.findOne({
             where:{
-                uuid: req.params.id
+                iuid: req.params.id
             }
         });
         if(!items) return res.status(404).json({msg: "Data tidak ditemukan"});
-        const {name, price} = req.body;
+        const {iuid, name, credit} = req.body;
         if(req.role === "admin"){
-            await items.update({name, credit},{
+            await items.update({iuid, name, credit},{
                 where:{
                     id: items.id
                 }
@@ -105,7 +105,7 @@ export const deleteItems = async(req, res) => {
     try {
         const items = await Items.findOne({
             where:{
-                uuid: req.params.id
+                iuid: req.params.id
             }
         });
         if(!items) return res.status(404).json({msg: "Data tidak ditemukan"});

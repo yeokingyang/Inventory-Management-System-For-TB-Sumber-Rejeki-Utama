@@ -24,7 +24,7 @@ const Items = db.define('items',{
     },
     debit: {
         type:DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
         validate:{
             notEmpty: true,
         }
@@ -32,6 +32,13 @@ const Items = db.define('items',{
     credit: {
         type:DataTypes.INTEGER,
         allowNull: false,
+        validate:{
+            notEmpty: true,
+        }
+    },
+    type: {
+        type:DataTypes.STRING,
+        allowNull: true,
         validate:{
             notEmpty: true,
         }
@@ -56,6 +63,13 @@ const Items = db.define('items',{
         type:DataTypes.INTEGER,
         defaultValue: 0,
         allowNull: false,
+        validate:{
+            notEmpty: true,
+        }
+    },
+    explanation: {
+        type:DataTypes.STRING,
+        allowNull: true,
         validate:{
             notEmpty: true,
         }

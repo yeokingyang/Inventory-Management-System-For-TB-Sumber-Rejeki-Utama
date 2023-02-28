@@ -84,9 +84,19 @@ POST http://localhost:5000/items
 Content-Type: application/json
 
 {
-    "uuid": "CH100",
+    "iuid": "CH1000",
     "name": "Clamp Hose",
     "debit": "4000",
+    "credit": "7000"
+}
+
+###
+PATCH  http://localhost:5000/items/1
+Content-Type: application/json
+
+{
+    "iuid": "CH1000",
+    "name": "Clamp Hose",
     "credit": "7000"
 }
 

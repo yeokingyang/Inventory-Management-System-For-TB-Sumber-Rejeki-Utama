@@ -49,7 +49,14 @@ const Userlist = () => {
 
     const deleteUser = async (userId) => {
         await axios.delete(`http://localhost:5000/users/${userId}`);
-        getUsers();
+        const newTotalRows = rows - 1;
+        setRows(newTotalRows);
+        const newTotalPages = Math.ceil(newTotalRows / limit);
+        if (page >= newTotalPages) {
+          setPage(newTotalPages - 1);
+        }
+       setPages(newTotalPages);
+       // getUsers();
     };
 
 

@@ -91,13 +91,14 @@ Content-Type: application/json
 }
 
 ###
-PATCH  http://localhost:5000/items/1
+PATCH  http://localhost:5000/items/CH1000
 Content-Type: application/json
 
 {
-    "iuid": "CH1000",
+    "iuid": "CH100",
     "name": "Clamp Hose",
-    "credit": "7000"
+    "debit": "0",
+    "credit": "7500"
 }
 
 ###
@@ -105,3 +106,18 @@ GET http://localhost:5000/items/
 
 ###
 GET http://localhost:5000/items/CH100
+
+
+
+###
+GET http://localhost:5000/itemsPurchased
+
+###
+POST http://localhost:5000/itemsPurchased
+Content-Type: application/json
+
+{
+  "iuid": "CH100",
+  "debit": 50,
+  "quantityPurchased": 2
+}

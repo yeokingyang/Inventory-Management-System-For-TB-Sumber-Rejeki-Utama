@@ -3,12 +3,18 @@ GET http://localhost:5000/users
 ###
 GET http://localhost:5000/users/ca28bbb9-6d91-4c9a-95dc-2d894e85a564
 
+
 ###
 GET http://localhost:5000/me
 
 ###
 DELETE  http://localhost:5000/logout
 
+###
+GET http://localhost:5000/users?search_query=yeo&page=0&limit=10
+
+###
+GET http://localhost:5000/users?page=0&limit=10
 
 
 ###
@@ -50,6 +56,19 @@ Content-Type: application/json
     "confPassword": "123456",
     "role":"admin"
 }
+
+###
+POST http://localhost:5000/users
+Content-Type: application/json
+
+{
+    "name": "saul",
+    "email": "saul@yahoo.com",
+    "password": "123456",
+    "confPassword": "123456",
+    "role":"staff"
+}
+
 
 ###
 POST http://localhost:5000/users

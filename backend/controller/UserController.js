@@ -1,15 +1,60 @@
 import User from "../models/UserModel.js";
 import argon2, { hash } from "argon2";
+import {Op} from "sequelize"
 
 export const getUsers = async (req, res) => {
-    try {
-        const response = await User.findAll({
-            attributes: ['uuid', 'name', 'email', 'role']
-        });
-        res.status(200).json(response);
-    } catch (error) {
-        res.status(500).json({ msg: error.message });
-    }
+    /*  try {
+           const response = await User.findAll({
+               attributes: ['uuid', 'name', 'email', 'role']
+           });
+           res.status(200).json(response);
+       } catch (error) {
+           res.status(500).json({ msg: error.message });
+       }
+       */
+    const page = parseInt(req.query.page) || 0;
+    const limit = parseInt(req.query.limit) || 10;
+    const search = req.query.search_query || "";
+    const offset = limit * page;
+    const totalRows = await User.count({
+        where: {
+            [Op.or]: [{
+                name: {
+                    [Op.like]: '%' + search + '%'
+                }
+            }, {
+                email: {
+                    [Op.like]: '%' + search + '%'
+                }
+            }]
+        }
+    });
+    const totalPage = Math.ceil(totalRows / limit);
+    const result = await User.findAll({
+        where: {
+            [Op.or]: [{
+                name: {
+                    [Op.like]: '%' + search + '%'
+                }
+            }, {
+                email: {
+                    [Op.like]: '%' + search + '%'
+                }
+            }]
+        },
+        offset: offset,
+        limit: limit,
+        order: [
+            ['id', 'ASC']
+        ]
+    });
+    res.json({
+        result: result,
+        page: page,
+        limit: limit,
+        totalRows: totalRows,
+        totalPage: totalPage
+    });
 }
 
 export const getUserById = async (req, res) => {

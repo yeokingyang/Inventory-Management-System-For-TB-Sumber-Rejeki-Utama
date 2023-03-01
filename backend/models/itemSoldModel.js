@@ -3,15 +3,7 @@ import db from "../config/Database.js";
 
 const {DataTypes} = Sequelize;
 
-const ItemsSold = db.define('items',{
-    iuid: {
-        type:DataTypes.STRING,
-        unique: true,
-        allowNull: false,
-        validate:{
-            notEmpty: true,
-        }
-    },
+const ItemsSold = db.define('itemsSold',{
     name: {
         type:DataTypes.STRING,
         allowNull: false,

@@ -1,9 +1,9 @@
 import Items from "../models/ItemModel.js";
 import User from "../models/UserModel.js"
-
+import {Op} from "sequelize"
 
 export const getItems = async (req, res) => {
-    try {
+ /*   try {
         let response;
         if (req.role === "admin") {
             response = await Items.findAll({
@@ -25,7 +25,52 @@ export const getItems = async (req, res) => {
         res.status(200).json(response);
     } catch (error) {
         res.status(500).json({ msg: error.message });
-    }
+    } */
+
+    const page = parseInt(req.query.page) || 0;
+    const limit = parseInt(req.query.limit) || 10;
+    const search = req.query.search_query || "";
+    const offset = limit * page;
+    const totalRows = await Items.count({
+        where: {
+            [Op.or]: [{
+                name: {
+                    [Op.like]: '%' + search + '%'
+                }
+            }, {
+                iuid: {
+                    [Op.like]: '%' + search + '%'
+                }
+            }]
+        }
+    });
+    const totalPage = Math.ceil(totalRows / limit);
+    const result = await Items.findAll({
+        where: {
+            [Op.or]: [{
+                name: {
+                    [Op.like]: '%' + search + '%'
+                }
+            }, {
+                iuid: {
+                    [Op.like]: '%' + search + '%'
+                }
+            }]
+        },
+        offset: offset,
+        limit: limit,
+        order: [
+            ['name', 'ASC']
+        ]
+    });
+    await updateQuantityOnHand();
+    res.json({
+        result: result,
+        page: page,
+        limit: limit,
+        totalRows: totalRows,
+        totalPage: totalPage
+    });
 }
 
 export const updateQuantityOnHand = async () => {

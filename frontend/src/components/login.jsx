@@ -52,7 +52,7 @@ const Login = () => {
                             <p>Forgot Password</p>
                         </div>
                         <button type="submit" className='w-full my-5 mt-10 py-2 text-2xl bg-teal-500 shadow-lg shadow-teal-500/20 group-hover:shadow-teal-500/15 text-white font-semibold rounded-lg
-                    '>  {isLoading ? "Loading..." : "Sign In"}</button>
+                    '>  {isLoading ? "Loading..." : "Login"}</button>
                     </form>
                 </div>
             </div>

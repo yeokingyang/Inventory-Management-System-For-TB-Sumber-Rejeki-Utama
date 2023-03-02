@@ -15,6 +15,7 @@ const Userlist = () => {
     const [query, setQuery] = useState("");
     const [msg, setMsg] = useState("");
 
+
     useEffect(() => {
         getUsers();
     }, [page, keyword]);
@@ -53,15 +54,20 @@ const Userlist = () => {
         setRows(newTotalRows);
         const newTotalPages = Math.ceil(newTotalRows / limit);
         if (page >= newTotalPages) {
-          setPage(newTotalPages - 1);
+            setPage(newTotalPages - 1);
         }
-       setPages(newTotalPages);
-       // getUsers();
+        setPages(newTotalPages);
+        const response = await axios.get(
+            ` http://localhost:5000/users`
+        );
+        setUsers(response.data.result);
     };
 
+    
 
     return (
         <div>
+            
             <div className="flex justify-between items-center">
                 <div>
                     <h1 className="title text-4xl font-bold text-white">Users</h1>
@@ -122,10 +128,11 @@ const Userlist = () => {
                 </tbody>
             </table>
             <div className="justify-between items-center mt-10 mb-5">
-                <p className="text-center text-red-500">{msg}</p>
+          
                 <p className="text-center text-white ">
                     Total Rows: {rows} Page: {rows ? page + 1 : 0} of {pages}
                 </p>
+                <p className="text-center text-red-500">{msg}</p>
             </div>
             <nav className="flex justify-center" key={rows} role="navigation" aria-label="pagination">
                 <ReactPaginate
@@ -145,7 +152,7 @@ const Userlist = () => {
                     nextLinkClassName={
                         "ml-2 px-3 py-2 rounded-r-lg hover:bg-blue-500 hover:text-white text-blue-500 font-medium"
                     }
-                    
+
                 />
             </nav>
         </div>

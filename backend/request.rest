@@ -126,7 +126,8 @@ GET http://localhost:5000/items/
 ###
 GET http://localhost:5000/items/CH100
 
-
+###
+GET http://localhost:5000/items?search_query=Clam&page=0&limit=10
 
 ###
 GET http://localhost:5000/itemsPurchased

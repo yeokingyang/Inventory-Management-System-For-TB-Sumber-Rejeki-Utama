@@ -7,6 +7,7 @@ import Edititem from "./pages/edititem";
 import Edituser from "./pages/edituser";
 import Items from "./pages/items";
 import Users from "./pages/users";
+import Purchaseitem from "./pages/purchaseitem";
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Route path="/items" element={<Items/>}/>
         <Route path="/items/add" element={<Additem/>}/>
         <Route path="/items/edit/:id" element={<Edititem/>}/>
+        <Route path="/purchaseitem" element={<Purchaseitem/>}/>
       </Routes>
     </BrowserRouter>
   );

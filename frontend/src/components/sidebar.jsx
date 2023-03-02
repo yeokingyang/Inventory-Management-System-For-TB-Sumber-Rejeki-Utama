@@ -17,7 +17,7 @@ const Sidebar = () => {
     { name: "Items", link: "/items", icon: IoPricetag },
     { name: "analytics", link: "/", icon: TbReportAnalytics, margin: true },
     { name: "File Manager", link: "/", icon: FiFolder },
-    { name: "Cart", link: "/", icon: FiShoppingCart },
+    { name: "Cart", link: "/purchaseitem", icon: FiShoppingCart },
     { name: "Saved", link: "/", icon: AiOutlineHeart, margin: true },
     { name: "LogOut", link:"/", icon: RiSettings4Line },
   ];

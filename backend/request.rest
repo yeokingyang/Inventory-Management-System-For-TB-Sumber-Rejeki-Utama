@@ -103,7 +103,7 @@ POST http://localhost:5000/items
 Content-Type: application/json
 
 {
-    "iuid": "CH1000",
+    "iuid": "CH6",
     "name": "Clamp Hose",
     "debit": "4000",
     "credit": "7000"

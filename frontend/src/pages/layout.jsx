@@ -12,7 +12,6 @@ const Layout = ({ children }) => {
                     <main className="p-4">{children}</main>
                 </div>
             </div>
-
         </div>
     );
 };

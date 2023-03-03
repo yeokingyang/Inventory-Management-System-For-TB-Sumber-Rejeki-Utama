@@ -10,13 +10,13 @@ const PurchaseItemsList = ({ item }) => {
   const { iuid, image, credit, name } = item;
 
   return (
-    <div className="border">
+    <div className="border w-[350px]">
       <Link to={`/items/${iuid}`}>
-        <div className="bg-grey h-[300px] flex items-center justify-center">
-        <img src={placeholderImg} alt="" className="w-[250px]" />
+        <div className="bg-grey mt-2 h-[120px] flex items-center justify-center">
+        <img src={placeholderImg} alt="" className="w-[150px]" />
         </div>
       </Link>
-      <div className="mt-6 flex justify-between items-center px-4">
+      <div className="mt-6 flex justify-between items-center px-5">
         <div>
           <div className="text-sm text-white font-bold mb-3">{name}</div>
           <div className="text-xl text-white font-bold">${credit}</div>
@@ -25,6 +25,7 @@ const PurchaseItemsList = ({ item }) => {
           Add To Cart
         </button>
       </div>
+      
     </div>
   );
 };

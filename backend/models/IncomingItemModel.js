@@ -4,7 +4,7 @@ import Items from "./ItemModel.js";
 
 const { DataTypes } = Sequelize;
 
-const ItemsPurchased = db.define('itemsPurchased', {
+const IncomingItems = db.define('incomingItems', {
 
     iuid: {
         type: DataTypes.STRING,
@@ -52,10 +52,17 @@ const ItemsPurchased = db.define('itemsPurchased', {
     freezeTableName: true
 });
 
-Items.hasMany(ItemsPurchased);
-ItemsPurchased.belongsTo(Items, { foreignKey: 'iuid' });
+Items.hasMany(IncomingItems, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
+});
+IncomingItems.belongsTo(Items, {
+    foreignKey: 'iuid',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
+});
 
-export default ItemsPurchased;
+export default IncomingItems;
 
 //(async () => {
    // console.log('Syncing database...');

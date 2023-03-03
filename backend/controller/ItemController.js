@@ -172,7 +172,7 @@ export const updateQuantityOnHand = async () => {
                 }
             });
             if (!items) return res.status(404).json({ msg: "Data tidak ditemukan" });
-            const { name, price } = req.body;
+          //  const { name, price } = req.body;
             if (req.role === "admin") {
                 await items.destroy({
                     where: {

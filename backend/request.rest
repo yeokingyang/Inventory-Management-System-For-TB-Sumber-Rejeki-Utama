@@ -121,6 +121,9 @@ Content-Type: application/json
 }
 
 ###
+DELETE   http://localhost:5000/items/CH1000
+
+###
 GET http://localhost:5000/items/
 
 ###
@@ -130,14 +133,30 @@ GET http://localhost:5000/items/CH100
 GET http://localhost:5000/items?search_query=Clam&page=0&limit=10
 
 ###
-GET http://localhost:5000/itemsPurchased
+GET http://localhost:5000/outgoingItems
 
 ###
-POST http://localhost:5000/itemsPurchased
+GET http://localhost:5000/outgoingItems/11
+
+
+###
+POST http://localhost:5000/outgoingItems
 Content-Type: application/json
 
 {
-  "iuid": "CH100",
-  "debit": 50,
-  "quantityPurchased": 2
+  "iuid": "CH1000",
+  "quantitySold": 2
 }
+
+###
+PATCH  http://localhost:5000/outgoingItems/2
+Content-Type: application/json
+
+{
+
+    "credit": "3000",
+    "quantitySold": "3"
+}
+
+###
+DELETE  http://localhost:5000/outgoingItems/10

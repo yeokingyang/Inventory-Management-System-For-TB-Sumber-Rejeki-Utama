@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import { HiChevronLeft, HiTrash } from "react-icons/hi";
 import Sellitemconfirmlist from "./sellitemconfirmlist";
 import { open } from "../features/checkoutslice";
@@ -8,10 +9,26 @@ import { useDispatch, useSelector } from "react-redux";
 const SellItemConfirm = () => {
     const dispatch = useDispatch();
     const { cartItems, total, amount } = useSelector((state) => state.cart);
+
+    const handleCheckout = async () => {
+        try {
+            for (let i = 0; i < cartItems.length; i++) {
+                const { iuid, amount } = cartItems[i];
+                await axios.post("http://localhost:5000/outgoingItems", {
+                    iuid,
+                    quantitySold: amount,
+                });
+            }
+            dispatch(clear());
+            dispatch(open());
+        } catch (error) {
+            console.error(error);
+        }
+    };
     return (
-        <div className="fixed bg-transparentBlack z-50 top-0 left-0 w-full h-screen ">
+        <div className="fixed bg-transparentBlack top-0 left-0 w-full h-screen ">
             <div className="absolute inset-0 bg-black opacity-10 "></div>
-            <div className="w-1/2 p-4 h-full overflow-y-auto bg-white rounded-lg shadow-md mx-0 ">
+            <div className="relative w-1/2 p-4 h-full overflow-y-auto bg-white rounded-lg shadow-md mx-0">
 
                 <div className="flex items-center justify-between">
                     <div className="flex items-center cursor-pointer z-10"
@@ -42,9 +59,10 @@ const SellItemConfirm = () => {
                                     onClick={() => dispatch(clear())}
                                 />
                             </div>
-                            <div className="text-center cursor-pointer bg-black text-white p-3 mt-8">
+                            <button className="w-full text-center cursor-pointer bg-black text-white p-3 mt-8 z-10"
+                                onClick={handleCheckout} >
                                 CheckOut
-                            </div>
+                            </button>
                         </>
                     )}
                 </div>

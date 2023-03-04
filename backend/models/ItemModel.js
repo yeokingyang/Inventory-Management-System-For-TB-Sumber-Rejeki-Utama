@@ -39,9 +39,6 @@ const Items = db.define('items',{
     type: {
         type:DataTypes.STRING,
         allowNull: true,
-        validate:{
-            notEmpty: true,
-        }
     },
     quantityReceived: {
         type:DataTypes.INTEGER,
@@ -67,12 +64,13 @@ const Items = db.define('items',{
             notEmpty: true,
         }
     },
+    quantification: {
+        type:DataTypes.STRING,
+        allowNull: true,
+    },
     explanation: {
         type:DataTypes.STRING,
         allowNull: true,
-        validate:{
-            notEmpty: true,
-        }
     },
     userId: {
         type:DataTypes.INTEGER,

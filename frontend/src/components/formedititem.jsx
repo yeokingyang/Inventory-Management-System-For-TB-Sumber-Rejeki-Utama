@@ -6,7 +6,10 @@ const Formedititem = () => {
 
     const [iuid, setIuid] = useState("");
     const [name, setName] = useState("");
+    const [type, setType] = useState("");
     const [credit, setCredit] = useState("");
+    const [quantification, setQuantification] = useState("");
+    const [explanation, setExplanation] = useState("");
     const [msg, setMsg] = useState("");
     const navigate = useNavigate();
     const { id } = useParams();
@@ -17,7 +20,10 @@ const Formedititem = () => {
             await axios.patch(`http://localhost:5000/items/${id}`, {
                 iuid: iuid,
                 name: name,
+                type: type,
                 credit: credit,
+                quantification: quantification,
+                explanation: explanation
             });
             navigate("/items");
         } catch (error) {
@@ -36,6 +42,9 @@ const Formedititem = () => {
                 setIuid(response.data.iuid);
                 setName(response.data.name);
                 setCredit(response.data.credit);
+                setType(response.data.type);
+                setQuantification(response.data.quantification);
+                setExplanation(response.data.explanation);
             } catch (error) {
                 if (error.response) {
                     setMsg(error.response.data.msg);
@@ -75,6 +84,27 @@ const Formedititem = () => {
                         value={credit}
                         onChange={(e) => setCredit(e.target.value)}
                         placeholder="Price" />
+                </div>
+                <div className='flex flex-col text-gray-400 font-bold text-2xl py-2'>
+                    <label>Type</label>
+                    <input className='rounded-lg bg-white-800 mt-2 p-2 focus:border-blue-500 focus:outline-none text-black'
+                        value={type}
+                        onChange={(e) => setType(e.target.value)}
+                        placeholder="Item Type" />
+                </div>
+                <div className='flex flex-col text-gray-400 font-bold text-2xl py-2'>
+                    <label>Quantification</label>
+                    <input className='rounded-lg bg-white-800 mt-2 p-2 focus:border-blue-500 focus:outline-none text-black'
+                        value={quantification}
+                        onChange={(e) => setQuantification(e.target.value)}
+                        placeholder="Quantification" />
+                </div>
+                <div className='flex flex-col text-gray-400 font-bold text-2xl py-2'>
+                    <label>Information</label>
+                    <input className='rounded-lg bg-white-800 mt-2 p-2 focus:border-blue-500 focus:outline-none text-black'
+                        value={explanation}
+                        onChange={(e) => setExplanation(e.target.value)}
+                        placeholder="Information about the item" />
                 </div>
                 <div className="control mt-5">
                     <button type='submit' className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">

@@ -74,15 +74,16 @@ export const updateIncomingItems = async (req, res) => {
             }
         });
         if (!IncomingItem) return res.status(404).json({ msg: "Data tidak ditemukan" });
-        const { id, iuid, name, debit, quantityPurchased } = req.body;
+        const {  iuid, debit, quantityPurchased } = req.body;
+        const totalDebit = debit * quantityPurchased; 
         if (req.role === "admin") {
-            await IncomingItem.update({ id, name, debit, quantityPurchased }, {
+            await IncomingItem.update({  debit, quantityPurchased, totalDebit }, {
                 where: {
                     id: IncomingItem.id
                 }
             });
         }
-        await updateQuantityReceived(iuid);
+        await updateQuantityReceived(IncomingItem.iuid);
         res.status(200).json({ msg: "Product updated successfuly" });
     } catch (error) {
         res.status(500).json({ msg: error.message });
@@ -96,6 +97,7 @@ export const deleteIncomingItems = async (req, res) => {
                 id: req.params.id
             }
         });
+        const prevIuid = IncomingItem.iuid; 
         if (!IncomingItem) return res.status(404).json({ msg: "Data tidak ditemukan" });
         const { iuid } = req.body;
         if (req.role === "admin") {
@@ -105,7 +107,7 @@ export const deleteIncomingItems = async (req, res) => {
                 }
             });
         }
-        await updateQuantityReceived(iuid);
+        await updateQuantityReceived(prevIuid);
         res.status(200).json({ msg: "Product deleted successfuly" });
     } catch (error) {
         res.status(500).json({ msg: error.message });

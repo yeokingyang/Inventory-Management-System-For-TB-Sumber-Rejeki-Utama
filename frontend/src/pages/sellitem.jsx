@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import Layout from "./layout";
-import Purchaseitemstore from "../components/purchaseitemstore";
+import SellItemStore from "../components/sellitemstore";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getMe } from "../features/authslice";
-import PurchaseItemConfirm from "../components/purchaseitemconfirm";
+import SellItemConfirm from "../components/sellitemconfirm";
 import {total} from "../features/cartslice"
 
-const Purchaseitem = () => {
+const Sellitem = () => {
  
   const { isError } = useSelector((state) => state.auth);
   const { isOpen } = useSelector((state) => state.checkout);
@@ -32,11 +32,11 @@ const Purchaseitem = () => {
 
   return (
     <Layout>
-      <Purchaseitemstore/>
-     {isOpen && <PurchaseItemConfirm/>}
+      <SellItemStore/>
+     {isOpen && <SellItemConfirm/>}
   
     </Layout>
   );
 };
 
-export default Purchaseitem;
+export default Sellitem;

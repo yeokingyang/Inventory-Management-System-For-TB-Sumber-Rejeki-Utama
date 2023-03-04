@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import placeholderImg from '../assets/placeholderimg.jpg'
 
-const PurchaseItemsList = ({ item }) => {
+const SellItemList = ({ item }) => {
 
   const dispatch = useDispatch();
   const { iuid, image, credit, name } = item;
@@ -30,4 +30,4 @@ const PurchaseItemsList = ({ item }) => {
   );
 };
 
-export default PurchaseItemsList;
+export default SellItemList;

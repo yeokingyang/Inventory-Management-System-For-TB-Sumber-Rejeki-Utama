@@ -4,7 +4,7 @@ import { increase, decrease, remove } from "../features/cartslice";
 import { useDispatch } from "react-redux";
 import placeholderImg from '../assets/placeholderimg.jpg'
 
-const PurchaseItemConfirmList = ({ cartItem }) => {
+const SellItemConfirmList = ({ cartItem }) => {
 
   const dispatch = useDispatch();
   const { id, credit, amount, name } = cartItem;
@@ -33,7 +33,7 @@ const PurchaseItemConfirmList = ({ cartItem }) => {
       </div>
       <div className="flex flex-col items-center gap-3 ">
         <HiX
-          className="cursor-pointer text-xl text-white"
+          className="cursor-pointer text-xl z-10 text-black"
           onClick={() => dispatch(remove(cartItem))}
         />
         <div>${(credit * amount).toFixed(2)}</div>
@@ -42,4 +42,4 @@ const PurchaseItemConfirmList = ({ cartItem }) => {
   );
 };
 
-export default PurchaseItemConfirmList;
+export default SellItemConfirmList;

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { BiShoppingBag } from "react-icons/bi";
 import axios from "axios";
-import Purchaseitemslist from "./purchaseitemlist";
+import Sellitemlist from "./sellitemlist";
 import { open } from "../features/checkoutslice";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import ReactPaginate from "react-paginate";
 import { Link } from "react-router-dom";
 
-const Purchaseitemstore = () => {
+const SellItemstore = () => {
 
     const dispatch = useDispatch();
     const { amount } = useSelector((state) => state.cart);
@@ -90,7 +90,7 @@ const Purchaseitemstore = () => {
             </div>
             <div className="section mt-12 grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-3">
                 {items.map((item) => {
-                    return <Purchaseitemslist key={item.iuid} item={item} />;
+                    return <Sellitemlist key={item.iuid} item={item} />;
                 })}
             </div>
 
@@ -125,4 +125,4 @@ const Purchaseitemstore = () => {
     );
 };
 
-export default Purchaseitemstore;
+export default SellItemstore;

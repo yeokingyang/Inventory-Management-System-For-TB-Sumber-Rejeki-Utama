@@ -25,6 +25,13 @@ const OutgoingItems = db.define('outgoingItems', {
             notEmpty: true,
         }
     },
+    type: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        validate: {
+            notEmpty: true,
+        }
+    },
     credit: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -47,6 +54,20 @@ const OutgoingItems = db.define('outgoingItems', {
             notEmpty: true,
         }
     },
+    quantificaton: {
+        type:DataTypes.STRING,
+        allowNull: true,
+        validate:{
+            notEmpty: true,
+        }
+    },
+    explanation: {
+        type:DataTypes.STRING,
+        allowNull: true,
+        validate:{
+            notEmpty: true,
+        }
+    }
 }, {
     freezeTableName: true,
 });
@@ -64,6 +85,6 @@ export default OutgoingItems;
 
 //(async () => {
    // console.log('Syncing database...');
-//  await db.sync();
+ //await db.sync();
  //  console.log('Database synced!');
- // })();
+//})();

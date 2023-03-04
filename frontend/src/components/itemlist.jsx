@@ -117,17 +117,29 @@ const Itemlist = () => {
                         <th className="px-4 py-2 border text-left">No</th>
                         <th className="px-4 py-2 border text-left">Code</th>
                         <th className="px-4 py-2 border text-left">Name</th>
+                        <th className="px-4 py-2 border text-left">Type</th>
                         <th className="px-4 py-2 border text-left">Price</th>
+                        <th className="px-4 py-2 border text-left">Quantity Received</th>
+                        <th className="px-4 py-2 border text-left">Quantity Sold</th>
+                        <th className="px-4 py-2 border text-left">Quantity Onhand</th>
+                        <th className="px-4 py-2 border text-left">Quantification</th>
+                        <th className="px-4 py-2 border text-left">information</th>
                         <th className="px-4 py-2 border text-left">Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {items.map((item) => (
-                        <tr key={item.iuid}>
-                            <td className="px-4 py-2 border">{item.id}</td>
+                    {items.map((item, index) => (
+                        <tr key={item.iuid} className={index % 2 === 0 ? 'bg-gray-700' : 'bg-gray-600'}>
+                            <td className="px-4 py-2 border">{index + 1}</td>
                             <td className="px-4 py-2 border">{item.iuid}</td>
                             <td className="px-4 py-2 border">{item.name}</td>
+                            <td className="px-4 py-2 border">{item.type}</td>
                             <td className="px-4 py-2 border">{item.credit}</td>
+                            <td className="px-4 py-2 border">{item.quantityReceived}</td>
+                            <td className="px-4 py-2 border">{item.quantitySold}</td>
+                            <td className="px-4 py-2 border">{item.quantityOnHand}</td>
+                            <td className="px-4 py-2 border">{item.quantification}</td>
+                            <td className="px-4 py-2 border">{item.explanation}</td>
                             <td className="px-4 py-2 border">
                                 <Link to={`/items/edit/${item.iuid}`} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-sm mr-2">
                                     Edit

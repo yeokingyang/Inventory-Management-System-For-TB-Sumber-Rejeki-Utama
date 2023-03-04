@@ -15,10 +15,12 @@ const Sidebar = () => {
     { name: "Dashboard", link: "/dashboard", icon: MdOutlineDashboard },
     { name: "User", link: "/users", icon: AiOutlineUser },
     { name: "Items", link: "/items", icon: IoPricetag },
+    { name: "Incoming Items", link: "/", icon: TbReportAnalytics, margin: true },
+    { name: "Purchase Items", link: "/", icon: FiFolder },
+    { name: "Outgoing Items", link: "/", icon: FiFolder, margin: true},
+    { name: "Sell Items", link: "/purchaseitem", icon: FiShoppingCart },
     { name: "analytics", link: "/", icon: TbReportAnalytics, margin: true },
-    { name: "File Manager", link: "/", icon: FiFolder },
-    { name: "Cart", link: "/purchaseitem", icon: FiShoppingCart },
-    { name: "Saved", link: "/", icon: AiOutlineHeart, margin: true },
+    { name: "Saved", link: "/", icon: AiOutlineHeart},
     { name: "LogOut", link:"/", icon: RiSettings4Line },
   ];
 

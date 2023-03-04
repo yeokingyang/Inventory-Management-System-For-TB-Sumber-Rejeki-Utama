@@ -103,10 +103,12 @@ POST http://localhost:5000/items
 Content-Type: application/json
 
 {
-    "iuid": "CH6",
-    "name": "Clamp Hose",
-    "debit": "4000",
-    "credit": "7000"
+    "iuid": "CH2",
+    "name": "Clamp Hose 2 inch",
+    "credit": "7500",
+    "type": "Rujika",
+    "quantification": "Piece",
+    "explanation": "nothing"
 }
 
 ###
@@ -160,3 +162,35 @@ Content-Type: application/json
 
 ###
 DELETE  http://localhost:5000/outgoingItems/10
+
+
+###
+GET http://localhost:5000/incomingItems
+
+###
+GET http://localhost:5000/incomingItems/1
+
+
+###
+POST http://localhost:5000/incomingItems
+Content-Type: application/json
+
+{
+  "iuid": "CH1",
+  "debit": "2500",
+  "quantityPurchased": 2
+}
+
+###
+PATCH  http://localhost:5000/incomingItems/1
+Content-Type: application/json
+
+{
+
+    "debit": "3000",
+    "quantityPurchased": "3"
+}
+
+###
+DELETE  http://localhost:5000/incomingItems/1
+

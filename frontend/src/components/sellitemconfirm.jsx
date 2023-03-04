@@ -1,11 +1,11 @@
 import React from "react";
 import { HiChevronLeft, HiTrash } from "react-icons/hi";
-import Purchaseitemconfirmlist from "./purchaseitemconfirmlist";
+import Sellitemconfirmlist from "./sellitemconfirmlist";
 import { open } from "../features/checkoutslice";
 import { clear } from "../features/cartslice";
 import { useDispatch, useSelector } from "react-redux";
 
-const PurchaseItemConfirm = () => {
+const SellItemConfirm = () => {
     const dispatch = useDispatch();
     const { cartItems, total, amount } = useSelector((state) => state.cart);
     return (
@@ -32,7 +32,7 @@ const PurchaseItemConfirm = () => {
                         <>
                             {cartItems.map((cartItem) => {
                                 return (
-                                    <Purchaseitemconfirmlist key={cartItem.id} cartItem={cartItem} />
+                                    <Sellitemconfirmlist key={cartItem.id} cartItem={cartItem} />
                                 );
                             })}
                             <div className="flex justify-between items-center mt-12">
@@ -56,4 +56,4 @@ const PurchaseItemConfirm = () => {
     );
 };
 
-export default PurchaseItemConfirm;
+export default SellItemConfirm;

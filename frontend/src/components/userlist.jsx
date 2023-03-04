@@ -109,9 +109,9 @@ const Userlist = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {users.map((user) => (
-                        <tr key={user.id}>
-                            <td className="px-4 py-2 border">{user.id}</td>
+                    {users.map((user, index) => (
+                        <tr key={user.id} className={index % 2 === 0 ? 'bg-gray-700' : 'bg-gray-600'}>
+                            <td className="px-4 py-2 border">{index + 1}</td>
                             <td className="px-4 py-2 border">{user.name}</td>
                             <td className="px-4 py-2 border">{user.email}</td>
                             <td className="px-4 py-2 border">{user.role}</td>

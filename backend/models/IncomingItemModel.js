@@ -25,6 +25,13 @@ const IncomingItems = db.define('incomingItems', {
             notEmpty: true,
         }
     },
+    type: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        validate: {
+            notEmpty: true,
+        }
+    },
     debit: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -47,7 +54,20 @@ const IncomingItems = db.define('incomingItems', {
             notEmpty: true,
         }
     },
-
+    quantificaton: {
+        type:DataTypes.STRING,
+        allowNull: true,
+        validate:{
+            notEmpty: true,
+        }
+    },
+        explanation: {
+        type:DataTypes.STRING,
+        allowNull: true,
+        validate:{
+            notEmpty: true,
+        }
+    }
 }, {
     freezeTableName: true
 });

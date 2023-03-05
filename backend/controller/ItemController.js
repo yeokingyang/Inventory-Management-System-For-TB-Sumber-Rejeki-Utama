@@ -81,7 +81,7 @@ export const updateQuantityOnHand = async () => {
         });
 
         for (const item of items) {
-            const quantityOnHand = item.quantityReceived - item.quantitySold;
+            const quantityOnHand = Math.max(item.quantityReceived - item.quantitySold, 0);
             await Items.update({ quantityOnHand: quantityOnHand }, { where: { iuid: item.iuid } });
         }
     } catch (error) {

@@ -8,7 +8,8 @@ import Edituser from "./pages/edituser";
 import Items from "./pages/items";
 import Users from "./pages/users";
 import Sellitem from "./pages/sellitem";
-
+import Outgoingitems from "./pages/outgoingitems";
+import Editoutgoingitem from "./pages/editoutgoingitem";
 
 function App() {
   return (
@@ -22,6 +23,8 @@ function App() {
         <Route path="/items" element={<Items/>}/>
         <Route path="/items/add" element={<Additem/>}/>
         <Route path="/items/edit/:id" element={<Edititem/>}/>
+        <Route path="/outgoingitems" element={<Outgoingitems/>}/>
+        <Route path="/outgoingitems/edit/:id" element={<Editoutgoingitem/>}/>
         <Route path="/sellitem" element={<Sellitem/>}/>
       </Routes>
     </BrowserRouter>

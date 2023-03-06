@@ -54,7 +54,7 @@ const IncomingItems = db.define('incomingItems', {
             notEmpty: true,
         }
     },
-    quantificaton: {
+    quantification: {
         type:DataTypes.STRING,
         allowNull: true,
         validate:{

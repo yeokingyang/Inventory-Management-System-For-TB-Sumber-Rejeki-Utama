@@ -16,7 +16,7 @@ const SellItemConfirm = () => {
                 const { iuid, amount } = cartItems[i];
                 await axios.post("http://localhost:5000/outgoingItems", {
                     iuid,
-                    quantitySold: amount,
+                    quantitySold: amount
                 });
             }
             dispatch(clear());

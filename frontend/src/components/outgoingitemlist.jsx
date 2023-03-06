@@ -68,10 +68,10 @@ const Outgoingitemlist = () => {
         <div>
             <div className="flex justify-between items-center">
                 <div>
-                    <h1 className="title text-4xl font-bold text-white">Items</h1>
-                    <h2 className="subtitle text-white">List of Items</h2>
+                    <h1 className="title text-4xl font-bold text-white">Outgoing Items</h1>
+                    <h2 className="subtitle text-white">List of Items Sold History</h2>
                 </div>
-                <Link to="/outgoingItems/add" className="px-4 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">
+                <Link to="/sellitem/" className="px-4 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">
                     Add New
                 </Link>
             </div>
@@ -123,7 +123,7 @@ const Outgoingitemlist = () => {
                             <td className="px-4 py-2 border">{outgoingitem.totalCredit}</td>
                             <td className="px-4 py-2 border">{new Date(outgoingitem.createdAt).toLocaleDateString()}</td>
                             <td className="px-4 py-2 border">
-                                <Link to={`/outgoingItems/edit/${outgoingitem.iuid}`} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-sm mr-2">
+                                <Link to={`/outgoingItems/edit/${outgoingitem.id}`} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-sm mr-2">
                                     Edit
                                 </Link>
                                 <button onClick={() => deleteOutgoingItem(outgoingitem.id)} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-sm">

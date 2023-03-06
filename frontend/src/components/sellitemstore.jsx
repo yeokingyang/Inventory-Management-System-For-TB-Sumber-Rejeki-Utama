@@ -59,7 +59,15 @@ const SellItemstore = () => {
 
     return (
         <div>
-            <form onSubmit={searchData} className="flex items-center mt-20">
+              <div className="flex justify-between items-center">
+                <div>
+                    <h1 className="title text-4xl font-bold text-white">Outgoing Items</h1>
+                    <h2 className="subtitle text-white mt-5">Sell Items</h2>
+                </div>
+           
+            </div>
+            <form onSubmit={searchData} className="flex items-center mt-8">
+                
                 <div className="flex-1 pr-4">
                     <input
                         type="text"

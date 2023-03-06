@@ -84,6 +84,8 @@ export const createOutgoingItems = async (req, res) => {
             iuid: Item.iuid,
             name: Item.name,
             credit: Item.credit,
+            type: Item.type,
+            quantification: Item.quantification,
             quantitySold: quantitySold,
             totalCredit: Item.credit * quantitySold
         });

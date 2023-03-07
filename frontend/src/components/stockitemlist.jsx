@@ -1,13 +1,13 @@
 import React from "react";
-import { add } from "../features/cartslice";
+import { add } from "../features/stockslice";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import placeholderImg from '../assets/placeholderimg.jpg'
 
-const SellItemList = ({ item }) => {
+const StockItemList = ({ item }) => {
 
   const dispatch = useDispatch();
-  const { iuid, image, credit, name } = item;
+  const { iuid, name } = item;
 
   return (
     <div className="border w-[350px]">
@@ -19,7 +19,6 @@ const SellItemList = ({ item }) => {
       <div className="mt-6 flex justify-between items-center px-5">
         <div>
           <div className="text-sm text-white font-bold mb-3">{name}</div>
-          <div className="text-xl text-white font-bold">Rp{credit}</div>
         </div>
         <button className="bg-grey text-white p-3" onClick={() => dispatch(add(item))}>
           Add To Cart
@@ -30,4 +29,4 @@ const SellItemList = ({ item }) => {
   );
 };
 
-export default SellItemList;
+export default StockItemList;

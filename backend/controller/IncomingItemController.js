@@ -1,19 +1,52 @@
 import IncomingItems from "../models/IncomingItemModel.js";
 import Items from "../models/ItemModel.js"
 import { Sequelize } from "sequelize";
+import { Op } from "sequelize";
 
 export const getIncomingItems = async (req, res) => {
-    try {
-        const response = await IncomingItems.findAll({
-            include: [{
-                model: Items,
-                attributes: ['iuid', 'name']
+    const page = parseInt(req.query.page) || 0;
+    const limit = parseInt(req.query.limit) || 10;
+    const search = req.query.search_query || "";
+    const offset = Math.max(limit * page, 0);
+    const totalRows = await IncomingItems.count({
+        where: {
+            [Op.or]: [{
+                name: {
+                    [Op.like]: '%' + search + '%'
+                }
+            }, {
+                iuid: {
+                    [Op.like]: '%' + search + '%'
+                }
             }]
-        });
-        res.status(200).json(response);
-    } catch (error) {
-        res.status(500).json({ msg: error.message });
-    }
+        }
+    });
+    const totalPage = Math.ceil(totalRows / limit);
+    const result = await IncomingItems.findAll({
+        where: {
+            [Op.or]: [{
+                name: {
+                    [Op.like]: '%' + search + '%'
+                }
+            }, {
+                iuid: {
+                    [Op.like]: '%' + search + '%'
+                }
+            }]
+        },
+        offset: offset,
+        limit: limit,
+        order: [
+            ['createdAt', 'DESC']
+        ]
+    });
+    res.json({
+        result: result,
+        page: page,
+        limit: limit,
+        totalRows: totalRows,
+        totalPage: totalPage
+    });
 }
 
 
@@ -55,9 +88,11 @@ export const createIncomingItems = async (req, res) => {
         await IncomingItems.create({
             iuid: Item.iuid,
             name: Item.name,
+            type: Item.type,
+            quantification: Item.quantification,
             debit: debit,
             totalDebit: totalDebit,
-            quantityPurchased: quantityPurchased
+            quantityPurchased: quantityPurchased,
         });
         await updateQuantityReceived(iuid);
         res.status(201).json({ msg: "Item purchased created successfully" });

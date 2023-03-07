@@ -168,6 +168,9 @@ DELETE  http://localhost:5000/outgoingItems/10
 GET http://localhost:5000/incomingItems
 
 ###
+GET http://localhost:5000/incomingItems?search_query=cl&page=0&limit=10
+
+###
 GET http://localhost:5000/incomingItems/1
 
 

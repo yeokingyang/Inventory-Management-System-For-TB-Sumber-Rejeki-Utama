@@ -8,6 +8,7 @@ import Edituser from "./pages/edituser";
 import Items from "./pages/items";
 import Users from "./pages/users";
 import Sellitem from "./pages/sellitem";
+import Confirmcheckout from "./pages/confirmcheckout";
 import Stockitem from "./pages/stockitem"
 import Outgoingitems from "./pages/outgoingitems";
 import Editoutgoingitem from "./pages/editoutgoingitem";
@@ -29,6 +30,7 @@ function App() {
         <Route path="/outgoingitems" element={<Outgoingitems/>}/>
         <Route path="/outgoingitems/edit/:id" element={<Editoutgoingitem/>}/>
         <Route path="/sellitem" element={<Sellitem/>}/>
+        <Route path="/sellitem/checkout" element={<Confirmcheckout/>}/>
         <Route path="/stockitem" element={<Stockitem/>}/>
       </Routes>
     </BrowserRouter>

@@ -5,10 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getMe } from "../features/authslice";
 import SellItemConfirm from "../components/sellitemconfirm";
-import {total} from "../features/cartslice"
+import { total } from "../features/cartslice"
 
-const Sellitem = () => {
- 
+const Sellitem = ({children}) => {
+
   const { isError } = useSelector((state) => state.auth);
   const { isOpen } = useSelector((state) => state.checkout);
   const { cartItems } = useSelector((state) => state.cart);
@@ -20,7 +20,7 @@ const Sellitem = () => {
   }, [dispatch]);
 
   useEffect(() => {
-   dispatch(total());
+    dispatch(total());
   }, [cartItems]);
 
 
@@ -32,9 +32,8 @@ const Sellitem = () => {
 
   return (
     <Layout>
-      <SellItemStore/>
-     {isOpen && <SellItemConfirm/>}
-  
+      <SellItemStore />
+      {isOpen && <SellItemConfirm />}
     </Layout>
   );
 };

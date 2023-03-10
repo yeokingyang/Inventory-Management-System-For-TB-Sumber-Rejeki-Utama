@@ -11,7 +11,7 @@ const SellItemList = ({ item }) => {
 
   return (
     <div className="border w-[350px]">
-      <Link to={`/items/${iuid}`}>
+      <Link to={`/itemdetails/${iuid}`}>
         <div className="bg-grey mt-2 h-[120px] flex items-center justify-center">
         <img src={placeholderImg} alt="" className="w-[150px]" />
         </div>

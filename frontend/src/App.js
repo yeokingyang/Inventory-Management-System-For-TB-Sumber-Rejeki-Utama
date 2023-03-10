@@ -13,6 +13,7 @@ import Stockitem from "./pages/stockitem"
 import Outgoingitems from "./pages/outgoingitems";
 import Editoutgoingitem from "./pages/editoutgoingitem";
 import Incomingitems from "./pages/incomingitems";
+import Itemdetails from "./pages/itemdetail";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="/items" element={<Items/>}/>
         <Route path="/items/add" element={<Additem/>}/>
         <Route path="/items/edit/:id" element={<Edititem/>}/>
+        <Route path="/itemdetails/:iuid" element={<Itemdetails/>}/>
         <Route path="/incomingitems" element={<Incomingitems/>}/>
         <Route path="/outgoingitems" element={<Outgoingitems/>}/>
         <Route path="/outgoingitems/edit/:id" element={<Editoutgoingitem/>}/>

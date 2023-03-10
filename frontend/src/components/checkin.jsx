@@ -2,35 +2,29 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { HiChevronLeft, HiTrash, HiX } from "react-icons/hi";
 import { Link } from "react-router-dom";
-import { clear } from "../features/cartslice";
+import { clear } from "../features/stockslice";
 import { open } from "../features/checkinslice";
 import { useDispatch, useSelector } from "react-redux";
 import placeholderImg from '../assets/placeholderimg.jpg'
 import { useNavigate } from "react-router-dom";
 
-const Checkout = () => {
+const Checkin = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { cartItems, total, amount } = useSelector((state) => state.cart);
-    const [customerMoney, setCustomerMoney] = useState("");
-    const [exchange, setExchange] = useState("");
-
-    useEffect(() => {
-        const exchangeValue = customerMoney - total;
-        setExchange(exchangeValue.toFixed(2));
-    }, [customerMoney, total]);
+    const { cartItems, total, amount } = useSelector((state) => state.stockcart);
 
 
-    const handleCheckout = async () => {
+    const handleCheckin = async () => {
         try {
             for (let i = 0; i < cartItems.length; i++) {
-                const { iuid, amount } = cartItems[i];
-                await axios.post("http://localhost:5000/outgoingItems", {
+                const { iuid, amount, debit } = cartItems[i];
+                await axios.post("http://localhost:5000/incomingItems", {
                     iuid,
-                    quantitySold: amount
+                    debit: debit,
+                    quantityPurchased: amount
                 });
             }
-            navigate("/sellitem");
+            navigate("/stockitem");
             dispatch(clear());
             dispatch(open());
         } catch (error) {
@@ -41,8 +35,8 @@ const Checkout = () => {
         <div className="bg-white min-h-screen">
             <div className="flex items-center justify-between">
 
-                <Link to={`/sellitem`}
-                    onClick={() => dispatch(open())}
+                <Link to={`/stockitem`}
+                  onClick={() => dispatch(open())}
                 >
                     <HiChevronLeft />
                     <span className="uppercase text-[0.95rem] select-none">
@@ -73,7 +67,7 @@ const Checkout = () => {
                                         </div>
                                     </div>
                                     <div className="flex flex-col items-center gap-3 ">
-                                        <div>Rp {(cartItem.credit * cartItem.amount).toFixed(2)}</div>
+                                        <div>Rp {(cartItem.debit * cartItem.amount).toFixed(2)}</div>
                                     </div>
                                 </div>
                             );
@@ -86,33 +80,13 @@ const Checkout = () => {
                                 onClick={() => dispatch(clear())}
                             />
                         </div>
-                        <div className="flex items-center z-10">
-                            <div className="mr-2 mx-2">Pay: Rp</div>
-                            <input
-                                type="input"
-                                placeholder="Customer Money"
-                                value={customerMoney}
-                                onChange={(e) => setCustomerMoney(e.target.value)}
-                                className="rounded-lg bg-white-800 p-2 focus:border-blue-500 focus:outline-none text-black"
-                            />
-                        </div>
-                        <div className="flex items-center z-10 mb-8 mx-2">
-                            <div className="mr-2">Exchange: Rp</div>
-                            <input
-                                type="text"
-                                value={exchange}
-                                placeholder="Exchange Money"
-                                readOnly
-                                className="rounded-lg bg-white-800 p-2 focus:border-blue-500 focus:outline-none text-black"
-                            />
-                        </div>
 
                         <button
                             className="w-full bg-black text-white rounded-md text-center py-3 px-40 mt-8  mx-1 z-10"
                             onClick={() => {
-                                handleCheckout();
+                                handleCheckin();
                             }}>
-                            Confirm Payment
+                            Confirm stock
                         </button>
                     </>
                 )}
@@ -125,4 +99,4 @@ const Checkout = () => {
     );
 };
 
-export default Checkout;
+export default Checkin;

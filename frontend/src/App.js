@@ -14,6 +14,7 @@ import Outgoingitems from "./pages/outgoingitems";
 import Editoutgoingitem from "./pages/editoutgoingitem";
 import Incomingitems from "./pages/incomingitems";
 import Itemdetails from "./pages/itemdetail";
+import Confirmcheckin from "./pages/confirmcheckin";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
         <Route path="/sellitem" element={<Sellitem/>}/>
         <Route path="/sellitem/checkout" element={<Confirmcheckout/>}/>
         <Route path="/stockitem" element={<Stockitem/>}/>
+        <Route path="/stockitem/checkin" element={<Confirmcheckin/>}/>
       </Routes>
     </BrowserRouter>
   );

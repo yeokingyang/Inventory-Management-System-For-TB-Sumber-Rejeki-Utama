@@ -27,10 +27,7 @@ const OutgoingItems = db.define('outgoingItems', {
     },
     type: {
         type: DataTypes.STRING,
-        allowNull: true,
-        validate: {
-            notEmpty: true,
-        }
+        allowNull: true
     },
     credit: {
         type: DataTypes.INTEGER,
@@ -57,16 +54,10 @@ const OutgoingItems = db.define('outgoingItems', {
     quantification: {
         type:DataTypes.STRING,
         allowNull: true,
-        validate:{
-            notEmpty: true,
-        }
     },
     explanation: {
         type:DataTypes.STRING,
         allowNull: true,
-        validate:{
-            notEmpty: true,
-        }
     }
 }, {
     freezeTableName: true,

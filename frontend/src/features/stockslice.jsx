@@ -26,6 +26,7 @@ const StockSlice = createSlice({
             );
             state.cartItems[itemIndex].amount += 1;
             state.cartItems[itemIndex].debit = state.debit;
+            state.debit = state.cartItems[itemIndex].debit;
             let total = 0;
             total = state.cartItems[itemIndex].amount * state.cartItems.debit;
         },
@@ -62,6 +63,7 @@ const StockSlice = createSlice({
             );
             if (itemIndex !== -1) {
                 state.cartItems[itemIndex].debit = Number(debit);
+                state.debit = state.cartItems[itemIndex].debit;
             }
         },
         clear: (state) => {

@@ -14,7 +14,6 @@ const Outgoingitemlist = () => {
     const [query, setQuery] = useState("");
     const [msg, setMsg] = useState("");
 
-
     useEffect(() => {
         getOutgoingItems();
     }, [page, keyword]);
@@ -48,18 +47,16 @@ const Outgoingitemlist = () => {
     };
 
     const deleteOutgoingItem = async (itemId) => {
+
         await axios.delete(`http://localhost:5000/outgoingItems/${itemId}`);
         const newTotalRows = rows - 1;
+        setItems(outgoingitems.filter((item) => item.id !== itemId));
         setRows(newTotalRows);
         const newTotalPages = Math.ceil(newTotalRows / limit);
         if (page >= newTotalPages) {
             setPage(newTotalPages - 1);
         }
         setPages(newTotalPages);
-        const response = await axios.get(
-            ` http://localhost:5000/outgoingItems`
-        );
-        setItems(response.data.result);
     };
 
 
@@ -112,7 +109,7 @@ const Outgoingitemlist = () => {
                 </thead>
                 <tbody>
                     {outgoingitems.map((outgoingitem, index) => (
-                        <tr key={outgoingitem.iuid} className={index % 2 === 0 ? 'bg-gray-700' : 'bg-gray-600'}>
+                        <tr key={outgoingitem.id} className={index % 2 === 0 ? 'bg-gray-700' : 'bg-gray-600'}>
                             <td className="px-4 py-2 border">{index + 1}</td>
                             <td className="px-4 py-2 border">{outgoingitem.iuid}</td>
                             <td className="px-4 py-2 border">{outgoingitem.name}</td>
@@ -158,7 +155,6 @@ const Outgoingitemlist = () => {
                     nextLinkClassName={
                         "ml-2 px-3 py-2 rounded-r-lg hover:bg-blue-500 hover:text-white text-blue-500 font-medium"
                     }
-
                 />
             </nav>
         </div>

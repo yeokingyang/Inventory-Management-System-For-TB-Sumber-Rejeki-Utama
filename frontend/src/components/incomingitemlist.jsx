@@ -47,19 +47,18 @@ const Incomingitemlist = () => {
         setKeyword(query);
     };
 
+
     const deleteIncomingItem = async (itemId) => {
+
         await axios.delete(`http://localhost:5000/incomingItems/${itemId}`);
         const newTotalRows = rows - 1;
+        setItems(incomingitems.filter((item) => item.id !== itemId));
         setRows(newTotalRows);
         const newTotalPages = Math.ceil(newTotalRows / limit);
         if (page >= newTotalPages) {
             setPage(newTotalPages - 1);
         }
         setPages(newTotalPages);
-        const response = await axios.get(
-            ` http://localhost:5000/incomingItems`
-        );
-        setItems(response.data.result);
     };
 
 
@@ -112,7 +111,7 @@ const Incomingitemlist = () => {
                 </thead>
                 <tbody>
                     {incomingitems.map((incomingitem, index) => (
-                        <tr key={incomingitem.iuid} className={index % 2 === 0 ? 'bg-gray-700' : 'bg-gray-600'}>
+                        <tr key={incomingitem.id} className={index % 2 === 0 ? 'bg-gray-700' : 'bg-gray-600'}>
                             <td className="px-4 py-2 border">{index + 1}</td>
                             <td className="px-4 py-2 border">{incomingitem.iuid}</td>
                             <td className="px-4 py-2 border">{incomingitem.name}</td>

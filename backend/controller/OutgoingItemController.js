@@ -170,3 +170,24 @@ export const updateQuantitySold = async (iuid) => {
     }
 };
 
+export const getOutgoingItemsSumTotalCredit = async (req, res) => {
+    try {
+        const result = await OutgoingItems.findAll({
+            attributes: [
+                [Sequelize.fn('SUM', Sequelize.col('totalCredit')), 'sumTotalCredit']
+            ],
+            raw: true
+        });
+
+        if (!result || !result[0].sumTotalCredit) {
+            const sumTotalCredit = 0;
+            return res.json({ result: sumTotalCredit });
+        } else {
+            const sumTotalCredit = result[0].sumTotalCredit;
+            return res.json({ result: sumTotalCredit });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server error');
+    }
+};

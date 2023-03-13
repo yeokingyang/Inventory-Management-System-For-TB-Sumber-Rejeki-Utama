@@ -72,10 +72,7 @@ const Itemlist = () => {
             setPage(newTotalPages - 1);
         }
         setPages(newTotalPages);
-        const response = await axios.get(
-            ` http://localhost:5000/items`
-        );
-        setItems(response.data.result);
+        setItems(items.filter((item) => item.iuid !== itemId));
     };
 
 

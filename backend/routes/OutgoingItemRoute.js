@@ -4,14 +4,16 @@ import {
     getOutgoingItemsById,
     createOutgoingItems,
     updateOutgoingItems,
-    deleteOutgoingItems
+    deleteOutgoingItems,
+    getOutgoingItemsSumTotalCredit
 } from "../controller/OutgoingItemController.js";
 
 import { verifyUser, adminOnly } from "../middleware/AuthUser.js";
 
 const router = express.Router();
-router.get('/outgoingItems', verifyUser, getOutgoingItems);
+router.get('/outgoingItems/sumTotalCredit',verifyUser, getOutgoingItemsSumTotalCredit);
 router.get('/outgoingItems/:id', verifyUser, getOutgoingItemsById);
+router.get('/outgoingItems', verifyUser, getOutgoingItems);
 router.post('/outgoingItems', verifyUser, createOutgoingItems);
 router.patch('/outgoingItems/:id', verifyUser, adminOnly, updateOutgoingItems);
 router.delete('/outgoingItems/:id', verifyUser, adminOnly, deleteOutgoingItems);

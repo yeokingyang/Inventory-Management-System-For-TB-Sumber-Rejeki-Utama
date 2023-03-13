@@ -140,6 +140,8 @@ GET http://localhost:5000/outgoingItems?search_query=cl&page=0&limit=10
 ###
 GET http://localhost:5000/outgoingItems/11
 
+###
+GET http://localhost:5000/outgoingItems/sumTotalCredit
 
 ###
 POST http://localhost:5000/outgoingItems

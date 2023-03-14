@@ -45,6 +45,7 @@ const SellItemConfirm = () => {
                                 />
                             </div>
                             <Link to={`/sellitem/checkout`}
+                                 onClick={() => dispatch(open())}
                                 className="w-full text-center cursor-pointer bg-black text-white p-3 mt-8 z-10">
                                 Check Out
                             </Link>

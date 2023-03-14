@@ -10,10 +10,10 @@ const StockItemList = ({ item }) => {
   const { iuid, name } = item;
 
   return (
-    <div className="border w-[350px]">
-      <Link to={`/itemdetails/${iuid}`}>
+    <div className="border max-w-[350px]">
+      <Link to={`/itemdetails/${iuid}`} className="block w-full">
         <div className="bg-grey mt-2 h-[120px] flex items-center justify-center">
-        <img src={placeholderImg} alt="" className="w-[150px]" />
+          <img src={placeholderImg} alt="" className="w-[150px]" />
         </div>
       </Link>
       <div className="mt-6 flex justify-between items-center px-5">
@@ -24,7 +24,6 @@ const StockItemList = ({ item }) => {
           Add To Cart
         </button>
       </div>
-      
     </div>
   );
 };

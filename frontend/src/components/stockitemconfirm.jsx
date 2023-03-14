@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React from "react";
 import { HiChevronLeft, HiTrash } from "react-icons/hi";
 import Stockitemconfirmlist from "./stockitemconfirmlist";
 import { open } from "../features/checkinslice";
@@ -50,8 +49,10 @@ const StockItemConfirm = () => {
                                 />
                             </div>
                             <Link to={`/stockitem/checkin`}
+                                onClick={() => dispatch(open())}
                                 className="w-full text-center cursor-pointer bg-black text-white p-3 mt-8 z-10">
                                 Check In
+
                             </Link>
                         </>
                     )}

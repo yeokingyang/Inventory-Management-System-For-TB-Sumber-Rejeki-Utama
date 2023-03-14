@@ -40,13 +40,18 @@ export const getIncomingItems = async (req, res) => {
             ['createdAt', 'DESC']
         ]
     });
-    res.json({
-        result: result,
-        page: page,
-        limit: limit,
-        totalRows: totalRows,
-        totalPage: totalPage
-    });
+    try {
+        res.json({
+            result: result,
+            page: page,
+            limit: limit,
+            totalRows: totalRows,
+            totalPage: totalPage
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ msg: error.message });
+    }
 }
 
 

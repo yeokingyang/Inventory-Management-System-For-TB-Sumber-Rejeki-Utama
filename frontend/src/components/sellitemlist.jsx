@@ -10,7 +10,7 @@ const SellItemList = ({ item }) => {
   const { iuid, image, credit, name } = item;
 
   return (
-    <div className="border w-[350px]">
+    <div className="border max-w-[350px]">
       <Link to={`/itemdetails/${iuid}`}>
         <div className="bg-grey mt-2 h-[120px] flex items-center justify-center">
         <img src={placeholderImg} alt="" className="w-[150px]" />

@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import axios from "axios";
 import { HiChevronLeft, HiTrash, HiX } from "react-icons/hi";
 import { Link } from "react-router-dom";
 import { clear } from "../features/stockslice";
-import { open } from "../features/checkinslice";
 import { useDispatch, useSelector } from "react-redux";
 import placeholderImg from '../assets/placeholderimg.jpg'
 import { useNavigate } from "react-router-dom";
@@ -26,7 +25,6 @@ const Checkin = () => {
             }
             navigate("/stockitem");
             dispatch(clear());
-            dispatch(open());
         } catch (error) {
             console.error(error);
         }
@@ -36,7 +34,6 @@ const Checkin = () => {
             <div className="flex items-center justify-between">
 
                 <Link to={`/stockitem`}
-                  onClick={() => dispatch(open())}
                 >
                     <HiChevronLeft />
                     <span className="uppercase text-[0.95rem] select-none">

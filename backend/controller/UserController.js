@@ -1,6 +1,6 @@
 import User from "../models/UserModel.js";
 import argon2, { hash } from "argon2";
-import {Op} from "sequelize"
+import { Op } from "sequelize"
 
 export const getUsers = async (req, res) => {
     /*  try {
@@ -49,13 +49,18 @@ export const getUsers = async (req, res) => {
             ['id', 'ASC']
         ]
     });
-    res.json({
-        result: result,
-        page: page,
-        limit: limit,
-        totalRows: totalRows,
-        totalPage: totalPage
-    });
+    try {
+        res.json({
+            result: result,
+            page: page,
+            limit: limit,
+            totalRows: totalRows,
+            totalPage: totalPage
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ msg: error.message });
+    }
 }
 
 export const getUserById = async (req, res) => {

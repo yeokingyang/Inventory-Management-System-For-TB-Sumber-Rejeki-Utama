@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { HiChevronLeft, HiTrash, HiX } from "react-icons/hi";
+import { HiChevronLeft, HiTrash} from "react-icons/hi";
 import { Link } from "react-router-dom";
 import { clear } from "../features/cartslice";
-import { open } from "../features/checkinslice";
 import { useDispatch, useSelector } from "react-redux";
 import placeholderImg from '../assets/placeholderimg.jpg'
 import { useNavigate } from "react-router-dom";
@@ -32,7 +31,6 @@ const Checkout = () => {
             }
             navigate("/sellitem");
             dispatch(clear());
-            dispatch(open());
         } catch (error) {
             console.error(error);
         }
@@ -42,7 +40,6 @@ const Checkout = () => {
             <div className="flex items-center justify-between">
 
                 <Link to={`/sellitem`}
-                    onClick={() => dispatch(open())}
                 >
                     <HiChevronLeft />
                     <span className="uppercase text-[0.95rem] select-none">

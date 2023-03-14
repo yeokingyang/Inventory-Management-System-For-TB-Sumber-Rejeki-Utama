@@ -3,30 +3,6 @@ import User from "../models/UserModel.js"
 import { Op } from "sequelize"
 
 export const getItems = async (req, res) => {
-    /*   try {
-           let response;
-           if (req.role === "admin") {
-               response = await Items.findAll({
-                   include: [{
-                       model: User,
-                       attributes: ['name', 'email']
-                   }]
-               });
-           } else {
-               response = await Items.findAll({
-                   attributes: ['iuid', 'name', 'credit', 'quantityOnHand'],
-                   include: [{
-                       model: User,
-                       attributes: ['name', 'email']
-                   }]
-               });
-           }
-           await updateQuantityOnHand();
-           res.status(200).json(response);
-       } catch (error) {
-           res.status(500).json({ msg: error.message });
-       } */
-
     const page = parseInt(req.query.page) || 0;
     const limit = parseInt(req.query.limit) || 10;
     const search = req.query.search_query || "";
@@ -63,18 +39,22 @@ export const getItems = async (req, res) => {
             ['name', 'ASC']
         ]
     });
-    await updateQuantityOnHand();
-    res.json({
-        result: result,
-        page: page,
-        limit: limit,
-        totalRows: totalRows,
-        totalPage: totalPage
-    });
-
+    try {
+        await updateQuantityOnHand();
+        res.json({
+            result: result,
+            page: page,
+            limit: limit,
+            totalRows: totalRows,
+            totalPage: totalPage
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ msg: error.message });
+    }
 }
 
-export const updateQuantityOnHand = async () => {
+export const updateQuantityOnHand = async (req, res) => {
     try {
         const items = await Items.findAll({
             attributes: ['iuid', 'quantityOnHand', 'quantityReceived', 'quantitySold'],

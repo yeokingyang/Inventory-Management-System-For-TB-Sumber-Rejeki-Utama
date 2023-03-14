@@ -59,40 +59,41 @@ const SellItemstore = () => {
 
     return (
         <div>
-              <div className="flex justify-between items-center">
-                <div>
-                    <h1 className="title text-4xl font-bold text-white">Outgoing Items</h1>
-                    <h2 className="subtitle text-white mt-5">Sell Items</h2>
-                </div>
-           
-            </div>
-            <form onSubmit={searchData} className="flex items-center mt-8">
-                
-                <div className="flex-1 pr-4">
-                    <input
-                        type="text"
-                        className="w-full border-2 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
-                        value={query}
-                        onChange={(e) => setQuery(e.target.value)}
-                        placeholder="Find something here..."
-                    />
-                </div>
-                <div>
-                    <button
-                        type="submit"
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    >
-                        Search
-                    </button>
-                </div>
-            </form>
+            <div className="sticky  top-0 left-0 w-full bg-gray-800 p-4 z-15">
+                <div className="flex justify-between items-center">
+                    <div>
+                        <h1 className="title text-4xl font-bold text-white">Outgoing Items</h1>
+                        <h2 className="subtitle text-white mt-5">Sell Items</h2>
+                    </div>
 
+                </div>
+                <form onSubmit={searchData} className="flex items-center mt-8">
+
+                    <div className="flex-1 pr-4">
+                        <input
+                            type="text"
+                            className="w-full border-2 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
+                            value={query}
+                            onChange={(e) => setQuery(e.target.value)}
+                            placeholder="Find something here..."
+                        />
+                    </div>
+                    <div>
+                        <button
+                            type="submit"
+                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                        >
+                            Search
+                        </button>
+                    </div>
+                </form>
+            </div>
             <div className="fixed top-32 right-0 p-4">
                 <div className="relative cursor-pointer"
                     onClick={() => dispatch(open())} >
                     <BiShoppingBag className="text-3xl opacity-80 text-white" />
                     <div className="absolute w-4 h-4 rounded-full z-10 right-[-3px] bottom-[-3px] flex items-center justify-center text-[10px] bg-black text-white">
-                     {amount}
+                        {amount}
                     </div>
                 </div>
             </div>

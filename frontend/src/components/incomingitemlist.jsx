@@ -65,35 +65,36 @@ const Incomingitemlist = () => {
     return (
 
         <div>
-            <div className="flex justify-between items-center">
-                <div>
-                    <h1 className="title text-4xl font-bold text-white">Incoming Items</h1>
-                    <h2 className="subtitle text-white">List of Items Purchased History</h2>
+            <div className="sticky  top-0 left-0 w-full bg-gray-800 p-4 z-15">
+                <div className="flex justify-between items-center">
+                    <div>
+                        <h1 className="title text-4xl font-bold text-white">Incoming Items</h1>
+                        <h2 className="subtitle text-white">List of Items Purchased History</h2>
+                    </div>
+                    <Link to="/sellitem/" className="px-4 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">
+                        Add New
+                    </Link>
                 </div>
-                <Link to="/sellitem/" className="px-4 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">
-                    Add New
-                </Link>
+                <form onSubmit={searchData} className="flex items-center mt-4">
+                    <div className="flex-1 pr-4">
+                        <input
+                            type="text"
+                            className="w-full border-2 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
+                            value={query}
+                            onChange={(e) => setQuery(e.target.value)}
+                            placeholder="Find something here..."
+                        />
+                    </div>
+                    <div>
+                        <button
+                            type="submit"
+                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                        >
+                            Search
+                        </button>
+                    </div>
+                </form>
             </div>
-            <form onSubmit={searchData} className="flex items-center mt-4">
-                <div className="flex-1 pr-4">
-                    <input
-                        type="text"
-                        className="w-full border-2 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
-                        value={query}
-                        onChange={(e) => setQuery(e.target.value)}
-                        placeholder="Find something here..."
-                    />
-                </div>
-                <div>
-                    <button
-                        type="submit"
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    >
-                        Search
-                    </button>
-                </div>
-            </form>
-
             <table className="table is-striped w-full text-white bg-gray-800 mt-5">
                 <thead>
                     <tr>

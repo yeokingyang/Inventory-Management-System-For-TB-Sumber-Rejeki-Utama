@@ -11,7 +11,7 @@ const SellItemConfirm = () => {
     const { cartItems, total, amount } = useSelector((state) => state.cart);
 
     return (
-        <div className="fixed bg-transparentBlack top-0 left-0 w-full h-screen ">
+        <div className="fixed bg-transparentBlack top-0 left-0 w-full h-screen z-20 ">
             <div className="absolute inset-0 bg-black opacity-10 "></div>
             <div className="relative w-1/2 p-4 h-full overflow-y-auto bg-white rounded-lg shadow-md mx-0">
 

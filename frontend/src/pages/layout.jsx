@@ -6,7 +6,7 @@ const Layout = ({ children }) => {
     return (
         <div className='fixed top-0 left-0 w-full h-screen'>
                 <Navbar />
-            <div className="flex h-full">
+            <div className="flex h-full relative">
                 <Sidebar />
                 <div className="flex-1 bg-gray-800 overflow-y-auto"
                 style={{ height: 'calc(100vh - 7rem)' }}>

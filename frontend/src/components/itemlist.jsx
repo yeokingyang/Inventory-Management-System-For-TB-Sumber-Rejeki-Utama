@@ -113,6 +113,7 @@ const Itemlist = () => {
                 <thead>
                     <tr>
                         <th className="px-4 py-2 border text-left">No</th>
+                        <th className="px-4 py-2 border text-left">Image</th>
                         <th className="px-4 py-2 border text-left">Code</th>
                         <th className="px-4 py-2 border text-left">Name</th>
                         <th className="px-4 py-2 border text-left">Type</th>
@@ -129,6 +130,11 @@ const Itemlist = () => {
                     {items.map((item, index) => (
                         <tr key={item.iuid} className={index % 2 === 0 ? 'bg-gray-700' : 'bg-gray-600'}>
                             <td className="px-4 py-2 border">{index + 1}</td>
+                            <td className="px-4 py-2 border">
+                                <div className="mt-2 h-[50px] shadow-md rounded-md overflow-hidden">
+                                    <img src={item.url} alt="Image" className="w-[50px]" />
+                                </div>
+                            </td>
                             <td className="px-4 py-2 border">{item.iuid}</td>
                             <td className="px-4 py-2 border">{item.name}</td>
                             <td className="px-4 py-2 border">{item.type}</td>

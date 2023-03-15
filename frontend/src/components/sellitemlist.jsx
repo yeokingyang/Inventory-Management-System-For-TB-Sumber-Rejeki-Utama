@@ -13,7 +13,7 @@ const SellItemList = ({ item }) => {
     <div className="border max-w-[350px]">
       <Link to={`/itemdetails/${iuid}`}>
         <div className="bg-grey mt-2 h-[120px] flex items-center justify-center">
-        <img src={placeholderImg} alt="" className="w-[150px]" />
+        <img src={item.url} alt="" className="w-[120px]" />
         </div>
       </Link>
       <div className="mt-6 flex justify-between items-center px-5">

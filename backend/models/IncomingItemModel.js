@@ -25,6 +25,14 @@ const IncomingItems = db.define('incomingItems', {
             notEmpty: true,
         }
     },
+    image: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    url: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
     type: {
         type: DataTypes.STRING,
         allowNull: true

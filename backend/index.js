@@ -1,4 +1,5 @@
 import express from "express";
+import FileUpload from "express-fileupload";
 import cors from "cors";
 import session from "express-session";
 import dotenv from "dotenv";
@@ -37,6 +38,9 @@ app.use(session({
         secure: 'auto'
     }
 }))
+
+app.use(FileUpload());
+app.use(express.static("public"));
 app.use(express.json());
 app.use(UserRoute);
 app.use(ItemRoute);

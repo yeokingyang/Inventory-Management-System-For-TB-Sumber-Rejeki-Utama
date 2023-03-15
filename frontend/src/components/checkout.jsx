@@ -59,7 +59,7 @@ const Checkout = () => {
                             return (
                                 <div key={cartItem.id} className="flex justify-between items-center border border-solid border-glass p-4 mb-6">
                                     <div className="flex items-center gap-4">
-                                        <img src={placeholderImg} alt="" className="w-20 h-20 object-cover" />
+                                        <img src={cartItem.url} alt="" className="w-20 h-20 object-cover" />
                                     </div>
                                     <div className="flex flex-col items-start max-w-[6.8rem]">
                                         <div>{cartItem.name}</div>

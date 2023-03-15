@@ -6,6 +6,8 @@ const Formedititem = () => {
 
     const [iuid, setIuid] = useState("");
     const [name, setName] = useState("");
+    const [file, setFile] = useState("");
+    const [preview, setPreview] = useState("");
     const [type, setType] = useState("");
     const [credit, setCredit] = useState("");
     const [quantification, setQuantification] = useState("");
@@ -13,25 +15,6 @@ const Formedititem = () => {
     const [msg, setMsg] = useState("");
     const navigate = useNavigate();
     const { id } = useParams();
-
-    const editItem = async (e) => {
-        e.preventDefault();
-        try {
-            await axios.patch(`http://localhost:5000/items/${id}`, {
-                iuid: iuid,
-                name: name,
-                type: type,
-                credit: credit,
-                quantification: quantification,
-                explanation: explanation
-            });
-            navigate("/items");
-        } catch (error) {
-            if (error.response) {
-                setMsg(error.response.data.msg);
-            }
-        }
-    };
 
     useEffect(() => {
         const getItemById = async () => {
@@ -45,6 +28,8 @@ const Formedititem = () => {
                 setType(response.data.type);
                 setQuantification(response.data.quantification);
                 setExplanation(response.data.explanation);
+                setFile(response.data.image);
+                setPreview(response.data.url);
             } catch (error) {
                 if (error.response) {
                     setMsg(error.response.data.msg);
@@ -53,6 +38,37 @@ const Formedititem = () => {
         };
         getItemById();
     }, [id]);
+
+
+    const loadImage = (e) => {
+        const image = e.target.files[0];
+        setFile(image);
+        setPreview(URL.createObjectURL(image));
+    };
+
+    const editItem = async (e) => {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append('iuid', iuid);
+        formData.append('name', name);
+        formData.append("file", file);
+        formData.append('type', type);
+        formData.append('credit', credit);
+        formData.append('quantification', quantification);
+        formData.append('explanation', explanation);
+        try {
+            await axios.patch(`http://localhost:5000/items/${id}`, formData, {
+                headers: {
+                    "Content-type": "multipart/form-data",
+                }
+            });
+            navigate("/items");
+        } catch (error) {
+            if (error.response) {
+                setMsg(error.response.data.msg);
+            }
+        }
+    };
 
     return (
         <div className="bg-gray-800 h-screen flex flex-col justify-top pt-10 pl-10">
@@ -64,6 +80,29 @@ const Formedititem = () => {
             </div>
             <form onSubmit={editItem}>
                 <p className="text-center text-white">{msg}</p>
+                <div >
+                    <label className='text-gray-400 font-bold text-2xl'> Image</label>
+                    <div className="flex items-center mt-2">
+                        <input
+                            id="fileInput"
+                            type="file"
+                            className="hidden"
+                            onChange={loadImage}
+                        />
+                    </div>
+                    
+                    {preview ? (
+                        <figure className=" mb-5">
+                            <img src={preview} alt="Preview Image" className="w-40 h-40 object-cover rounded-lg shadow-md" />
+                        </figure>
+                    ) : (
+                        ""
+                    )}
+                            <label htmlFor="fileInput" className="bg-indigo-500 hover:bg-indigo-700 text-white py-2 px-4 rounded cursor-pointer">
+                            Choose a file...
+                        </label>
+                </div>
+
                 <div className='flex flex-col text-gray-400 font-bold text-2xl py-2'>
                     <label>Code</label>
                     <input className='rounded-lg bg-white-800 mt-2 p-2 focus:border-blue-500 focus:outline-none text-black'

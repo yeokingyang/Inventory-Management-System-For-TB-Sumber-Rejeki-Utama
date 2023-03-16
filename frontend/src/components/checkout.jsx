@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { HiChevronLeft, HiTrash} from "react-icons/hi";
+import { HiChevronLeft, HiTrash } from "react-icons/hi";
 import { Link } from "react-router-dom";
 import { clear } from "../features/cartslice";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,6 +11,7 @@ const Checkout = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { cartItems, total, amount } = useSelector((state) => state.cart);
+    const [date, setDate] = useState(new Date().toISOString().substr(0, 10));
     const [customerMoney, setCustomerMoney] = useState("");
     const [exchange, setExchange] = useState("");
 
@@ -26,7 +27,8 @@ const Checkout = () => {
                 const { iuid, amount } = cartItems[i];
                 await axios.post("http://localhost:5000/outgoingItems", {
                     iuid,
-                    quantitySold: amount
+                    quantitySold: amount,
+                    date: date
                 });
             }
             navigate("/sellitem");
@@ -75,6 +77,19 @@ const Checkout = () => {
                                 </div>
                             );
                         })}
+                        <div className="flex justify-between items-center mt-12 mx-2">
+                            <div></div>
+                            <div>
+                                <h1 className="ml-6"> Date </h1>
+                                <input
+                                    type="date"
+                                    value={date}
+                                    onChange={e => setDate(e.target.value)}
+                                    className="rounded-lg bg-white-800 p-2 focus:border-blue-500 focus:outline-none text-black ml-4"
+                                />
+                            </div>
+
+                        </div>
                         <div className="flex justify-between items-center mt-12 mx-2 ">
                             <div>Total Cost: Rp {total.toFixed(2)}</div>
 

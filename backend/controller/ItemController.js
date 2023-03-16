@@ -72,37 +72,25 @@ export const updateQuantityOnHand = async (req, res) => {
 }
 
 export const getItemsById = async (req, res) => {
-    try {
-        const items = await Items.findOne({
-            where: {
-                iuid: req.params.id
-            }
-        });
-        if (!items) return res.status(404).json({ msg: "Data tidak ditemukan" });
-        let response;
-        if (req.role === "admin") {
-            response = await Items.findOne({
-                where: {
-                    id: items.id
-                },
-                include: [{
-                    model: User,
-                    attributes: ['name', 'email']
-                }]
-            });
-        } else {
-            response = await Items.findOne({
-                attributes: ['iuid', 'name', 'credit'],
-                where: {
-                    id: items.id
-                },
-                include: [{
-                    model: User,
-                    attributes: ['name', 'email']
-                }]
-            });
+    const items = await Items.findOne({
+        where: {
+            iuid: req.params.id
         }
-        res.status(200).json(response);
+    });
+    if (!items) return res.status(404).json({ msg: "Data tidak ditemukan" });
+    try {
+        let response;
+        response = await Items.findOne({
+            where: {
+                id: items.id
+            },
+            include: [{
+                model: User,
+                attributes: ['name', 'email']
+            }]
+        });
+
+        res.status(200).json({ result: response });
     } catch (error) {
         res.status(500).json({ msg: error.message });
     }

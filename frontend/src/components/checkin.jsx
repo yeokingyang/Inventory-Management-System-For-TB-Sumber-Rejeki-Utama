@@ -1,18 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import { HiChevronLeft, HiTrash, HiX } from "react-icons/hi";
+import { HiChevronLeft, HiTrash } from "react-icons/hi";
 import { Link } from "react-router-dom";
 import { clear } from "../features/stockslice";
 import { useDispatch, useSelector } from "react-redux";
-import placeholderImg from '../assets/placeholderimg.jpg'
 import { useNavigate } from "react-router-dom";
 
 const Checkin = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [date, setDate] = useState(new Date().toISOString().substr(0, 10));
     const { cartItems, total, amount } = useSelector((state) => state.stockcart);
-
-
+      
     const handleCheckin = async () => {
         try {
             for (let i = 0; i < cartItems.length; i++) {
@@ -20,7 +19,8 @@ const Checkin = () => {
                 await axios.post("http://localhost:5000/incomingItems", {
                     iuid,
                     debit: debit,
-                    quantityPurchased: amount
+                    quantityPurchased: amount,
+                    date : date
                 });
             }
             navigate("/stockitem");
@@ -69,6 +69,19 @@ const Checkin = () => {
                                 </div>
                             );
                         })}
+                        <div className="flex justify-between items-center mt-12 mx-2">
+                            <div></div>
+                            <div>
+                            <h1 className="ml-6"> Date </h1>
+                            <input
+                                type="date"
+                                value={date}
+                                onChange={e=>setDate(e.target.value)}
+                                className="rounded-lg bg-white-800 p-2 focus:border-blue-500 focus:outline-none text-black ml-4"
+                            />
+                            </div>
+
+                        </div>
                         <div className="flex justify-between items-center mt-12 mx-2 ">
                             <div>Total Cost: Rp {total.toFixed(2)}</div>
 

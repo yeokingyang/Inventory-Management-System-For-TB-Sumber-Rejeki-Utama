@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import ReactPaginate from "react-paginate";
+import { useSelector } from "react-redux";
 
 const Userlist = () => {
 
@@ -14,7 +15,7 @@ const Userlist = () => {
     const [keyword, setKeyword] = useState("");
     const [query, setQuery] = useState("");
     const [msg, setMsg] = useState("");
-
+    const role = useSelector((state) => state.auth.user?.role);
 
     useEffect(() => {
         getUsers();
@@ -105,7 +106,7 @@ const Userlist = () => {
                         <th className="px-4 py-2 border text-left">Name</th>
                         <th className="px-4 py-2 border text-left">Email</th>
                         <th className="px-4 py-2 border text-left">Role</th>
-                        <th className="px-4 py-2 border text-left">Action</th>
+                        {role === "admin" && (<th className="px-4 py-2 border text-left">Action</th>)}
                     </tr>
                 </thead>
                 <tbody>
@@ -115,14 +116,14 @@ const Userlist = () => {
                             <td className="px-4 py-2 border">{user.name}</td>
                             <td className="px-4 py-2 border">{user.email}</td>
                             <td className="px-4 py-2 border">{user.role}</td>
-                            <td className="px-4 py-2 border">
+                            {role === "admin" && (<td className="px-4 py-2 border">
                                 <Link to={`/users/edit/${user.uuid}`} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-sm mr-2">
                                     Edit
                                 </Link>
                                 <button onClick={() => deleteUser(user.uuid)} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-sm">
                                     Delete
                                 </button>
-                            </td>
+                            </td>)}
                         </tr>
                     ))}
                 </tbody>

@@ -83,7 +83,7 @@ export const getIncomingItemsById = async (req, res) => {
 
 
 export const createIncomingItems = async (req, res) => {
-    const { iuid, debit, quantityPurchased } = req.body;
+    const { iuid, debit, quantityPurchased, date } = req.body;
     const totalDebit = debit * quantityPurchased;
     try {
         const Item = await Items.findOne({ where: { iuid: iuid } });
@@ -98,6 +98,7 @@ export const createIncomingItems = async (req, res) => {
             debit: debit,
             totalDebit: totalDebit,
             quantityPurchased: quantityPurchased,
+            date: date
         });
         await updateQuantityReceived(iuid);
         res.status(201).json({ msg: "Item purchased created successfully" });

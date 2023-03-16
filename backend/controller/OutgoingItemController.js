@@ -79,7 +79,7 @@ export const getOutgoingItemsById = async (req, res) => {
 
 
 export const createOutgoingItems = async (req, res) => {
-    const { iuid, quantitySold } = req.body;
+    const { iuid, quantitySold, date } = req.body;
     try {
         const Item = await Items.findOne({ where: { iuid: iuid } });
         if (!Item) {
@@ -92,7 +92,8 @@ export const createOutgoingItems = async (req, res) => {
             type: Item.type,
             quantification: Item.quantification,
             quantitySold: quantitySold,
-            totalCredit: Item.credit * quantitySold
+            totalCredit: Item.credit * quantitySold,
+            date: date
         });
         await updateQuantitySold(iuid);
         res.status(201).json({ msg: "Item purchased created successfully" });

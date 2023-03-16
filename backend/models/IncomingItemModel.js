@@ -60,13 +60,21 @@ const IncomingItems = db.define('incomingItems', {
         }
     },
     quantification: {
-        type:DataTypes.STRING,
+        type: DataTypes.STRING,
         allowNull: true
     },
-        explanation: {
-        type:DataTypes.STRING,
+    explanation: {
+        type: DataTypes.STRING,
         allowNull: true
+    },
+    date: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        validate: {
+            notEmpty: true,
+        }
     }
+
 }, {
     freezeTableName: true
 });
@@ -84,7 +92,7 @@ IncomingItems.belongsTo(Items, {
 export default IncomingItems;
 
 //(async () => {
-   // console.log('Syncing database...');
-//  await db.sync();
- //  console.log('Database synced!');
- // })();
+    // console.log('Syncing database...');
+   // await db.sync();
+    //  console.log('Database synced!');
+//})();

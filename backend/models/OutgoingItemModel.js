@@ -66,6 +66,13 @@ const OutgoingItems = db.define('outgoingItems', {
     explanation: {
         type:DataTypes.STRING,
         allowNull: true,
+    },
+    date: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        validate: {
+            notEmpty: true,
+        }
     }
 }, {
     freezeTableName: true,

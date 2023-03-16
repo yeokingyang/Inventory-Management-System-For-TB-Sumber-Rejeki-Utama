@@ -74,7 +74,12 @@ export const authSlice = createSlice({
             state.isLoading = false;
             state.isError = true;
             state.message = action.payload;
-        })
+        });
+        builder.addMatcher(
+            (action) => action.type.endsWith("/fulfilled") && action.payload.role === "admin",
+            (state, action) => {
+                state.isAdmin = true;
+        });
 
     }
 });

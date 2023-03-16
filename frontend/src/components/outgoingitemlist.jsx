@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
@@ -13,6 +14,7 @@ const Outgoingitemlist = () => {
     const [keyword, setKeyword] = useState("");
     const [query, setQuery] = useState("");
     const [msg, setMsg] = useState("");
+    const role = useSelector((state) => state.auth.user?.role);
 
     useEffect(() => {
         getOutgoingItems();
@@ -105,7 +107,7 @@ const Outgoingitemlist = () => {
                         <th className="px-4 py-2 border text-left">Quantification</th>
                         <th className="px-4 py-2 border text-left">Total Price</th>
                         <th className="px-4 py-2 border text-left">Date</th>
-                        <th className="px-4 py-2 border text-left">Action</th>
+                        {role === "admin" && (<th className="px-4 py-2 border text-left">Action</th>)}
                     </tr>
                 </thead>
                 <tbody>
@@ -119,15 +121,15 @@ const Outgoingitemlist = () => {
                             <td className="px-4 py-2 border">{outgoingitem.quantitySold}</td>
                             <td className="px-4 py-2 border">{outgoingitem.quantification}</td>
                             <td className="px-4 py-2 border">{outgoingitem.totalCredit}</td>
-                            <td className="px-4 py-2 border">{new Date(outgoingitem.createdAt).toLocaleDateString()}</td>
-                            <td className="px-4 py-2 border">
+                            <td className="px-4 py-2 border">{outgoingitem.date.slice(0, 10)}</td>
+                            {role === "admin" && (<td className="px-4 py-2 border">
                                 <Link to={`/outgoingItems/edit/${outgoingitem.id}`} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-sm mr-2">
                                     Edit
                                 </Link>
                                 <button onClick={() => deleteOutgoingItem(outgoingitem.id)} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-sm">
                                     Delete
                                 </button>
-                            </td>
+                            </td>)}
                         </tr>
                     ))}
                 </tbody>

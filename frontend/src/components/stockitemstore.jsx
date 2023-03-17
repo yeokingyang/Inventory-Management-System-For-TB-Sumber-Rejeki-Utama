@@ -14,7 +14,7 @@ const StockItemstore = () => {
     const { amount } = useSelector((state) => state.stockcart);
     const [items, setItems] = useState([]);
     const [page, setPage] = useState(0);
-    const [limit, setLimit] = useState(9);
+    const [limit, setLimit] = useState(30);
     const [pages, setPages] = useState(0);
     const [rows, setRows] = useState(0);
     const [keyword, setKeyword] = useState("");

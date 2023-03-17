@@ -49,9 +49,12 @@ const Incomingitemlist = () => {
     };
 
 
-    const deleteIncomingItem = async (itemId) => {
+    const deleteIncomingItem = async (itemId, iuid) => {
 
         await axios.delete(`http://localhost:5000/incomingItems/${itemId}`);
+        await axios.patch("http://localhost:5000/updateQuantityOnHand", {
+            iuid: iuid
+        });
         const newTotalRows = rows - 1;
         setItems(incomingitems.filter((item) => item.id !== itemId));
         setRows(newTotalRows);
@@ -72,7 +75,7 @@ const Incomingitemlist = () => {
                         <h1 className="title text-4xl font-bold text-white">Incoming Items</h1>
                         <h2 className="subtitle text-white">List of Items Purchased History</h2>
                     </div>
-                    <Link to="/sellitem/" className="px-4 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">
+                    <Link to="/stockitem/" className="px-4 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">
                         Add New
                     </Link>
                 </div>
@@ -127,7 +130,7 @@ const Incomingitemlist = () => {
                                 <Link to={`/incomingItems/edit/${incomingitem.id}`} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-sm mr-2">
                                     Edit
                                 </Link>
-                                <button onClick={() => deleteIncomingItem(incomingitem.id)} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-sm">
+                                <button onClick={() => deleteIncomingItem(incomingitem.id, incomingitem.iuid)} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-sm">
                                     Delete
                                 </button>
                             </td>)}

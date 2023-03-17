@@ -4,7 +4,7 @@ import { Sequelize } from "sequelize";
 import { Op } from "sequelize";
 
 export const getIncomingItems = async (req, res) => {
-    const page = parseInt(req.query.page) || 0;
+  /*  const page = parseInt(req.query.page) || 0;
     const limit = parseInt(req.query.limit) || 10;
     const search = req.query.search_query || "";
     const offset = Math.max(limit * page, 0);
@@ -51,7 +51,43 @@ export const getIncomingItems = async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ msg: error.message });
+    }*/
+    const page = parseInt(req.query.page) || 0;
+    const limit = parseInt(req.query.limit) || 10;
+    const search = req.query.search_query || "";
+    const offset = Math.max(limit * page, 0);
+    const { count, rows } = await IncomingItems.findAndCountAll({
+        where: {
+            [Op.or]: [{
+                name: {
+                    [Op.like]: search + '%'
+                }
+            }, {
+                iuid: {
+                    [Op.like]: search + '%'
+                }
+            }]
+        },
+        offset: offset,
+        limit: limit,
+        order: [
+            ['name', 'ASC']
+        ]
+    });
+    const totalPage = Math.ceil(count / limit);
+    try {
+        res.json({
+            result: rows,
+            page: page,
+            limit: limit,
+            totalRows: count,
+            totalPage: totalPage
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ msg: error.message });
     }
+
 }
 
 

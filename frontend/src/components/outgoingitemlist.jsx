@@ -48,9 +48,12 @@ const Outgoingitemlist = () => {
         setKeyword(query);
     };
 
-    const deleteOutgoingItem = async (itemId) => {
+    const deleteOutgoingItem = async (itemId, iuid) => {
 
         await axios.delete(`http://localhost:5000/outgoingItems/${itemId}`);
+        await axios.patch("http://localhost:5000/updateQuantityOnHand", {
+            iuid: iuid
+        });
         const newTotalRows = rows - 1;
         setItems(outgoingitems.filter((item) => item.id !== itemId));
         setRows(newTotalRows);
@@ -126,7 +129,7 @@ const Outgoingitemlist = () => {
                                 <Link to={`/outgoingItems/edit/${outgoingitem.id}`} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-sm mr-2">
                                     Edit
                                 </Link>
-                                <button onClick={() => deleteOutgoingItem(outgoingitem.id)} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-sm">
+                                <button onClick={() => deleteOutgoingItem(outgoingitem.id, outgoingitem.iuid)} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-sm">
                                     Delete
                                 </button>
                             </td>)}

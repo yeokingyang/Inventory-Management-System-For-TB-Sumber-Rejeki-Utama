@@ -2,25 +2,25 @@ import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 
-const Formeditoutgoingitem = () => {
+const Formeditincomingitem = () => {
 
   const [iuid, setIuid] = useState("");
   const [name, setName] = useState("");
   const [type, setType] = useState("");
-  const [credit, setCredit] = useState("");
-  const [quantitySold, setQuantitySold] = useState("");
+  const [debit, setDebit] = useState("");
+  const [quantityPurchased, setquantityPurchased] = useState("");
   const [quantification, setQuantification] = useState("");
   const [explanation, setExplanation] = useState("");
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const editOutgoingItem = async (e) => {
+  const Editincomingitem = async (e) => {
     e.preventDefault();
     try {
-      await axios.patch(`http://localhost:5000/outgoingItems/${id}`, {
-        credit: credit,
-        quantitySold: quantitySold,
+      await axios.patch(`http://localhost:5000/incomingitems/${id}`, {
+        debit: debit,
+        quantityPurchased: quantityPurchased,
         quantification: quantification,
         explanation: explanation
       });
@@ -28,7 +28,7 @@ const Formeditoutgoingitem = () => {
         iuid : iuid
       });
 
-      navigate("/outgoingItems");
+      navigate("/incomingitems");
     } catch (error) {
       if (error.response) {
         setMsg(error.response.data.msg);
@@ -37,16 +37,16 @@ const Formeditoutgoingitem = () => {
   };
 
   useEffect(() => {
-    const getOutgoingItemById = async () => {
+    const getIncomingItemsById = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/outgoingItems/${id}`
+          `http://localhost:5000/incomingitems/${id}`
         );
         setIuid(response.data.iuid);
         setName(response.data.name);
         setType(response.data.type);
-        setCredit(response.data.credit);
-        setQuantitySold(response.data.quantitySold);
+        setDebit(response.data.debit);
+        setquantityPurchased(response.data.quantityPurchased);
         setQuantification(response.data.quantification);
         setExplanation(response.data.explanation);
       } catch (error) {
@@ -55,7 +55,7 @@ const Formeditoutgoingitem = () => {
         }
       }
     };
-    getOutgoingItemById();
+    getIncomingItemsById();
   }, [id]);
 
   return (
@@ -63,10 +63,10 @@ const Formeditoutgoingitem = () => {
       <div className="flex justify-between items-center">
         <div>
           <h1 className="title text-4xl font-bold text-white">Items</h1>
-          <h2 className="subtitle text-white">Update Items</h2>
+          <h2 className="subtitle text-white">Update Incoming Items</h2>
         </div>
       </div>
-      <form onSubmit={editOutgoingItem}>
+      <form onSubmit={Editincomingitem}>
         <p className="text-center text-white">{msg}</p>
         <div className='flex flex-col text-gray-400 font-bold text-2xl py-2'>
           <label>Code</label>
@@ -90,15 +90,15 @@ const Formeditoutgoingitem = () => {
         <div className='flex flex-col text-gray-400 font-bold text-2xl py-2'>
           <label>Price</label>
           <input className='rounded-lg bg-white-800 mt-2 p-2 focus:border-blue-500 focus:outline-none text-black'
-            value={credit}
-            onChange={(e) => setCredit(e.target.value)}
+            value={debit}
+            onChange={(e) => setDebit(e.target.value)}
             placeholder="Price" />
         </div>
         <div className='flex flex-col text-gray-400 font-bold text-2xl py-2'>
           <label>Quantity</label>
           <input className='rounded-lg bg-white-800 mt-2 p-2 focus:border-blue-500 focus:outline-none text-black'
-            value={quantitySold}
-            onChange={(e) => setQuantitySold(e.target.value)}
+            value={quantityPurchased}
+            onChange={(e) => setquantityPurchased(e.target.value)}
             placeholder="Price" />
         </div>
         <div className='flex flex-col text-gray-400 font-bold text-2xl py-2'>
@@ -125,4 +125,4 @@ const Formeditoutgoingitem = () => {
   )
 }
 
-export default Formeditoutgoingitem;
+export default Formeditincomingitem;

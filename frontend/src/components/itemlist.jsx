@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
+import placeholderImg from '../assets/placeholderimg.jpg'
 
 const Itemlist = () => {
     /*  const [items, setItems] = useState([]);
@@ -23,7 +24,7 @@ const Itemlist = () => {
 
     const [items, setItems] = useState([]);
     const [page, setPage] = useState(0);
-    const [limit, setLimit] = useState(10);
+    const [limit, setLimit] = useState(30);
     const [pages, setPages] = useState(0);
     const [rows, setRows] = useState(0);
     const [keyword, setKeyword] = useState("");
@@ -132,7 +133,7 @@ const Itemlist = () => {
                             <td className="px-4 py-2 border">{index + 1}</td>
                             <td className="px-4 py-2 border">
                                 <div className="mt-2 h-[50px] shadow-md rounded-md overflow-hidden">
-                                    <img src={item.url} alt="Image" className="w-[50px]" />
+                                    <img src={item.url || placeholderImg} alt="Image" className="w-[50px]" />
                                 </div>
                             </td>
                             <td className="px-4 py-2 border">{item.iuid}</td>
@@ -145,7 +146,7 @@ const Itemlist = () => {
                             <td className="px-4 py-2 border">{item.quantification}</td>
                             <td className="px-4 py-2 border">{item.explanation}</td>
                             <td className="px-4 py-2 border">
-                                <Link to={`/items/edit/${item.iuid}`} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-sm mr-2">
+                                <Link to={`/items/edit/${item.id}`} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-sm mr-2">
                                     Edit
                                 </Link>
                                 <button onClick={() => deleteItem(item.iuid)} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-sm">

@@ -22,17 +22,17 @@ const Formedititem = () => {
                 const response = await axios.get(
                     `http://localhost:5000/items/${id}`
                 );
-                setIuid(response.data.iuid);
-                setName(response.data.name);
-                setCredit(response.data.credit);
-                setType(response.data.type);
-                setQuantification(response.data.quantification);
-                setExplanation(response.data.explanation);
-                setFile(response.data.image);
-                setPreview(response.data.url);
+                setIuid(response.data.result.iuid);
+                setName(response.data.result.name);
+                setCredit(response.data.result.credit);
+                setType(response.data.result.type);
+                setQuantification(response.data.result.quantification);
+                setExplanation(response.data.result.explanation);
+                setFile(response.data.result.image);
+                setPreview(response.data.result.url);
             } catch (error) {
                 if (error.response) {
-                    setMsg(error.response.data.msg);
+                    setMsg(error.response.data.result.msg);
                 }
             }
         };

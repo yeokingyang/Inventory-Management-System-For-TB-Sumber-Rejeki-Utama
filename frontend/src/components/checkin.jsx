@@ -22,6 +22,9 @@ const Checkin = () => {
                     quantityPurchased: amount,
                     date : date
                 });
+                await axios.patch("http://localhost:5000/updateQuantityOnHand", {
+                    iuid: iuid
+                });
             }
             navigate("/stockitem");
             dispatch(clear());

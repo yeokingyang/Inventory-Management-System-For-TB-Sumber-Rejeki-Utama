@@ -8,23 +8,21 @@ const Itemdetails = () => {
     const [items, setItems] = useState([]);
     const [msg, setMsg] = useState("");
     const navigate = useNavigate();
-    const { iuid } = useParams();
+    const { id } = useParams();
 
     useEffect(() => {
         const getItemById = async () => {
             try {
-                const response = await axios.get(
-                    `http://localhost:5000/items/${iuid}`
-                );
+                const response = await axios.get(`http://localhost:5000/items/${id}`);
                 setItems(response.data.result);
             } catch (error) {
-                if (error.response) {
-                    setMsg(error.response.data.msg);
-                }
+                console.error(error);
+                setMsg("Error fetching item details");
             }
         };
+    
         getItemById();
-    }, [iuid]);
+    }, [id]);
 
     const goBack = () => {
         navigate(-1);
@@ -34,7 +32,7 @@ const Itemdetails = () => {
         <div className="min-h-screen w-full flex flex-col justify-center items-center p-4 bg-gray-100">
             <div className="lg:flex items-center justify-center bg-white rounded-lg shadow-lg mt-10 ml-10">
                 <img
-                    src={items.url}
+                    src={items.url || placeholderImg}
                     alt=""
                     className="lg:w-[35rem] md:w-[30rem] w-[25rem] h-full object-cover rounded-lg lg:rounded-l-lg"
                 />

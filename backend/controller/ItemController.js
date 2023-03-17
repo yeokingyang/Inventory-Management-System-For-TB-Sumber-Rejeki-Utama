@@ -4,34 +4,51 @@ import { Op } from "sequelize"
 import path from "path";
 import fs from "fs";
 
+
+/*
+export const getProducts = async (req, res) =>{
+    try {
+        let response;
+        if(req.role === "admin"){
+            response = await Product.findAll({
+                attributes:['uuid','name','price'],
+                include:[{
+                    model: User,
+                    attributes:['name','email']
+                }]
+            });
+        }else{
+            response = await Product.findAll({
+                attributes:['uuid','name','price'],
+                where:{
+                    userId: req.userId
+                },
+                include:[{
+                    model: User,
+                    attributes:['name','email']
+                }]
+            });
+        }
+        res.status(200).json(response);
+    } catch (error) {
+        res.status(500).json({msg: error.message});
+    }
+}
+*/
 export const getItems = async (req, res) => {
     const page = parseInt(req.query.page) || 0;
     const limit = parseInt(req.query.limit) || 10;
     const search = req.query.search_query || "";
     const offset = Math.max(limit * page, 0);
-    const totalRows = await Items.count({
+    const { count, rows } = await Items.findAndCountAll({
         where: {
             [Op.or]: [{
                 name: {
-                    [Op.like]: '%' + search + '%'
+                    [Op.like]: search + '%'
                 }
             }, {
                 iuid: {
-                    [Op.like]: '%' + search + '%'
-                }
-            }]
-        }
-    });
-    const totalPage = Math.ceil(totalRows / limit);
-    const result = await Items.findAll({
-        where: {
-            [Op.or]: [{
-                name: {
-                    [Op.like]: '%' + search + '%'
-                }
-            }, {
-                iuid: {
-                    [Op.like]: '%' + search + '%'
+                    [Op.like]: search + '%'
                 }
             }]
         },
@@ -41,40 +58,102 @@ export const getItems = async (req, res) => {
             ['name', 'ASC']
         ]
     });
+    const totalPage = Math.ceil(count / limit);
     try {
-        await updateQuantityOnHand();
         res.json({
-            result: result,
+            result: rows,
             page: page,
             limit: limit,
-            totalRows: totalRows,
+            totalRows: count,
             totalPage: totalPage
         });
     } catch (error) {
         console.error(error);
         res.status(500).json({ msg: error.message });
     }
+
+
+
+    /*   const page = parseInt(req.query.page) || 0;
+       const limit = parseInt(req.query.limit) || 10;
+       const search = req.query.search_query || "";
+       const offset = Math.max(limit * page, 0);
+       const totalRows = await Items.count({
+           where: {
+               [Op.or]: [{
+                   name: {
+                       [Op.like]: '%' + search + '%'
+                   }
+               }, {
+                   iuid: {
+                       [Op.like]: '%' + search + '%'
+                   }
+               }]
+           }
+       });
+       const totalPage = Math.ceil(totalRows / limit);
+       const result = await Items.findAll({
+           where: {
+               [Op.or]: [{
+                   name: {
+                       [Op.like]: '%' + search + '%'
+                   }
+               }, {
+                   iuid: {
+                       [Op.like]: '%' + search + '%'
+                   }
+               }]
+           },
+           offset: offset,
+           limit: limit,
+           order: [
+               ['name', 'ASC']
+           ]
+       });
+       try {
+           await updateQuantityOnHand();
+           res.json({
+               result: result,
+               page: page,
+               limit: limit,
+               totalRows: totalRows,
+               totalPage: totalPage
+           });
+       } catch (error) {
+           console.error(error);
+           res.status(500).json({ msg: error.message });
+       }*/
+
+
 }
 
 export const updateQuantityOnHand = async (req, res) => {
-    try {
-        const items = await Items.findAll({
-            attributes: ['iuid', 'quantityOnHand', 'quantityReceived', 'quantitySold'],
-        });
-
-        for (const item of items) {
-            const quantityOnHand = Math.max(item.quantityReceived - item.quantitySold, 0);
-            await Items.update({ quantityOnHand: quantityOnHand }, { where: { iuid: item.iuid } });
+    const iuidToUpdate = req.body.iuid;
+    const item = await Items.findOne({
+        attributes: ['iuid', 'quantityOnHand', 'quantityReceived', 'quantitySold'],
+        where: {
+            iuid: iuidToUpdate
         }
-    } catch (error) {
-        console.error(error);
+    });
+    if (!item) return res.status(404).json({ msg: "Data tidak ditemukan" });
+    try {
+
+        const quantityOnHand = Math.max(item.quantityReceived - item.quantitySold, 0);
+        await Items.update({ quantityOnHand: quantityOnHand }, { where: { iuid: iuidToUpdate } });
+
+        res.status(200).json({ msg: "quantityonhand berhasil diupdate" });
+
+    }
+    catch (error) {
+        res.status(500).json({ msg: error.message });
     }
 }
 
 export const getItemsById = async (req, res) => {
+
     const items = await Items.findOne({
         where: {
-            iuid: req.params.id
+            id: req.params.id
         }
     });
     if (!items) return res.status(404).json({ msg: "Data tidak ditemukan" });
@@ -82,7 +161,7 @@ export const getItemsById = async (req, res) => {
         let response;
         response = await Items.findOne({
             where: {
-                id: items.id
+                id: req.params.id
             },
             include: [{
                 model: User,
@@ -132,7 +211,7 @@ export const createItems = async (req, res) => {
 export const updateItems = async (req, res) => {
     const items = await Items.findOne({
         where: {
-            iuid: req.params.id
+            id: req.params.id
         }
     });
     if (!items) return res.status(404).json({ msg: "Data tidak ditemukan" });
@@ -164,7 +243,7 @@ export const updateItems = async (req, res) => {
         if (req.role === "admin") {
             await items.update({ iuid, name, image: fileName, url: url, credit, type, quantification, explanation }, {
                 where: {
-                    id: items.id
+                    id: req.params.id
                 }
             });
         }
@@ -185,7 +264,9 @@ export const deleteItems = async (req, res) => {
         //  const { name, price } = req.body;
         if (req.role === "admin") {
             const filepath = `./public/images/${item.image}`;
-            fs.unlinkSync(filepath);
+            if (fs.existsSync(filepath)) {
+                fs.unlinkSync(filepath);
+            }
             await item.destroy({
                 where: {
                     id: item.id

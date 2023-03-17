@@ -15,6 +15,7 @@ import Editoutgoingitem from "./pages/editoutgoingitem";
 import Incomingitems from "./pages/incomingitems";
 import Itemdetails from "./pages/itemdetail";
 import Confirmcheckin from "./pages/confirmcheckin";
+import Editincomingitem from "./pages/editincomingitem";
 
 function App() {
   return (
@@ -28,10 +29,11 @@ function App() {
         <Route path="/items" element={<Items/>}/>
         <Route path="/items/add" element={<Additem/>}/>
         <Route path="/items/edit/:id" element={<Edititem/>}/>
-        <Route path="/itemdetails/:iuid" element={<Itemdetails/>}/>
+        <Route path="/itemdetails/:id" element={<Itemdetails/>}/>
         <Route path="/incomingitems" element={<Incomingitems/>}/>
         <Route path="/outgoingitems" element={<Outgoingitems/>}/>
         <Route path="/outgoingitems/edit/:id" element={<Editoutgoingitem/>}/>
+        <Route path="/incomingitems/edit/:id" element={<Editincomingitem/>}/>
         <Route path="/sellitem" element={<Sellitem/>}/>
         <Route path="/sellitem/checkout" element={<Confirmcheckout/>}/>
         <Route path="/stockitem" element={<Stockitem/>}/>

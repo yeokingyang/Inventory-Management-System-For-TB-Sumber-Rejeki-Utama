@@ -30,6 +30,10 @@ const Checkout = () => {
                     quantitySold: amount,
                     date: date
                 });
+                await axios.patch("http://localhost:5000/updateQuantityOnHand", {
+                    iuid: iuid
+                });
+
             }
             navigate("/sellitem");
             dispatch(clear());

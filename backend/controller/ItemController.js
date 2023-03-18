@@ -1,4 +1,6 @@
 import Items from "../models/ItemModel.js";
+import IncomingItems from "../models/IncomingItemModel.js"
+import OutgoingItems from "../models/OutgoingItemModel.js"
 import User from "../models/UserModel.js"
 import { Op } from "sequelize"
 import path from "path";
@@ -60,12 +62,13 @@ export const getItems = async (req, res) => {
     });
     const totalPage = Math.ceil(count / limit);
     try {
-        res.json({
+        res.status(200).json({
             result: rows,
             page: page,
             limit: limit,
             totalRows: count,
-            totalPage: totalPage
+            totalPage: totalPage,
+            msg: "berhasil mengambil data item"
         });
     } catch (error) {
         console.error(error);
@@ -169,7 +172,7 @@ export const getItemsById = async (req, res) => {
             }]
         });
 
-        res.status(200).json({ result: response });
+        res.status(200).json({ result: response, msg: "Data item berhasil diambil" });
     } catch (error) {
         res.status(500).json({ msg: error.message });
     }
@@ -246,8 +249,35 @@ export const updateItems = async (req, res) => {
                     id: req.params.id
                 }
             });
+            const incomingItemsUpdated = await IncomingItems.update(
+                {   
+                    iuid: iuid,
+                    name: name,
+                    type: type,
+                    quantification: quantification
+                },
+                { where: { iuid: iuid }}
+            );
+
+            const outgoingItemsUpdated = await OutgoingItems.update(
+                {
+                     iuid: iuid,
+                     name: name,
+                     type: type,
+                     quantification: quantification 
+                },
+                { where: { iuid: iuid } }
+            );
+
+            // Check if child items were updated
+            if (incomingItemsUpdated[0] === 0 && outgoingItemsUpdated[0] === 0) {
+                return res.status(200).json({ msg: "Item updated, but child items not found" });
+            } else {
+                return res.status(200).json({ msg: "Item and child items updated successfully" });
+            }
+
         }
-        res.status(200).json({ msg: "Product updated successfuly" });
+        res.status(403).json({ msg: "Unauthorized" });
     } catch (error) {
         res.status(500).json({ msg: error.message });
     }

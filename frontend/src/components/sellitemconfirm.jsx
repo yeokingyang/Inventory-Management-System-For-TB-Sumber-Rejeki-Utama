@@ -38,7 +38,7 @@ const SellItemConfirm = () => {
                                 );
                             })}
                             <div className="flex justify-between items-center mt-12 mb-8">
-                                <div>Total Cost: ${total.toFixed(2)}</div>
+                                <div>Total Cost: Rp{total.toFixed(2)}</div>
                                 <HiTrash
                                     className="cursor-pointer text-3xl z-10"
                                     onClick={() => dispatch(clear())}

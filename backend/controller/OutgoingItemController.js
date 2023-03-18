@@ -4,54 +4,54 @@ import { Sequelize } from "sequelize";
 import { Op } from "sequelize"
 
 export const getOutgoingItems = async (req, res) => {
-  /*  const page = parseInt(req.query.page) || 0;
-    const limit = parseInt(req.query.limit) || 10;
-    const search = req.query.search_query || "";
-    const offset = Math.max(limit * page, 0);
-    const totalRows = await OutgoingItems.count({
-        where: {
-            [Op.or]: [{
-                name: {
-                    [Op.like]: '%' + search + '%'
-                }
-            }, {
-                iuid: {
-                    [Op.like]: '%' + search + '%'
-                }
-            }]
-        }
-    });
-    const totalPage = Math.ceil(totalRows / limit);
-    const result = await OutgoingItems.findAll({
-        where: {
-            [Op.or]: [{
-                name: {
-                    [Op.like]: '%' + search + '%'
-                }
-            }, {
-                iuid: {
-                    [Op.like]: '%' + search + '%'
-                }
-            }]
-        },
-        offset: offset,
-        limit: limit,
-        order: [
-            ['createdAt', 'DESC']
-        ]
-    });
-    try {
-        res.json({
-            result: result,
-            page: page,
-            limit: limit,
-            totalRows: totalRows,
-            totalPage: totalPage
-        });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ msg: error.message });
-    }*/
+    /*  const page = parseInt(req.query.page) || 0;
+      const limit = parseInt(req.query.limit) || 10;
+      const search = req.query.search_query || "";
+      const offset = Math.max(limit * page, 0);
+      const totalRows = await OutgoingItems.count({
+          where: {
+              [Op.or]: [{
+                  name: {
+                      [Op.like]: '%' + search + '%'
+                  }
+              }, {
+                  iuid: {
+                      [Op.like]: '%' + search + '%'
+                  }
+              }]
+          }
+      });
+      const totalPage = Math.ceil(totalRows / limit);
+      const result = await OutgoingItems.findAll({
+          where: {
+              [Op.or]: [{
+                  name: {
+                      [Op.like]: '%' + search + '%'
+                  }
+              }, {
+                  iuid: {
+                      [Op.like]: '%' + search + '%'
+                  }
+              }]
+          },
+          offset: offset,
+          limit: limit,
+          order: [
+              ['createdAt', 'DESC']
+          ]
+      });
+      try {
+          res.json({
+              result: result,
+              page: page,
+              limit: limit,
+              totalRows: totalRows,
+              totalPage: totalPage
+          });
+      } catch (error) {
+          console.error(error);
+          res.status(500).json({ msg: error.message });
+      }*/
 
     const page = parseInt(req.query.page) || 0;
     const limit = parseInt(req.query.limit) || 10;
@@ -82,10 +82,10 @@ export const getOutgoingItems = async (req, res) => {
             page: page,
             limit: limit,
             totalRows: count,
-            totalPage: totalPage
+            totalPage: totalPage,
+            msg: "data outgoingitem berhasil diambil"
         });
     } catch (error) {
-        console.error(error);
         res.status(500).json({ msg: error.message });
     }
 }
@@ -187,17 +187,17 @@ export const deleteOutgoingItems = async (req, res) => {
 }
 
 
-export const updateQuantitySold = async (iuid) => {
+export const updateQuantitySold = async (iuid, res) => {
+    const result = await OutgoingItems.findOne({
+        attributes: [
+            'iuid',
+            [Sequelize.fn('SUM', Sequelize.col('quantitySold')), 'totalQuantity']
+        ],
+        where: { iuid: iuid },
+        group: ['iuid']
+    });
+    if (!result) return res.status(404).json({ msg: "Data diupdatequantity sold tidak ditemukan" });
     try {
-        const result = await OutgoingItems.findOne({
-            attributes: [
-                'iuid',
-                [Sequelize.fn('SUM', Sequelize.col('quantitySold')), 'totalQuantity']
-            ],
-            where: { iuid: iuid },
-            group: ['iuid']
-        });
-
         if (!result || !result.dataValues.totalQuantity) {
             const totalQuantity = 0;
             await Items.update({ quantitySold: totalQuantity }, { where: { iuid: iuid } });
@@ -206,12 +206,13 @@ export const updateQuantitySold = async (iuid) => {
             const totalQuantity = result.dataValues.totalQuantity;
             await Items.update({ quantitySold: totalQuantity }, { where: { iuid: iuid } });
         }
-
+        return res.status(200).json({ msg: "Quantitysold updated successfully" });
     } catch (error) {
-        console.error(error);
+        res.status(500).json({ msg: error.message });
     }
 };
 
+//use by dashboard webpage to get total laba kotor
 export const getOutgoingItemsSumTotalCredit = async (req, res) => {
     try {
         const result = await OutgoingItems.findAll({
@@ -229,7 +230,6 @@ export const getOutgoingItemsSumTotalCredit = async (req, res) => {
             return res.json({ result: sumTotalCredit });
         }
     } catch (error) {
-        console.error(error);
         res.status(500).send('Server error');
     }
 };

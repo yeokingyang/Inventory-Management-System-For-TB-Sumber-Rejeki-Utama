@@ -4,54 +4,54 @@ import { Sequelize } from "sequelize";
 import { Op } from "sequelize";
 
 export const getIncomingItems = async (req, res) => {
-  /*  const page = parseInt(req.query.page) || 0;
-    const limit = parseInt(req.query.limit) || 10;
-    const search = req.query.search_query || "";
-    const offset = Math.max(limit * page, 0);
-    const totalRows = await IncomingItems.count({
-        where: {
-            [Op.or]: [{
-                name: {
-                    [Op.like]: '%' + search + '%'
-                }
-            }, {
-                iuid: {
-                    [Op.like]: '%' + search + '%'
-                }
-            }]
-        }
-    });
-    const totalPage = Math.ceil(totalRows / limit);
-    const result = await IncomingItems.findAll({
-        where: {
-            [Op.or]: [{
-                name: {
-                    [Op.like]: '%' + search + '%'
-                }
-            }, {
-                iuid: {
-                    [Op.like]: '%' + search + '%'
-                }
-            }]
-        },
-        offset: offset,
-        limit: limit,
-        order: [
-            ['createdAt', 'DESC']
-        ]
-    });
-    try {
-        res.json({
-            result: result,
-            page: page,
-            limit: limit,
-            totalRows: totalRows,
-            totalPage: totalPage
-        });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ msg: error.message });
-    }*/
+    /*  const page = parseInt(req.query.page) || 0;
+      const limit = parseInt(req.query.limit) || 10;
+      const search = req.query.search_query || "";
+      const offset = Math.max(limit * page, 0);
+      const totalRows = await IncomingItems.count({
+          where: {
+              [Op.or]: [{
+                  name: {
+                      [Op.like]: '%' + search + '%'
+                  }
+              }, {
+                  iuid: {
+                      [Op.like]: '%' + search + '%'
+                  }
+              }]
+          }
+      });
+      const totalPage = Math.ceil(totalRows / limit);
+      const result = await IncomingItems.findAll({
+          where: {
+              [Op.or]: [{
+                  name: {
+                      [Op.like]: '%' + search + '%'
+                  }
+              }, {
+                  iuid: {
+                      [Op.like]: '%' + search + '%'
+                  }
+              }]
+          },
+          offset: offset,
+          limit: limit,
+          order: [
+              ['createdAt', 'DESC']
+          ]
+      });
+      try {
+          res.json({
+              result: result,
+              page: page,
+              limit: limit,
+              totalRows: totalRows,
+              totalPage: totalPage
+          });
+      } catch (error) {
+          console.error(error);
+          res.status(500).json({ msg: error.message });
+      }*/
     const page = parseInt(req.query.page) || 0;
     const limit = parseInt(req.query.limit) || 10;
     const search = req.query.search_query || "";
@@ -81,7 +81,8 @@ export const getIncomingItems = async (req, res) => {
             page: page,
             limit: limit,
             totalRows: count,
-            totalPage: totalPage
+            totalPage: totalPage,
+            msg: "data berhasil di ambil"
         });
     } catch (error) {
         console.error(error);
@@ -151,10 +152,10 @@ export const updateIncomingItems = async (req, res) => {
             }
         });
         if (!IncomingItem) return res.status(404).json({ msg: "Data tidak ditemukan" });
-        const {  iuid, debit, quantityPurchased } = req.body;
-        const totalDebit = debit * quantityPurchased; 
+        const { iuid, debit, quantityPurchased } = req.body;
+        const totalDebit = debit * quantityPurchased;
         if (req.role === "admin") {
-            await IncomingItem.update({  debit, quantityPurchased, totalDebit }, {
+            await IncomingItem.update({ debit, quantityPurchased, totalDebit }, {
                 where: {
                     id: IncomingItem.id
                 }
@@ -174,7 +175,7 @@ export const deleteIncomingItems = async (req, res) => {
                 id: req.params.id
             }
         });
-        const prevIuid = IncomingItem.iuid; 
+        const prevIuid = IncomingItem.iuid;
         if (!IncomingItem) return res.status(404).json({ msg: "Data tidak ditemukan" });
         const { iuid } = req.body;
         if (req.role === "admin") {
@@ -192,18 +193,17 @@ export const deleteIncomingItems = async (req, res) => {
 }
 
 
-export const updateQuantityReceived = async (iuid) => {
+export const updateQuantityReceived = async (iuid, res) => {
+    const result = await IncomingItems.findOne({
+        attributes: [
+            'iuid',
+            [Sequelize.fn('SUM', Sequelize.col('quantityPurchased')), 'totalQuantity']
+        ],
+        where: { iuid: iuid },
+        group: ['iuid']
+    });
+    if (!result) return res.status(404).json({ msg: "Data diupdatequantity received tidak ditemukan" });
     try {
-
-        const result = await IncomingItems.findOne({
-            attributes: [
-                'iuid',
-                [Sequelize.fn('SUM', Sequelize.col('quantityPurchased')), 'totalQuantity']
-            ],
-            where: { iuid: iuid },
-            group: ['iuid']
-        });
-
         if (!result || !result.dataValues.totalQuantity) {
             const totalQuantity = 0;
             await Items.update({ quantityReceived: totalQuantity }, { where: { iuid: iuid } });
@@ -212,9 +212,9 @@ export const updateQuantityReceived = async (iuid) => {
             const totalQuantity = result.dataValues.totalQuantity;
             await Items.update({ quantityReceived: totalQuantity }, { where: { iuid: iuid } });
         }
-
+        return res.status(200).json({ msg: "Quantityreceived updated successfully" });
     } catch (error) {
-        console.error(error);
+        res.status(500).json({ msg: error.message });
     }
 };
 

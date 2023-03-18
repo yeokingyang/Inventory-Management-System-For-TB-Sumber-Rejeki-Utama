@@ -36,7 +36,7 @@ const SellItemConfirmList = ({ cartItem }) => {
           className="cursor-pointer text-xl z-10 text-black"
           onClick={() => dispatch(remove(cartItem))}
         />
-        <div>${(credit * amount).toFixed(2)}</div>
+        <div>RP{(credit * amount).toFixed(2)}</div>
       </div>
     </div>
   );

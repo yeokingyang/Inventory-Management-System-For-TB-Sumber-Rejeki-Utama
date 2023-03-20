@@ -1,29 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
 import placeholderImg from '../assets/placeholderimg.jpg'
+import { useSelector } from "react-redux";
 
-const Itemlist = () => {
-    /*  const [items, setItems] = useState([]);
-  
-      useEffect(() => {
-          getItems();
-      }, []);
-  
-      const getItems = async () => {
-          const response = await axios.get("http://localhost:5000/items");
-          setItems(response.data);
-      };
-  
-      const deleteItem = async (itemId) => {
-          await axios.delete(`http://localhost:5000/items/${itemId}`);
-          getItems();
-      };
-  */
+const Itemwishlist = () => {
 
-    const [items, setItems] = useState([]);
+    const [wishlistitems, setWishlistitems] = useState([]);
     const [page, setPage] = useState(0);
     const [limit, setLimit] = useState(30);
     const [pages, setPages] = useState(0);
@@ -34,14 +18,14 @@ const Itemlist = () => {
     const role = useSelector((state) => state.auth.user?.role);
 
     useEffect(() => {
-        getItems();
+        getWishlistItems();
     }, [page, keyword]);
 
-    const getItems = async () => {
+    const getWishlistItems = async () => {
         const response = await axios.get(
-            `http://localhost:5000/items?search_query=${keyword}&page=${page}&limit=${limit}`
+            `http://localhost:5000/wishlistitems?search_query=${keyword}&page=${page}&limit=${limit}`
         );
-        setItems(response.data.result);
+        setWishlistitems(response.data.result);
         setPage(response.data.page);
         setPages(response.data.totalPage);
         setRows(response.data.totalRows);
@@ -65,10 +49,10 @@ const Itemlist = () => {
         setKeyword(query);
     };
 
-    const deleteItem = async (itemId) => {
+    const deleteWishlistItem = async (itemId) => {
         const confirmed = window.confirm('Are you sure you want to delete this item?');
         if (confirmed) {
-            await axios.delete(`http://localhost:5000/items/${itemId}`);
+            await axios.delete(`http://localhost:5000/wishlistitems/${itemId}`);
             const newTotalRows = rows - 1;
             setRows(newTotalRows);
             const newTotalPages = Math.ceil(newTotalRows / limit);
@@ -76,7 +60,7 @@ const Itemlist = () => {
                 setPage(newTotalPages - 1);
             }
             setPages(newTotalPages);
-            setItems(items.filter((item) => item.iuid !== itemId));
+            setWishlistitems(wishlistitems.filter((wishlistitem) => wishlistitem.id !== itemId));
         }
     };
 
@@ -88,10 +72,10 @@ const Itemlist = () => {
                 <div className="flex justify-between items-center">
                     <div>
                         <h1 className="title text-4xl font-bold text-white">Items</h1>
-                        <h2 className="subtitle text-white">List of Items</h2>
+                        <h2 className="subtitle text-white">Items Wishlist</h2>
                     </div>
-                    <Link to="/items/add" className="px-4 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">
-                        Add New
+                    <Link to="/wishlistitems/add" className="px-4 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">
+                        Add New Wishlist
                     </Link>
                 </div>
                 <form onSubmit={searchData} className="flex items-center mt-4">
@@ -119,41 +103,33 @@ const Itemlist = () => {
                     <tr>
                         <th className="px-4 py-2 border text-left">No</th>
                         <th className="px-4 py-2 border text-left">Image</th>
-                        <th className="px-4 py-2 border text-left">Code</th>
                         <th className="px-4 py-2 border text-left">Name</th>
                         <th className="px-4 py-2 border text-left">Type</th>
                         <th className="px-4 py-2 border text-left">Price</th>
-                        <th className="px-4 py-2 border text-left">Quantity Received</th>
-                        <th className="px-4 py-2 border text-left">Quantity Sold</th>
-                        <th className="px-4 py-2 border text-left">Quantity Onhand</th>
+                        <th className="px-4 py-2 border text-left">Quantity</th>
                         <th className="px-4 py-2 border text-left">Quantification</th>
                         <th className="px-4 py-2 border text-left">information</th>
                         {role === "admin" && (<th className="px-4 py-2 border text-left">Action</th>)}
                     </tr>
                 </thead>
                 <tbody>
-                    {items.map((item, index) => (
-                        <tr key={item.iuid} className={index % 2 === 0 ? 'bg-gray-700' : 'bg-gray-600'}>
+                    {wishlistitems.map((wishlistitem, index) => (
+                        <tr key={wishlistitem.id} className={index % 2 === 0 ? 'bg-gray-700' : 'bg-gray-600'}>
                             <td className="px-4 py-2 border">{index + 1}</td>
                             <td className="px-4 py-2 border">
                                 <div className="mt-2 h-[50px] shadow-md rounded-md overflow-hidden">
-                                    <img src={item.url || placeholderImg} alt="Image" className="w-[50px]" />
+                                    <img src={wishlistitem.url || placeholderImg} alt="Image" className="w-[50px]" />
                                 </div>
                             </td>
-                            <td className="px-4 py-2 border">{item.iuid}</td>
-                            <td className="px-4 py-2 border">{item.name}</td>
-                            <td className="px-4 py-2 border">{item.type}</td>
-                            <td className="px-4 py-2 border">{item.credit}</td>
-                            <td className="px-4 py-2 border">{item.quantityReceived}</td>
-                            <td className="px-4 py-2 border">{item.quantitySold}</td>
-                            <td className="px-4 py-2 border">{item.quantityOnHand}</td>
-                            <td className="px-4 py-2 border">{item.quantification}</td>
-                            <td className="px-4 py-2 border">{item.explanation}</td>
+                            <td className="px-4 py-2 border">{wishlistitem.name}</td>
+                            <td className="px-4 py-2 border">{wishlistitem.type}</td>
+                            <td className="px-4 py-2 border">{wishlistitem.credit}</td>
+                            <td className="px-4 py-2 border">{wishlistitem.quantity}</td>
+                            <td className="px-4 py-2 border">{wishlistitem.quantification}</td>
+                            <td className="px-4 py-2 border">{wishlistitem.explanation}</td>
                             {role === "admin" && (<td className="px-4 py-2 border">
-                                <Link to={`/items/edit/${item.id}`} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-sm mr-2">
-                                    Edit
-                                </Link>
-                                <button onClick={() => deleteItem(item.iuid)} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-sm">
+                       
+                                <button onClick={() => deleteWishlistItem(wishlistitem.id)} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-sm">
                                     Delete
                                 </button>
                             </td>)}
@@ -192,4 +168,4 @@ const Itemlist = () => {
     );
 };
 
-export default Itemlist;
+export default Itemwishlist;

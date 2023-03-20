@@ -30,6 +30,9 @@ const Checkout = () => {
                     quantitySold: amount,
                     date: date
                 });
+                await axios.patch("http://localhost:5000/updateQuantitySold", {
+                    iuid: iuid
+                });
                 await axios.patch("http://localhost:5000/updateQuantityOnHand", {
                     iuid: iuid
                 });

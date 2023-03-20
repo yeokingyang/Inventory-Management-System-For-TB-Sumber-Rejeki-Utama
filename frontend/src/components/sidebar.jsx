@@ -15,6 +15,7 @@ const Sidebar = () => {
     { name: "Dashboard", link: "/dashboard", icon: MdOutlineDashboard },
     { name: "User", link: "/users", icon: AiOutlineUser },
     { name: "Items", link: "/items", icon: IoPricetag },
+    { name: "Wishlist Items", link: "/wishlistitems", icon: IoPricetag },
     { name: "Incoming Items", link: "/incomingitems", icon: TbReportAnalytics, margin: true },
     { name: "Stocking Items", link: "/stockitem", icon: FiFolder },
     { name: "Outgoing Items", link: "/outgoingitems", icon: FiFolder, margin: true},

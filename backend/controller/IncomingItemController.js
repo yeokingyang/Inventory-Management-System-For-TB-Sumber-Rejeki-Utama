@@ -137,7 +137,6 @@ export const createIncomingItems = async (req, res) => {
             quantityPurchased: quantityPurchased,
             date: date
         });
-        await updateQuantityReceived(iuid);
         res.status(201).json({ msg: "Item purchased created successfully" });
     } catch (error) {
         res.status(500).json({ msg: error.message });
@@ -161,7 +160,6 @@ export const updateIncomingItems = async (req, res) => {
                 }
             });
         }
-        await updateQuantityReceived(IncomingItem.iuid);
         res.status(200).json({ msg: "Product updated successfuly" });
     } catch (error) {
         res.status(500).json({ msg: error.message });
@@ -175,7 +173,6 @@ export const deleteIncomingItems = async (req, res) => {
                 id: req.params.id
             }
         });
-        const prevIuid = IncomingItem.iuid;
         if (!IncomingItem) return res.status(404).json({ msg: "Data tidak ditemukan" });
         const { iuid } = req.body;
         if (req.role === "admin") {
@@ -185,7 +182,6 @@ export const deleteIncomingItems = async (req, res) => {
                 }
             });
         }
-        await updateQuantityReceived(prevIuid);
         res.status(200).json({ msg: "Product deleted successfuly" });
     } catch (error) {
         res.status(500).json({ msg: error.message });
@@ -193,7 +189,8 @@ export const deleteIncomingItems = async (req, res) => {
 }
 
 
-export const updateQuantityReceived = async (iuid, res) => {
+export const updateQuantityReceived = async (req, res) => {
+    const { iuid } = req.body;
     const result = await IncomingItems.findOne({
         attributes: [
             'iuid',
@@ -202,19 +199,25 @@ export const updateQuantityReceived = async (iuid, res) => {
         where: { iuid: iuid },
         group: ['iuid']
     });
-    if (!result) return res.status(404).json({ msg: "Data diupdatequantity received tidak ditemukan" });
-    try {
-        if (!result || !result.dataValues.totalQuantity) {
-            const totalQuantity = 0;
-            await Items.update({ quantityReceived: totalQuantity }, { where: { iuid: iuid } });
+    if (!result) {
+        try {
+            await Items.update({ quantityReceived: 0 }, { where: { iuid: iuid } });
+            return res.status(200).json({ msg: "quantityReceived updated successfully" });
+        } catch (error) {
+            res.status(500).json({ msg: error.message });
         }
-        else {
-            const totalQuantity = result.dataValues.totalQuantity;
-            await Items.update({ quantityReceived: totalQuantity }, { where: { iuid: iuid } });
-        }
-        return res.status(200).json({ msg: "Quantityreceived updated successfully" });
-    } catch (error) {
-        res.status(500).json({ msg: error.message });
     }
+    else {
+        const totalQuantity = result.dataValues.totalQuantity || 0;
+        try {
+            await Items.update({ quantityReceived: totalQuantity }, { where: { iuid: iuid } });
+            return res.status(200).json({ msg: "Quantityreceived updated successfully" });
+
+        } catch (error) {
+            res.status(500).json({ msg: error.message });
+        }
+
+    }
+
 };
 

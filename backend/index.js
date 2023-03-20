@@ -10,6 +10,7 @@ import ItemRoute from "./routes/ItemRoute.js";
 import AuthRoute from "./routes/AuthRoute.js";
 import OutgoingItemRoute from "./routes/OutgoingItemRoute.js";
 import IncomingItemRoute from "./routes/IncomingItemRoute.js";
+import WishlistItemRoute from "./routes/WishlistItemRoute.js";
 
 dotenv.config();
 
@@ -44,9 +45,11 @@ app.use(express.static("public"));
 app.use(express.json());
 app.use(UserRoute);
 app.use(ItemRoute);
+app.use(WishlistItemRoute);
 app.use(AuthRoute);
 app.use(OutgoingItemRoute);
 app.use(IncomingItemRoute);
+
 //store.sync();
 
 app.listen(process.env.APP_PORT, ()=> {

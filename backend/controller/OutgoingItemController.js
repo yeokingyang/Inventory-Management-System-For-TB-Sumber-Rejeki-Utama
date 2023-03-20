@@ -116,11 +116,11 @@ export const getOutgoingItemsById = async (req, res) => {
 
 export const createOutgoingItems = async (req, res) => {
     const { iuid, quantitySold, date } = req.body;
+    const Item = await Items.findOne({ where: { iuid: iuid } });
+    if (!Item) {
+        return res.status(404).json({ msg: "Item not found" });
+    }
     try {
-        const Item = await Items.findOne({ where: { iuid: iuid } });
-        if (!Item) {
-            return res.status(404).json({ msg: "Item not found" });
-        }
         await OutgoingItems.create({
             iuid: Item.iuid,
             name: Item.name,
@@ -131,7 +131,6 @@ export const createOutgoingItems = async (req, res) => {
             totalCredit: Item.credit * quantitySold,
             date: date
         });
-        await updateQuantitySold(iuid);
         res.status(201).json({ msg: "Item purchased created successfully" });
     } catch (error) {
         res.status(500).json({ msg: error.message });
@@ -155,7 +154,6 @@ export const updateOutgoingItems = async (req, res) => {
                 }
             });
         }
-        await updateQuantitySold(OutgoingItem.iuid);
         res.status(200).json({ msg: "Product updated successfuly" });
     } catch (error) {
         res.status(500).json({ msg: error.message });
@@ -170,7 +168,6 @@ export const deleteOutgoingItems = async (req, res) => {
                 id: req.params.id
             }
         });
-        const prevIuid = OutgoingItem.iuid;
         if (!OutgoingItem) return res.status(404).json({ msg: "Data tidak ditemukan" });
         if (req.role === "admin") {
             await OutgoingItem.destroy({
@@ -179,15 +176,45 @@ export const deleteOutgoingItems = async (req, res) => {
                 }
             });
         }
-        await updateQuantitySold(prevIuid);
         res.status(200).json({ msg: "Product deleted successfuly" });
     } catch (error) {
         res.status(500).json({ msg: error.message });
     }
 }
 
+export const updateQuantitySold = async (req, res) => {
 
-export const updateQuantitySold = async (iuid, res) => {
+    const { iuid } = req.body;
+    const result = await OutgoingItems.findOne({
+        attributes: [
+            'iuid',
+            [Sequelize.fn('SUM', Sequelize.col('quantitySold')), 'totalQuantity']
+        ],
+        where: { iuid: iuid },
+        group: ['iuid']
+    });
+    if (!result) {
+        try {
+            await Items.update({ quantitySold: 0 }, { where: { iuid: iuid } });
+            return res.status(200).json({ msg: "Quantitysold updated successfully" });
+        } catch (error) {
+            res.status(500).json({ msg: error.message });
+        }
+    } else {
+        const totalQuantity = result.dataValues.totalQuantity || 0;
+        try {
+            await Items.update({ quantitySold: totalQuantity }, { where: { iuid: iuid } });
+            return res.status(200).json({ msg: "Quantitysold updated successfully" });
+        } catch (error) {
+            res.status(500).json({ msg: error.message });
+        }
+    }
+};
+
+
+/*export const updateQuantitySold = async (req, res) => {
+
+    const { iuid } = req.body;
     const result = await OutgoingItems.findOne({
         attributes: [
             'iuid',
@@ -211,7 +238,7 @@ export const updateQuantitySold = async (iuid, res) => {
         res.status(500).json({ msg: error.message });
     }
 };
-
+*/
 //use by dashboard webpage to get total laba kotor
 export const getOutgoingItemsSumTotalCredit = async (req, res) => {
     try {

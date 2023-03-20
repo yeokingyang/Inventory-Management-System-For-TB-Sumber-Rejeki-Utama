@@ -16,7 +16,8 @@ import Incomingitems from "./pages/incomingitems";
 import Itemdetails from "./pages/itemdetail";
 import Confirmcheckin from "./pages/confirmcheckin";
 import Editincomingitem from "./pages/editincomingitem";
-
+import Wishlistitem from "./pages/wishlistitem";
+import Addwishlistitem from "./pages/addwishlistitem";
 function App() {
   return (
     <BrowserRouter>
@@ -30,6 +31,8 @@ function App() {
         <Route path="/items/add" element={<Additem/>}/>
         <Route path="/items/edit/:id" element={<Edititem/>}/>
         <Route path="/itemdetails/:id" element={<Itemdetails/>}/>
+        <Route path="/wishlistitems" element={<Wishlistitem/>}/>
+        <Route path="/wishlistitems/add" element={<Addwishlistitem/>}/>
         <Route path="/incomingitems" element={<Incomingitems/>}/>
         <Route path="/outgoingitems" element={<Outgoingitems/>}/>
         <Route path="/outgoingitems/edit/:id" element={<Editoutgoingitem/>}/>

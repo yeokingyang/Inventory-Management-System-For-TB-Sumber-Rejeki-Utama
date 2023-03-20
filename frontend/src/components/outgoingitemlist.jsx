@@ -50,20 +50,28 @@ const Outgoingitemlist = () => {
 
     const deleteOutgoingItem = async (itemId, iuid) => {
 
-        await axios.delete(`http://localhost:5000/outgoingItems/${itemId}`);
-        await axios.patch("http://localhost:5000/updateQuantityOnHand", {
-            iuid: iuid
-        });
-        const newTotalRows = rows - 1;
-        setItems(outgoingitems.filter((item) => item.id !== itemId));
-        setRows(newTotalRows);
-        const newTotalPages = Math.ceil(newTotalRows / limit);
-        if (page >= newTotalPages) {
-            setPage(newTotalPages - 1);
+        const confirmed = window.confirm('Are you sure you want to delete this item?');
+        if (confirmed) {
+            await axios.delete(`http://localhost:5000/outgoingItems/${itemId}`);
+            await axios.patch("http://localhost:5000/updateQuantitySold", {
+                iuid: iuid
+            });
+            await axios.patch("http://localhost:5000/updateQuantityOnHand", {
+                iuid: iuid
+            });
+            const newTotalRows = rows - 1;
+            setItems(outgoingitems.filter((item) => item.id !== itemId));
+            setRows(newTotalRows);
+            const newTotalPages = Math.ceil(newTotalRows / limit);
+            if (page >= newTotalPages) {
+                setPage(newTotalPages - 1);
+            }
+            setPages(newTotalPages);
         }
-        setPages(newTotalPages);
     };
 
+
+    
 
     return (
 

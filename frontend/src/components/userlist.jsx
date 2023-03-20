@@ -50,20 +50,22 @@ const Userlist = () => {
     };
 
     const deleteUser = async (userId) => {
-        await axios.delete(`http://localhost:5000/users/${userId}`);
-        const newTotalRows = rows - 1;
-        setRows(newTotalRows);
-        const newTotalPages = Math.ceil(newTotalRows / limit);
-        if (page >= newTotalPages) {
-            setPage(newTotalPages - 1);
+        const confirmed = window.confirm('Are you sure you want to delete this item?');
+        if (confirmed) {
+            await axios.delete(`http://localhost:5000/users/${userId}`);
+            const newTotalRows = rows - 1;
+            setRows(newTotalRows);
+            const newTotalPages = Math.ceil(newTotalRows / limit);
+            if (page >= newTotalPages) {
+                setPage(newTotalPages - 1);
+            }
+            setPages(newTotalPages);
+            const response = await axios.get(
+                ` http://localhost:5000/users`
+            );
+            setUsers(response.data.result);
         }
-        setPages(newTotalPages);
-        const response = await axios.get(
-            ` http://localhost:5000/users`
-        );
-        setUsers(response.data.result);
     };
-
 
 
     return (

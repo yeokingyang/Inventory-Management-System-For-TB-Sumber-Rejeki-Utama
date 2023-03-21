@@ -71,7 +71,7 @@ export const getIncomingItems = async (req, res) => {
         offset: offset,
         limit: limit,
         order: [
-            ['name', 'ASC']
+            ['date', 'DESC']
         ]
     });
     const totalPage = Math.ceil(count / limit);

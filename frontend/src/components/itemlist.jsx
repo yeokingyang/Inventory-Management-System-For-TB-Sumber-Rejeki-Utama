@@ -4,6 +4,10 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
 import placeholderImg from '../assets/placeholderimg.jpg'
+import feTrash from '@iconify-icons/fe/trash';
+import { Icon } from '@iconify/react';
+import { FaCogs } from 'react-icons/fa';
+
 
 const Itemlist = () => {
     /*  const [items, setItems] = useState([]);
@@ -150,11 +154,15 @@ const Itemlist = () => {
                             <td className="px-4 py-2 border">{item.quantification}</td>
                             <td className="px-4 py-2 border">{item.explanation}</td>
                             {role === "admin" && (<td className="px-4 py-2 border">
-                                <Link to={`/items/edit/${item.id}`} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-sm mr-2">
-                                    Edit
+                                <Link to={`/items/edit/${item.id}`} className="inline-block align-middle px-4 py-2 mx-2 bg-gray-300 hover:text-red-700 leading-tight uppercase rounded shadow-md hover:bg-gray-500 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-700 active:shadow-lg transition duration-150 ease-in-out"
+                                >
+                                    <span class="text-white tooltip-text border bg-green-400 -mt-12 -ml-16 rounded-xl hidden group-hover:block absolute text-center py-2 px-6 z-50">Hapus Akun</span>
+                                    <FaCogs className="h-5 w-5" />
                                 </Link>
-                                <button onClick={() => deleteItem(item.iuid)} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-sm">
-                                    Delete
+                                <button onClick={() => deleteItem(item.iuid)} className="inline-block align-middle px-4 py-2 mx-2 bg-gray-300 hover:text-red-700 leading-tight uppercase rounded shadow-md hover:bg-gray-500 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-700 active:shadow-lg transition duration-150 ease-in-out"
+                                >
+                                    <span class="text-white tooltip-text border bg-green-400 -mt-12 -ml-16 rounded-xl hidden group-hover:block absolute text-center py-2 px-6 z-50">Hapus Akun</span>
+                                    <Icon icon={feTrash} className="h-5 w-5" />
                                 </button>
                             </td>)}
                         </tr>

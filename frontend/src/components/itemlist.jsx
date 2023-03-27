@@ -10,29 +10,13 @@ import { FaCogs } from 'react-icons/fa';
 
 
 const Itemlist = () => {
-    /*  const [items, setItems] = useState([]);
-  
-      useEffect(() => {
-          getItems();
-      }, []);
-  
-      const getItems = async () => {
-          const response = await axios.get("http://localhost:5000/items");
-          setItems(response.data);
-      };
-  
-      const deleteItem = async (itemId) => {
-          await axios.delete(`http://localhost:5000/items/${itemId}`);
-          getItems();
-      };
-  */
 
     const [items, setItems] = useState([]);
-    const [page, setPage] = useState(0);
+    const [page, setPage] = useState(parseInt(localStorage.getItem('selected')) || 0);
     const [limit, setLimit] = useState(30);
     const [pages, setPages] = useState(0);
     const [rows, setRows] = useState(0);
-    const [keyword, setKeyword] = useState("");
+    const [keyword, setKeyword] = useState(localStorage.getItem('searchQuery') || '');
     const [query, setQuery] = useState("");
     const [msg, setMsg] = useState("");
     const role = useSelector((state) => state.auth.user?.role);
@@ -40,6 +24,13 @@ const Itemlist = () => {
     useEffect(() => {
         getItems();
     }, [page, keyword]);
+
+
+    useEffect(() => {
+        localStorage.setItem('searchQuery', keyword);
+        localStorage.setItem('selected', page);
+    }, [keyword, page]);
+
 
     const getItems = async () => {
         const response = await axios.get(
@@ -60,6 +51,7 @@ const Itemlist = () => {
         } else {
             setMsg("");
         }
+        localStorage.setItem('selected', selected);
     };
 
     const searchData = (e) => {
@@ -156,12 +148,12 @@ const Itemlist = () => {
                             {role === "admin" && (<td className="px-4 py-2 border">
                                 <Link to={`/items/edit/${item.id}`} className="inline-block align-middle px-4 py-2 mx-2 bg-gray-300 hover:text-red-700 leading-tight uppercase rounded shadow-md hover:bg-gray-500 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-700 active:shadow-lg transition duration-150 ease-in-out"
                                 >
-                                    <span class="text-white tooltip-text border bg-green-400 -mt-12 -ml-16 rounded-xl hidden group-hover:block absolute text-center py-2 px-6 z-50">Hapus Akun</span>
+                                    <span className="text-white tooltip-text border bg-green-400 -mt-12 -ml-16 rounded-xl hidden group-hover:block absolute text-center py-2 px-6 z-50">Hapus Akun</span>
                                     <FaCogs className="h-5 w-5" />
                                 </Link>
                                 <button onClick={() => deleteItem(item.iuid)} className="inline-block align-middle px-4 py-2 mx-2 bg-gray-300 hover:text-red-700 leading-tight uppercase rounded shadow-md hover:bg-gray-500 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-700 active:shadow-lg transition duration-150 ease-in-out"
                                 >
-                                    <span class="text-white tooltip-text border bg-green-400 -mt-12 -ml-16 rounded-xl hidden group-hover:block absolute text-center py-2 px-6 z-50">Hapus Akun</span>
+                                    <span className="text-white tooltip-text border bg-green-400 -mt-12 -ml-16 rounded-xl hidden group-hover:block absolute text-center py-2 px-6 z-50">Hapus Akun</span>
                                     <Icon icon={feTrash} className="h-5 w-5" />
                                 </button>
                             </td>)}
@@ -181,6 +173,7 @@ const Itemlist = () => {
                     nextLabel={"Next >"}
                     pageCount={Math.min(10, pages)}
                     onPageChange={changePage}
+                    initialPage={page}
                     containerClassName={
                         "flex items-center px-4 py-2 ml-3 text-sm font-medium bg-white border-gray-300 rounded-lg "
                     }

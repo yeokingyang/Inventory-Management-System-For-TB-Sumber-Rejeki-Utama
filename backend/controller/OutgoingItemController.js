@@ -72,7 +72,7 @@ export const getOutgoingItems = async (req, res) => {
         offset: offset,
         limit: limit,
         order: [
-            ['name', 'ASC']
+            ['date', 'DESC']
         ]
     });
     const totalPage = Math.ceil(count / limit);
@@ -115,7 +115,8 @@ export const getOutgoingItemsById = async (req, res) => {
 
 
 export const createOutgoingItems = async (req, res) => {
-    const { iuid, quantitySold, date } = req.body;
+    const { iuid, quantitySold, credit, date } = req.body;
+    const totalCredit = credit * quantitySold;
     const Item = await Items.findOne({ where: { iuid: iuid } });
     if (!Item) {
         return res.status(404).json({ msg: "Item not found" });
@@ -124,11 +125,11 @@ export const createOutgoingItems = async (req, res) => {
         await OutgoingItems.create({
             iuid: Item.iuid,
             name: Item.name,
-            credit: Item.credit,
+            credit: credit,
             type: Item.type,
             quantification: Item.quantification,
             quantitySold: quantitySold,
-            totalCredit: Item.credit * quantitySold,
+            totalCredit: totalCredit,
             date: date
         });
         res.status(201).json({ msg: "Item purchased created successfully" });
@@ -145,10 +146,10 @@ export const updateOutgoingItems = async (req, res) => {
             }
         });
         if (!OutgoingItem) return res.status(404).json({ msg: "Data tidak ditemukan" });
-        const { credit, quantitySold } = req.body;
+        const { credit, quantitySold, explanation } = req.body;
         const totalCredit = credit * quantitySold;
         if (req.role === "admin") {
-            await OutgoingItem.update({ credit, quantitySold, totalCredit }, {
+            await OutgoingItem.update({ credit, quantitySold, totalCredit, explanation }, {
                 where: {
                     id: OutgoingItem.id
                 }

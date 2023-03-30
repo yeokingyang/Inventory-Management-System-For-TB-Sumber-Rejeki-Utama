@@ -7,7 +7,7 @@ import placeholderImg from '../assets/placeholderimg.jpg'
 const SellItemList = ({ item }) => {
 
   const dispatch = useDispatch();
-  const { iuid, image, credit, name } = item;
+  const { iuid, image, credit, name, type } = item;
 
   return (
     <div className="border max-w-[350px]">
@@ -18,7 +18,8 @@ const SellItemList = ({ item }) => {
       </Link>
       <div className="mt-6 flex justify-between items-center px-5">
         <div>
-          <div className="text-sm text-white font-bold mb-3">{name}</div>
+          <div className="text-sm text-white font-bold">{name}</div>
+          <div className="text-sm text-white font-bold mb-3">{type}</div>
           <div className="text-xl text-white font-bold">Rp{credit}</div>
         </div>
         <button className="bg-grey text-white p-3" onClick={() => dispatch(add(item))}>

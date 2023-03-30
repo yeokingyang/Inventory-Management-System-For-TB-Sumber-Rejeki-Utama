@@ -24,9 +24,10 @@ const Checkout = () => {
     const handleCheckout = async () => {
         try {
             for (let i = 0; i < cartItems.length; i++) {
-                const { iuid, amount } = cartItems[i];
+                const { iuid, amount, credit } = cartItems[i];
                 await axios.post("http://localhost:5000/outgoingItems", {
                     iuid,
+                    credit: credit,
                     quantitySold: amount,
                     date: date
                 });

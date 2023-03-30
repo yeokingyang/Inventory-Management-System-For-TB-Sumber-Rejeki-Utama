@@ -112,9 +112,10 @@ const Formeditoutgoingitem = () => {
         </div>
         <div className='flex flex-col text-gray-400 font-bold text-2xl py-2'>
           <label>Information</label>
-          <h1 className='rounded-lg bg-white-800 mt-2 p-2 focus:border-blue-500 focus:outline-none text-white'>
-            {explanation ? explanation : '-'}
-          </h1>
+            <input className='rounded-lg bg-white-800 mt-2 p-2 focus:border-blue-500 focus:outline-none text-black'
+            value={explanation}
+            onChange={(e) => setExplanation(e.target.value)}
+            placeholder="information" />
         </div>
         <div className="control mt-5">
           <button type='submit' className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">

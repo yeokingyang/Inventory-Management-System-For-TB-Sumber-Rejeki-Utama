@@ -151,10 +151,10 @@ export const updateIncomingItems = async (req, res) => {
             }
         });
         if (!IncomingItem) return res.status(404).json({ msg: "Data tidak ditemukan" });
-        const { iuid, debit, quantityPurchased } = req.body;
+        const { iuid, debit, quantification, quantityPurchased } = req.body;
         const totalDebit = debit * quantityPurchased;
         if (req.role === "admin") {
-            await IncomingItem.update({ debit, quantityPurchased, totalDebit }, {
+            await IncomingItem.update({ debit, quantityPurchased, quantification, totalDebit }, {
                 where: {
                     id: IncomingItem.id
                 }

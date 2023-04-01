@@ -115,7 +115,7 @@ export const getOutgoingItemsById = async (req, res) => {
 
 
 export const createOutgoingItems = async (req, res) => {
-    const { iuid, quantitySold, credit, date } = req.body;
+    const { iuid, quantitySold, credit, quantification, date } = req.body;
     const totalCredit = credit * quantitySold;
     const Item = await Items.findOne({ where: { iuid: iuid } });
     if (!Item) {
@@ -127,7 +127,7 @@ export const createOutgoingItems = async (req, res) => {
             name: Item.name,
             credit: credit,
             type: Item.type,
-            quantification: Item.quantification,
+            quantification: quantification,
             quantitySold: quantitySold,
             totalCredit: totalCredit,
             date: date
@@ -146,10 +146,10 @@ export const updateOutgoingItems = async (req, res) => {
             }
         });
         if (!OutgoingItem) return res.status(404).json({ msg: "Data tidak ditemukan" });
-        const { credit, quantitySold, explanation } = req.body;
+        const { credit, quantitySold, quantification, explanation } = req.body;
         const totalCredit = credit * quantitySold;
         if (req.role === "admin") {
-            await OutgoingItem.update({ credit, quantitySold, totalCredit, explanation }, {
+            await OutgoingItem.update({ credit, quantitySold, totalCredit, quantification, explanation }, {
                 where: {
                     id: OutgoingItem.id
                 }

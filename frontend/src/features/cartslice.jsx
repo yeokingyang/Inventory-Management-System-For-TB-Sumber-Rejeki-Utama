@@ -48,13 +48,23 @@ const CartSlice = createSlice({
     updateCredit: (state, action) => {
       const { id, credit } = action.payload;
       const itemIndex = state.cartItems.findIndex(
-          (cartItem) => cartItem.id === id
+        (cartItem) => cartItem.id === id
       );
       if (itemIndex !== -1) {
-          state.cartItems[itemIndex].credit = Number(credit);
-          state.credit = state.cartItems[itemIndex].credit;
+        state.cartItems[itemIndex].credit = Number(credit);
+        state.credit = state.cartItems[itemIndex].credit;
       }
-  },
+    },
+    updateQuantification: (state, action) => {
+      const { id, quantification } = action.payload;
+      const itemIndex = state.cartItems.findIndex(
+        (cartItem) => cartItem.id === id
+      );
+      if (itemIndex !== -1) {
+        state.cartItems[itemIndex].quantification = String(quantification);
+        state.quantification = state.cartItems[itemIndex].quantification;
+      }
+    },
     total: (state) => {
       let total = 0;
       state.cartItems.forEach((cartItem) => {
@@ -68,6 +78,6 @@ const CartSlice = createSlice({
     },
   },
 });
-export const { add, increase, decrease, remove, total, clear, updateCredit } =
+export const { add, increase, decrease, remove, total, clear, updateCredit, updateQuantification } =
   CartSlice.actions;
 export default CartSlice.reducer;

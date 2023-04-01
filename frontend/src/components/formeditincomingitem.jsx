@@ -26,9 +26,9 @@ const Formeditincomingitem = () => {
       });
       await axios.patch("http://localhost:5000/updateQuantityReceived", {
         iuid: iuid
-    });
+      });
       await axios.patch("http://localhost:5000/updateQuantityOnHand", {
-        iuid : iuid
+        iuid: iuid
       });
 
       navigate("/incomingitems");
@@ -106,9 +106,10 @@ const Formeditincomingitem = () => {
         </div>
         <div className='flex flex-col text-gray-400 font-bold text-2xl py-2'>
           <label>Quantification</label>
-          <h1 className='rounded-lg bg-white-800 mt-2 p-2 focus:border-blue-500 focus:outline-none text-white'>
-            {quantification ? quantification : '-'}
-          </h1>
+          <input className='rounded-lg bg-white-800 mt-2 p-2 focus:border-blue-500 focus:outline-none text-black'
+            value={quantification}
+            onChange={(e) => setQuantification(e.target.value)}
+            placeholder="quantification" />
         </div>
         <div className='flex flex-col text-gray-400 font-bold text-2xl py-2'>
           <label>Information</label>

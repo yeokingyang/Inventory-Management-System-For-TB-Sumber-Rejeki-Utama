@@ -258,7 +258,7 @@ export const updateItems = async (req, res) => {
                     iuid: iuid,
                     name: name,
                     type: type,
-                    quantification: quantification
+                 //   quantification: quantification
                 },
                 { where: { iuid: iuid }}
             );
@@ -268,7 +268,7 @@ export const updateItems = async (req, res) => {
                      iuid: iuid,
                      name: name,
                      type: type,
-                     quantification: quantification 
+                   //  quantification: quantification 
                 },
                 { where: { iuid: iuid } }
             );

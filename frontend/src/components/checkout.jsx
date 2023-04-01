@@ -24,11 +24,12 @@ const Checkout = () => {
     const handleCheckout = async () => {
         try {
             for (let i = 0; i < cartItems.length; i++) {
-                const { iuid, amount, credit } = cartItems[i];
+                const { iuid, amount, credit, quantification } = cartItems[i];
                 await axios.post("http://localhost:5000/outgoingItems", {
                     iuid,
                     credit: credit,
                     quantitySold: amount,
+                    quantification: quantification,
                     date: date
                 });
                 await axios.patch("http://localhost:5000/updateQuantitySold", {
@@ -76,7 +77,7 @@ const Checkout = () => {
                                         <div className="flex items-center gap-4 mt-2">
 
                                             <div>{cartItem.amount}</div>
-
+                                            <div>{cartItem.quantification}</div>
                                         </div>
                                     </div>
                                     <div className="flex flex-col items-center gap-3 ">

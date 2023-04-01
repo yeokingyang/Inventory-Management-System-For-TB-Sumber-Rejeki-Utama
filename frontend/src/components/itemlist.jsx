@@ -12,10 +12,10 @@ import { FaCogs } from 'react-icons/fa';
 const Itemlist = () => {
 
     const [items, setItems] = useState([]);
-    const [page, setPage] = useState(parseInt(localStorage.getItem('selected')) || 0);
     const [limit, setLimit] = useState(30);
     const [pages, setPages] = useState(0);
     const [rows, setRows] = useState(0);
+    const [page, setPage] = useState(parseInt(localStorage.getItem('selected')) || 0);
     const [keyword, setKeyword] = useState(localStorage.getItem('searchQuery') || '');
     const [query, setQuery] = useState("");
     const [msg, setMsg] = useState("");

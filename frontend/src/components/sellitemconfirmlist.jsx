@@ -51,7 +51,8 @@ const SellItemConfirmList = ({ cartItem }) => {
         <div>{name}</div>
         <div className="flex flex-col items-start max-w-[6.8rem] z-10">
           <input
-            placeholder="Debit"
+          type="number"
+            placeholder="Credit"
             value={credit}
             onChange={handleCreditChange}
             className="rounded-lg bg-white p-2 focus:border-blue-500 focus:outline-none text-black ml-4 border border-gray-400 "

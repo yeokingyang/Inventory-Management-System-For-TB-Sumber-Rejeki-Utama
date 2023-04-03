@@ -14,6 +14,7 @@ const Checkout = () => {
     const [date, setDate] = useState(new Date().toISOString().substr(0, 10));
     const [customerMoney, setCustomerMoney] = useState("");
     const [exchange, setExchange] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         const exchangeValue = customerMoney - total;
@@ -22,6 +23,7 @@ const Checkout = () => {
 
 
     const handleCheckout = async () => {
+        setIsLoading(true);
         try {
             for (let i = 0; i < cartItems.length; i++) {
                 const { iuid, amount, credit, quantification } = cartItems[i];
@@ -45,9 +47,14 @@ const Checkout = () => {
         } catch (error) {
             console.error(error);
         }
+        finally {
+            setIsLoading(false);
+        }
     };
     return (
         <div className="bg-white min-h-screen">
+            {isLoading && <div className="fixed top-0 left-0 right-0 bottom-0 bg-gray-500 opacity-50 z-50"></div>}
+            {isLoading && <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white font-bold text-2xl z-50">Loading...</div>}
             <div className="flex items-center justify-between">
 
                 <Link to={`/sellitem`}

@@ -4,6 +4,9 @@ import axios from "axios";
 import ReactPaginate from "react-paginate";
 import placeholderImg from '../assets/placeholderimg.jpg'
 import { useSelector } from "react-redux";
+import { FaCogs, FaPlus, FaSearch } from 'react-icons/fa';
+import feTrash from '@iconify-icons/fe/trash';
+import { Icon } from '@iconify/react';
 
 const Itemwishlist = () => {
 
@@ -74,8 +77,9 @@ const Itemwishlist = () => {
                         <h1 className="title text-4xl font-bold text-white">Items</h1>
                         <h2 className="subtitle text-white">Items Wishlist</h2>
                     </div>
-                    <Link to="/wishlistitems/add" className="px-4 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">
-                        Add New Wishlist
+                    <Link to="/wishlistitems/add" className="px-4 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800 group">
+                        <span className="text-white tooltip-text border bg-green-400 -mt-12 -ml-16 rounded-xl hidden group-hover:block absolute text-center py-2 px-6 z-50">Tambah Wishlist Item</span>
+                        <FaPlus className="h-5 w-5" />
                     </Link>
                 </div>
                 <form onSubmit={searchData} className="flex items-center mt-4">
@@ -91,9 +95,10 @@ const Itemwishlist = () => {
                     <div>
                         <button
                             type="submit"
-                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded group"
                         >
-                            Search
+                            <span className="text-white tooltip-text border bg-green-400 -mt-12 -ml-16 rounded-xl hidden group-hover:block absolute text-center py-2 px-6 z-50">Cari Wishlist Item</span>
+                            <FaSearch className="h-5 w-5" />
                         </button>
                     </div>
                 </form>
@@ -128,9 +133,10 @@ const Itemwishlist = () => {
                             <td className="px-4 py-2 border">{wishlistitem.quantification}</td>
                             <td className="px-4 py-2 border">{wishlistitem.explanation}</td>
                             {role === "admin" && (<td className="px-4 py-2 border">
-                       
+
                                 <button onClick={() => deleteWishlistItem(wishlistitem.id)} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-sm">
-                                    Delete
+                                    <span className="text-white tooltip-text border bg-green-400 -mt-12 -ml-16 rounded-xl hidden group-hover:block absolute text-center py-2 px-6 z-50">Hapus Wishlist Item</span>
+                                    <Icon icon={feTrash} className="h-5 w-5" />
                                 </button>
                             </td>)}
                         </tr>

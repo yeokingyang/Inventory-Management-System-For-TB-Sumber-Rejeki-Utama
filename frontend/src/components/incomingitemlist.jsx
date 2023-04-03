@@ -5,7 +5,7 @@ import axios from "axios";
 import ReactPaginate from "react-paginate";
 import feTrash from '@iconify-icons/fe/trash';
 import { Icon } from '@iconify/react';
-import { FaCogs } from 'react-icons/fa';
+import { FaCogs, FaPlus, FaSearch } from 'react-icons/fa';
 
 const Incomingitemlist = () => {
 
@@ -84,8 +84,9 @@ const Incomingitemlist = () => {
                         <h1 className="title text-4xl font-bold text-white">Incoming Items</h1>
                         <h2 className="subtitle text-white">List of Items Purchased History</h2>
                     </div>
-                    <Link to="/stockitem/" className="px-4 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">
-                        Add New
+                    <Link to="/stockitem/" className="px-4 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800 group">
+                        <span className="text-white tooltip-text border bg-green-400 -mt-12 -ml-16 rounded-xl hidden group-hover:block absolute text-center py-2 px-6 z-50">Pergi ke tambah stock item</span>
+                        <FaPlus className="h-5 w-5" />
                     </Link>
                 </div>
                 <form onSubmit={searchData} className="flex items-center mt-4">
@@ -101,9 +102,10 @@ const Incomingitemlist = () => {
                     <div>
                         <button
                             type="submit"
-                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded group"
                         >
-                            Search
+                            <span className="text-white tooltip-text border bg-green-400 -mt-12 -ml-16 rounded-xl hidden group-hover:block absolute text-center py-2 px-6 z-50">Cari Stock Item</span>
+                            <FaSearch className="h-5 w-5" />
                         </button>
                     </div>
                 </form>
@@ -136,14 +138,14 @@ const Incomingitemlist = () => {
                             <td className="px-4 py-2 border">{incomingitem.totalDebit}</td>
                             <td className="px-4 py-2 border">{incomingitem.date.slice(0, 10)}</td>
                             {role === "admin" && (<td className="px-4 py-2 border">
-                                <Link to={`/incomingItems/edit/${incomingitem.id}`}  className="inline-block align-middle px-4 py-2 mx-2 bg-gray-300 hover:text-red-700 leading-tight uppercase rounded shadow-md hover:bg-gray-500 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-700 active:shadow-lg transition duration-150 ease-in-out"
+                                <Link to={`/incomingItems/edit/${incomingitem.id}`} className="inline-block align-middle px-4 py-2 mx-2 bg-gray-300 hover:text-red-700 leading-tight uppercase rounded shadow-md hover:bg-gray-500 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-700 active:shadow-lg transition duration-150 ease-in-out group"
                                 >
-                                    <span className="text-white tooltip-text border bg-green-400 -mt-12 -ml-16 rounded-xl hidden group-hover:block absolute text-center py-2 px-6 z-50">Hapus Akun</span>
+                                    <span className="text-white tooltip-text border bg-green-400 -mt-12 -ml-16 rounded-xl hidden group-hover:block absolute text-center py-2 px-6 z-50">Edit Stock Item</span>
                                     <FaCogs className="h-5 w-5" />
                                 </Link>
-                                <button onClick={() => deleteIncomingItem(incomingitem.id, incomingitem.iuid)} className="inline-block align-middle px-4 py-2 mx-2 bg-gray-300 hover:text-red-700 leading-tight uppercase rounded shadow-md hover:bg-gray-500 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-700 active:shadow-lg transition duration-150 ease-in-out"
+                                <button onClick={() => deleteIncomingItem(incomingitem.id, incomingitem.iuid)} className="inline-block align-middle px-4 py-2 mx-2 bg-gray-300 hover:text-red-700 leading-tight uppercase rounded shadow-md hover:bg-gray-500 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-700 active:shadow-lg transition duration-150 ease-in-out group"
                                 >
-                                    <span className="text-white tooltip-text border bg-green-400 -mt-12 -ml-16 rounded-xl hidden group-hover:block absolute text-center py-2 px-6 z-50">Hapus Akun</span>
+                                    <span className="text-white tooltip-text border bg-green-400 -mt-12 -ml-16 rounded-xl hidden group-hover:block absolute text-center py-2 px-6 z-50">Hapus Stock Item</span>
                                     <Icon icon={feTrash} className="h-5 w-5" />
                                 </button>
                             </td>)}

@@ -6,7 +6,8 @@ import { open } from "../features/checkoutslice";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import ReactPaginate from "react-paginate";
-import { Link } from "react-router-dom";
+import { FaSearch } from 'react-icons/fa';
+import { useSpring, animated } from 'react-spring';
 
 const SellItemstore = () => {
 
@@ -20,11 +21,24 @@ const SellItemstore = () => {
     const [keyword, setKeyword] = useState("");
     const [query, setQuery] = useState("");
     const [msg, setMsg] = useState("");
+    const [color, setColor] = useState('#ffffff');
 
+    const props = useSpring({
+        color: color,
+        textShadow: amount > 0 ? '0px 0px 5px #ff0000' : 'none'
+      });
+
+    useEffect(() => {
+        if (amount > 0) {
+          setColor('#ff0000');
+          setTimeout(() => {
+            setColor('#ffffff');
+          }, 250);
+        }
+      }, [amount]);
 
     useEffect(() => {
         getItems();
-
     }, [page, keyword]);
 
     const getItems = async () => {
@@ -81,9 +95,10 @@ const SellItemstore = () => {
                     <div>
                         <button
                             type="submit"
-                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded group"
                         >
-                            Search
+                            <span className="text-white tooltip-text border bg-green-400 -mt-12 -ml-16 rounded-xl hidden group-hover:block absolute text-center py-2 px-6 z-50">Cari Item</span>
+                            <FaSearch className="h-5 w-5" />
                         </button>
                     </div>
                 </form>
@@ -91,10 +106,12 @@ const SellItemstore = () => {
             <div className="fixed top-32 right-0 p-4">
                 <div className="relative cursor-pointer"
                     onClick={() => dispatch(open())} >
+
                     <BiShoppingBag className="text-3xl opacity-80 text-white" />
-                    <div className="absolute w-4 h-4 rounded-full z-10 right-[-3px] bottom-[-3px] flex items-center justify-center text-[10px] bg-black text-white">
+
+                    <animated.div style={props} className="absolute w-4 h-4 rounded-full z-10 right-[-3px] bottom-[-3px] flex items-center justify-center text-[10px] bg-black text-white">
                         {amount}
-                    </div>
+                    </animated.div>
                 </div>
             </div>
             <div className="section mt-12 grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-3">

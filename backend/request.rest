@@ -203,3 +203,14 @@ DELETE  http://localhost:5000/incomingItems/1
 
 ###
 GET http://localhost:5000/wishlistitems
+
+
+###
+GET http://localhost:5000/staffs/count
+
+
+###
+GET http://localhost:5000/inventory/stat
+
+###
+GET http://localhost:5000/expense

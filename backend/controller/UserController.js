@@ -146,3 +146,12 @@ export const deleteUser = async (req, res) => {
         res.status(400).json({ msg: error.message });
     }
 }
+
+export const countStaffs = async (req, res) => {
+    try {
+      const count = await User.count({ where: { role: 'staff' } });
+      res.json({ result: count });
+    } catch (error) {
+      res.status(400).json({ msg: error.message });
+    }
+  };

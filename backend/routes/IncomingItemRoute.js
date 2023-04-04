@@ -4,7 +4,8 @@ import {
     getIncomingItemsById,
     createIncomingItems,
     updateIncomingItems,
-    deleteIncomingItems
+    deleteIncomingItems,
+    getExpense
 } from "../controller/IncomingItemController.js";
 
 import { verifyUser, adminOnly } from "../middleware/AuthUser.js";
@@ -12,6 +13,7 @@ import { verifyUser, adminOnly } from "../middleware/AuthUser.js";
 const router = express.Router();
 router.get('/incomingItems', verifyUser, getIncomingItems);
 router.get('/incomingItems/:id', verifyUser, getIncomingItemsById);
+router.get('/expense', verifyUser, getExpense);
 router.post('/incomingItems', verifyUser, createIncomingItems);
 router.patch('/incomingItems/:id', verifyUser, adminOnly, updateIncomingItems);
 router.delete('/incomingItems/:id', verifyUser, adminOnly, deleteIncomingItems);

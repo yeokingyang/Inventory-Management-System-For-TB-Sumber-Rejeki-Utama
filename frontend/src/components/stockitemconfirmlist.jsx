@@ -18,7 +18,7 @@ const StockItemConfirmList = ({ cartItem }) => {
     };
 
     const handleDecreaseMouseDown = () => {
-        const id = setInterval(() => dispatch(decrease(cartItem)), 100);
+        const id = setInterval(() => dispatch(decrease(cartItem)), 50);
         setIntervalId(id);
     };
 
@@ -27,7 +27,7 @@ const StockItemConfirmList = ({ cartItem }) => {
     };
 
     const handleIncreaseMouseDown = () => {
-        const id = setInterval(() => dispatch(increase(cartItem)), 100);
+        const id = setInterval(() => dispatch(increase(cartItem)), 50);
         setIntervalId(id);
     };
 

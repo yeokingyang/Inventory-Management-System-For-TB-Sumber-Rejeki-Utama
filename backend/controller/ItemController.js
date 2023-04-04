@@ -313,3 +313,13 @@ export const deleteItems = async (req, res) => {
     }
 }
 
+export const countItems = async (req, res) => {
+    try {
+      const count = await Items.count();
+      res.json({ result: count });
+    } catch (error) {
+      res.status(400).json({ msg: error.message });
+    }
+  };
+
+

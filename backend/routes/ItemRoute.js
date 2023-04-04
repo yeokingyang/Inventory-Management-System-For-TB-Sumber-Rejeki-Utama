@@ -5,7 +5,8 @@ import {
     createItems,
     updateItems,
     deleteItems,
-    updateQuantityOnHand
+    updateQuantityOnHand,
+    countItems
 } from "../controller/ItemController.js";
 import { updateQuantitySold } from "../controller/OutgoingItemController.js";
 import { updateQuantityReceived } from "../controller/IncomingItemController.js";
@@ -14,6 +15,7 @@ import { verifyUser, adminOnly } from "../middleware/AuthUser.js";
 const router = express.Router();
 router.get('/items', verifyUser, getItems);
 router.get('/items/:id', verifyUser, getItemsById);
+router.get('/inventory/stat', verifyUser, countItems);
 router.patch('/items/:id', verifyUser, adminOnly, updateItems);
 router.patch('/updateQuantityOnHand', verifyUser, updateQuantityOnHand);
 router.patch('/updateQuantitySold', verifyUser, updateQuantitySold);

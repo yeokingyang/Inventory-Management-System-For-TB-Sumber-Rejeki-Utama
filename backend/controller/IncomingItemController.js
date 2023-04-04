@@ -221,3 +221,41 @@ export const updateQuantityReceived = async (req, res) => {
 
 };
 
+export const getExpense = async (req, res) => {
+    try {
+        const aYearAgo = new Date();
+        aYearAgo.setMonth(aYearAgo.getMonth() - 12);
+
+        const expenseData = await IncomingItems.findAll({
+            attributes: [
+                'date',
+                [Sequelize.fn('SUM', Sequelize.col('totalDebit')), 'totalExpense']
+            ],
+            where: {
+                date: {
+                    [Op.gte]: aYearAgo
+                }
+            },
+            group: [Sequelize.fn('MONTH', Sequelize.col('date'))],
+            raw: true
+        });
+        const sortedExpenseData = expenseData.sort((a, b) => {
+            const dateA = new Date(a.date);
+            const dateB = new Date(b.date);
+            const yearDiff = dateA.getFullYear() - dateB.getFullYear();
+            const monthDiff = dateA.getMonth() - dateB.getMonth();
+            return yearDiff !== 0 ? yearDiff : monthDiff;
+        });
+        const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const data = sortedExpenseData.reduce((acc, { date, totalExpense }) => {
+            const month = new Date(date).getMonth();
+            const monthName = monthNames[month];
+            acc[monthName] = totalExpense;
+            return acc;
+        }, {});
+
+        res.status(200).json(data);
+    } catch (error) {
+        res.status(500).json({ msg: error.message });
+    }
+}

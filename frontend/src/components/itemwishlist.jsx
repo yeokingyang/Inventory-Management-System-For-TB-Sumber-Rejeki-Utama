@@ -71,7 +71,7 @@ const Itemwishlist = () => {
     return (
 
         <div>
-            <div className="sticky  top-0 left-0 w-full bg-gray-800 p-4 z-15">
+            <div className="sticky top-0 bg-gray-800 p-4 z-15 border">
                 <div className="flex justify-between items-center">
                     <div>
                         <h1 className="title text-4xl font-bold text-white">Items</h1>
@@ -103,46 +103,48 @@ const Itemwishlist = () => {
                     </div>
                 </form>
             </div>
-            <table className="table is-striped w-full text-white bg-gray-800 mt-5">
-                <thead>
-                    <tr>
-                        <th className="px-4 py-2 border text-left">No</th>
-                        <th className="px-4 py-2 border text-left">Image</th>
-                        <th className="px-4 py-2 border text-left">Name</th>
-                        <th className="px-4 py-2 border text-left">Type</th>
-                        <th className="px-4 py-2 border text-left">Price</th>
-                        <th className="px-4 py-2 border text-left">Quantity</th>
-                        <th className="px-4 py-2 border text-left">Quantification</th>
-                        <th className="px-4 py-2 border text-left">information</th>
-                        {role === "admin" && (<th className="px-4 py-2 border text-left">Action</th>)}
-                    </tr>
-                </thead>
-                <tbody>
-                    {wishlistitems.map((wishlistitem, index) => (
-                        <tr key={wishlistitem.id} className={index % 2 === 0 ? 'bg-gray-700' : 'bg-gray-600'}>
-                            <td className="px-4 py-2 border">{index + 1}</td>
-                            <td className="px-4 py-2 border">
-                                <div className="mt-2 h-[50px] shadow-md rounded-md overflow-hidden">
-                                    <img src={wishlistitem.url || placeholderImg} alt="Image" className="w-[50px]" />
-                                </div>
-                            </td>
-                            <td className="px-4 py-2 border">{wishlistitem.name}</td>
-                            <td className="px-4 py-2 border">{wishlistitem.type}</td>
-                            <td className="px-4 py-2 border">{wishlistitem.credit}</td>
-                            <td className="px-4 py-2 border">{wishlistitem.quantity}</td>
-                            <td className="px-4 py-2 border">{wishlistitem.quantification}</td>
-                            <td className="px-4 py-2 border">{wishlistitem.explanation}</td>
-                            {role === "admin" && (<td className="px-4 py-2 border">
-
-                                <button onClick={() => deleteWishlistItem(wishlistitem.id)} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-sm">
-                                    <span className="text-white tooltip-text border bg-green-400 -mt-12 -ml-16 rounded-xl hidden group-hover:block absolute text-center py-2 px-6 z-50">Hapus Wishlist Item</span>
-                                    <Icon icon={feTrash} className="h-5 w-5" />
-                                </button>
-                            </td>)}
+            <div className="overflow-x-auto">
+                <table className="table is-striped w-full text-white bg-gray-800 mt-5">
+                    <thead>
+                        <tr>
+                            <th className="px-4 py-2 border text-left">No</th>
+                            <th className="px-4 py-2 border text-left">Image</th>
+                            <th className="px-4 py-2 border text-left">Name</th>
+                            <th className="px-4 py-2 border text-left">Type</th>
+                            <th className="px-4 py-2 border text-left">Price</th>
+                            <th className="px-4 py-2 border text-left">Quantity</th>
+                            <th className="px-4 py-2 border text-left">Quantification</th>
+                            <th className="px-4 py-2 border text-left">information</th>
+                            {role === "admin" && (<th className="px-4 py-2 border text-left">Action</th>)}
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {wishlistitems.map((wishlistitem, index) => (
+                            <tr key={wishlistitem.id} className={index % 2 === 0 ? 'bg-gray-700' : 'bg-gray-600'}>
+                                <td className="px-4 py-2 border">{index + 1}</td>
+                                <td className="px-4 py-2 border">
+                                    <div className="mt-2 h-[50px] shadow-md rounded-md overflow-hidden">
+                                        <img src={wishlistitem.url || placeholderImg} alt="Image" className="w-[50px]" />
+                                    </div>
+                                </td>
+                                <td className="px-4 py-2 border">{wishlistitem.name}</td>
+                                <td className="px-4 py-2 border">{wishlistitem.type}</td>
+                                <td className="px-4 py-2 border">{wishlistitem.credit}</td>
+                                <td className="px-4 py-2 border">{wishlistitem.quantity}</td>
+                                <td className="px-4 py-2 border">{wishlistitem.quantification}</td>
+                                <td className="px-4 py-2 border">{wishlistitem.explanation}</td>
+                                {role === "admin" && (<td className="px-4 py-2 border">
+
+                                    <button onClick={() => deleteWishlistItem(wishlistitem.id)} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-sm">
+                                        <span className="text-white tooltip-text border bg-green-400 -mt-12 -ml-16 rounded-xl hidden group-hover:block absolute text-center py-2 px-6 z-50">Hapus Wishlist Item</span>
+                                        <Icon icon={feTrash} className="h-5 w-5" />
+                                    </button>
+                                </td>)}
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
             <div className="justify-between items-center mt-10 mb-5">
                 <p className="text-center text-red-500">{msg}</p>
                 <p className="text-center text-white ">

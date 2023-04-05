@@ -20,14 +20,14 @@ const SellItemList = ({ item }) => {
     <div className="border max-w-[350px]">
       <Link to={`/itemdetails/${item.id}`}>
         <div className="bg-grey mt-2 h-[120px] flex items-center justify-center overflow-hidden">
-          <img src={item.url} alt="" className="w-[120px]" />
+          <img src={item.url} alt="" className="w-[200px]" />
         </div>
       </Link>
       <div className="mt-6 flex justify-between items-center px-5">
         <div>
           <div className="text-sm text-white font-bold">{name}</div>
           <div className="text-sm text-white font-bold mb-3">{type}</div>
-          <div className="text-xl text-white font-bold">Rp{credit}</div>
+          <div className="text-xl text-white font-bold mb-3">Rp{credit}</div>
         </div>
         <animated.button
           className={`text-white p-3 ${addedToCart ? 'added-to-cart' : ''}`}

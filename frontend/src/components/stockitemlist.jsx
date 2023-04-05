@@ -8,7 +8,7 @@ import { useSpring, animated } from 'react-spring';
 const StockItemList = ({ item }) => {
 
   const dispatch = useDispatch();
-  const { iuid, name } = item;
+  const { iuid, name, type } = item;
   const [addedToCart, setAddedToCart] = useState(false);
 
   const cartIconProps = useSpring({
@@ -25,6 +25,7 @@ const StockItemList = ({ item }) => {
       <div className="mt-6 flex justify-between items-center px-5">
         <div>
           <div className="text-sm text-white font-bold mb-3">{name}</div>
+          <div className="text-sm text-white font-bold mb-3">{type}</div>
         </div>
         <animated.button
           className={`text-white p-3 ${addedToCart ? 'added-to-cart' : ''}`}

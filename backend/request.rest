@@ -214,3 +214,12 @@ GET http://localhost:5000/inventory/stat
 
 ###
 GET http://localhost:5000/expense
+
+###
+GET http://localhost:5000/expenseThisMonth
+
+###
+GET http://localhost:5000/incomeThisMonth
+
+###
+GET http://localhost:5000/incomeDifferences

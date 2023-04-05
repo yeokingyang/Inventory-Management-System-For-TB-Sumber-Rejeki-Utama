@@ -261,3 +261,51 @@ export const getOutgoingItemsSumTotalCredit = async (req, res) => {
         res.status(500).send('Server error');
     }
 };
+
+export const getThisMonthIncome = async (req, res) => {
+    try {
+        const thisMonth = new Date();
+        thisMonth.setMonth(thisMonth.getMonth());
+
+        let data = await OutgoingItems.sum('totalCredit', {
+            where: Sequelize.where(Sequelize.fn('DATE_FORMAT', Sequelize.col('date'), '%Y-%m'), '=', Sequelize.fn('DATE_FORMAT', thisMonth, '%Y-%m')),
+        });
+        if (data == null) {
+            data = 0
+        }
+        res.status(200).json(data);
+    } catch (error) {
+        res.status(500).json({ msg: error.message });
+    }
+}
+
+export const getThisMonthVsLastMonthIncome = async (req, res) => {
+    try {
+        const thisMonth = new Date();
+        thisMonth.setMonth(thisMonth.getMonth());
+
+        const lastMonth = new Date();
+        lastMonth.setMonth(lastMonth.getMonth() - 1);
+
+        const thisMonthTotal = await OutgoingItems.sum('totalCredit', {
+            where: Sequelize.where(Sequelize.fn('DATE_FORMAT', Sequelize.col('date'), '%Y-%m'), '=', Sequelize.fn('DATE_FORMAT', thisMonth, '%Y-%m')),
+        });
+
+        const lastMonthTotal = await OutgoingItems.sum('totalCredit', {
+            where: Sequelize.where(Sequelize.fn('DATE_FORMAT', Sequelize.col('date'), '%Y-%m'), '=', Sequelize.fn('DATE_FORMAT', lastMonth, '%Y-%m')),
+        });
+
+        const percentageDiff = (((thisMonthTotal - lastMonthTotal) / lastMonthTotal) * 100).toFixed(2);
+
+        const isIncrease = percentageDiff > 0;
+
+        res.status(200).json({
+            thisMonthTotal: thisMonthTotal,
+            lastMonthTotal: lastMonthTotal,
+            percentageDiff: percentageDiff,
+            isIncrease: isIncrease
+        });
+    } catch (error) {
+        res.status(500).json({ msg: error.message });
+    }
+}

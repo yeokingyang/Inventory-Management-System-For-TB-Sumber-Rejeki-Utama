@@ -221,10 +221,10 @@ export const updateQuantityReceived = async (req, res) => {
 
 };
 
-export const getExpense = async (req, res) => {
+export const getExpenseChart = async (req, res) => {
     try {
         const aYearAgo = new Date();
-        aYearAgo.setMonth(aYearAgo.getMonth() - 12);
+        aYearAgo.setMonth(aYearAgo.getMonth() - 5);
 
         const expenseData = await IncomingItems.findAll({
             attributes: [
@@ -254,6 +254,22 @@ export const getExpense = async (req, res) => {
             return acc;
         }, {});
 
+        res.status(200).json(data);
+    } catch (error) {
+        res.status(500).json({ msg: error.message });
+    }
+}
+export const getThisMonthExpense = async (req, res) => {
+    try {
+        const thisMonth = new Date();
+        thisMonth.setMonth(thisMonth.getMonth());
+
+        let data = await IncomingItems.sum('totalDebit', {
+            where: Sequelize.where(Sequelize.fn('DATE_FORMAT', Sequelize.col('date'), '%Y-%m'), '=', Sequelize.fn('DATE_FORMAT', thisMonth, '%Y-%m')),
+        });
+        if (data==null){
+            data = 0
+        }
         res.status(200).json(data);
     } catch (error) {
         res.status(500).json({ msg: error.message });

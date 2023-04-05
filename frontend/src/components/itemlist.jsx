@@ -79,7 +79,7 @@ const Itemlist = () => {
     return (
 
         <div>
-            <div className="sticky  top-0 left-0 w-full bg-gray-800 p-4 z-15">
+            <div className="sticky top-0 bg-gray-800 p-4 z-15 border">
                 <div className="flex justify-between items-center">
                     <div>
                         <h1 className="title text-4xl font-bold text-white">Items</h1>
@@ -111,6 +111,7 @@ const Itemlist = () => {
                     </div>
                 </form>
             </div>
+            <div className="overflow-x-auto">
             <table className="table is-striped w-full text-white bg-gray-800 mt-5">
                 <thead>
                     <tr>
@@ -162,6 +163,7 @@ const Itemlist = () => {
                     ))}
                 </tbody>
             </table>
+            </div>
             <div className="justify-between items-center mt-10 mb-5">
                 <p className="text-center text-red-500">{msg}</p>
                 <p className="text-center text-white ">

@@ -78,7 +78,7 @@ const Incomingitemlist = () => {
     return (
 
         <div>
-            <div className="sticky  top-0 left-0 w-full bg-gray-800 p-4 z-15">
+            <div className="sticky top-0 bg-gray-800 p-4 z-15 border">
                 <div className="flex justify-between items-center">
                     <div>
                         <h1 className="title text-4xl font-bold text-white">Incoming Items</h1>
@@ -110,49 +110,51 @@ const Incomingitemlist = () => {
                     </div>
                 </form>
             </div>
-            <table className="table is-striped w-full text-white bg-gray-800 mt-5">
-                <thead>
-                    <tr>
-                        <th className="px-4 py-2 border text-left">No</th>
-                        <th className="px-4 py-2 border text-left">Code</th>
-                        <th className="px-4 py-2 border text-left">Name</th>
-                        <th className="px-4 py-2 border text-left">Type</th>
-                        <th className="px-4 py-2 border text-left">Price</th>
-                        <th className="px-4 py-2 border text-left">Quantity Bought</th>
-                        <th className="px-4 py-2 border text-left">Quantification</th>
-                        <th className="px-4 py-2 border text-left">Total Price</th>
-                        <th className="px-4 py-2 border text-left">Date</th>
-                        {role === "admin" && (<th className="px-4 py-2 border text-left">Action</th>)}
-                    </tr>
-                </thead>
-                <tbody>
-                    {incomingitems.map((incomingitem, index) => (
-                        <tr key={incomingitem.id} className={index % 2 === 0 ? 'bg-gray-700' : 'bg-gray-600'}>
-                            <td className="px-4 py-2 border">{index + 1}</td>
-                            <td className="px-4 py-2 border">{incomingitem.iuid}</td>
-                            <td className="px-4 py-2 border">{incomingitem.name}</td>
-                            <td className="px-4 py-2 border">{incomingitem.type}</td>
-                            <td className="px-4 py-2 border">{incomingitem.debit}</td>
-                            <td className="px-4 py-2 border">{incomingitem.quantityPurchased}</td>
-                            <td className="px-4 py-2 border">{incomingitem.quantification}</td>
-                            <td className="px-4 py-2 border">{incomingitem.totalDebit}</td>
-                            <td className="px-4 py-2 border">{incomingitem.date.slice(0, 10)}</td>
-                            {role === "admin" && (<td className="px-4 py-2 border">
-                                <Link to={`/incomingItems/edit/${incomingitem.id}`} className="inline-block align-middle px-4 py-2 mx-2 bg-gray-300 hover:text-red-700 leading-tight uppercase rounded shadow-md hover:bg-gray-500 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-700 active:shadow-lg transition duration-150 ease-in-out group"
-                                >
-                                    <span className="text-white tooltip-text border bg-green-400 -mt-12 -ml-16 rounded-xl hidden group-hover:block absolute text-center py-2 px-6 z-50">Edit Stock Item</span>
-                                    <FaCogs className="h-5 w-5" />
-                                </Link>
-                                <button onClick={() => deleteIncomingItem(incomingitem.id, incomingitem.iuid)} className="inline-block align-middle px-4 py-2 mx-2 bg-gray-300 hover:text-red-700 leading-tight uppercase rounded shadow-md hover:bg-gray-500 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-700 active:shadow-lg transition duration-150 ease-in-out group"
-                                >
-                                    <span className="text-white tooltip-text border bg-green-400 -mt-12 -ml-16 rounded-xl hidden group-hover:block absolute text-center py-2 px-6 z-50">Hapus Stock Item</span>
-                                    <Icon icon={feTrash} className="h-5 w-5" />
-                                </button>
-                            </td>)}
+            <div className="overflow-x-auto">
+                <table className="table is-striped w-full text-white bg-gray-800 mt-5">
+                    <thead>
+                        <tr>
+                            <th className="px-4 py-2 border text-left">No</th>
+                            <th className="px-4 py-2 border text-left">Code</th>
+                            <th className="px-4 py-2 border text-left">Name</th>
+                            <th className="px-4 py-2 border text-left">Type</th>
+                            <th className="px-4 py-2 border text-left">Price</th>
+                            <th className="px-4 py-2 border text-left">Quantity Bought</th>
+                            <th className="px-4 py-2 border text-left">Quantification</th>
+                            <th className="px-4 py-2 border text-left">Total Price</th>
+                            <th className="px-4 py-2 border text-left">Date</th>
+                            {role === "admin" && (<th className="px-4 py-2 border text-left">Action</th>)}
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {incomingitems.map((incomingitem, index) => (
+                            <tr key={incomingitem.id} className={index % 2 === 0 ? 'bg-gray-700' : 'bg-gray-600'}>
+                                <td className="px-4 py-2 border">{index + 1}</td>
+                                <td className="px-4 py-2 border">{incomingitem.iuid}</td>
+                                <td className="px-4 py-2 border">{incomingitem.name}</td>
+                                <td className="px-4 py-2 border">{incomingitem.type}</td>
+                                <td className="px-4 py-2 border">{incomingitem.debit}</td>
+                                <td className="px-4 py-2 border">{incomingitem.quantityPurchased}</td>
+                                <td className="px-4 py-2 border">{incomingitem.quantification}</td>
+                                <td className="px-4 py-2 border">{incomingitem.totalDebit}</td>
+                                <td className="px-4 py-2 border">{incomingitem.date.slice(0, 10)}</td>
+                                {role === "admin" && (<td className="px-4 py-2 border">
+                                    <Link to={`/incomingItems/edit/${incomingitem.id}`} className="inline-block align-middle px-4 py-2 mx-2 bg-gray-300 hover:text-red-700 leading-tight uppercase rounded shadow-md hover:bg-gray-500 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-700 active:shadow-lg transition duration-150 ease-in-out group"
+                                    >
+                                        <span className="text-white tooltip-text border bg-green-400 -mt-12 -ml-16 rounded-xl hidden group-hover:block absolute text-center py-2 px-6 z-50">Edit Stock Item</span>
+                                        <FaCogs className="h-5 w-5" />
+                                    </Link>
+                                    <button onClick={() => deleteIncomingItem(incomingitem.id, incomingitem.iuid)} className="inline-block align-middle px-4 py-2 mx-2 bg-gray-300 hover:text-red-700 leading-tight uppercase rounded shadow-md hover:bg-gray-500 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-700 active:shadow-lg transition duration-150 ease-in-out group"
+                                    >
+                                        <span className="text-white tooltip-text border bg-green-400 -mt-12 -ml-16 rounded-xl hidden group-hover:block absolute text-center py-2 px-6 z-50">Hapus Stock Item</span>
+                                        <Icon icon={feTrash} className="h-5 w-5" />
+                                    </button>
+                                </td>)}
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
             <div className="justify-between items-center mt-10 mb-5">
                 <p className="text-center text-red-500">{msg}</p>
                 <p className="text-center text-white ">

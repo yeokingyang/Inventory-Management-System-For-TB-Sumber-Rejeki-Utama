@@ -7,7 +7,8 @@ import { IoIosMore, IoIosPhotos } from 'react-icons/io';
 import axios from "axios";
 import { Link } from "react-router-dom";
 import placeholderImg from '../assets/bannerearning.jpg'
-import SparkLine from "./charts/sparkline";
+import LineChart from "./charts/linechart";
+import BarChart from "./charts/barchart";
 
 const Welcome = () => {
   const { user } = useSelector((state) => state.auth);
@@ -15,6 +16,9 @@ const Welcome = () => {
   const [sumStaffs, setSumStaffs] = useState(0);
   const [sumItems, setSumItems] = useState(0);
   const [expense, setExpense] = useState(0);
+  const [expenseThisMonth, setExpenseThisMonth] = useState(0);
+  const [incomeThisMonth, setIncomeThisMonth] = useState(0);
+  const [incomeDifferences, setIncomeDifferences] = useState(0);
 
   const getOutgoingItemsSumTotalCredit = async () => {
     try {
@@ -60,23 +64,59 @@ const Welcome = () => {
     }
   };
 
+  const getExpenseThisMonth = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/expenseThisMonth`
+      );
+      setExpenseThisMonth(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const getThisMonthIncome = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/incomeThisMonth`
+      );
+      setIncomeThisMonth(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const getThisMonthVsLastMonthIncome = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/incomeDifferences`
+      );
+      setIncomeDifferences(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+
 
   useEffect(() => {
     getOutgoingItemsSumTotalCredit();
     countStaffs();
     countItems();
     getExpense();
+    getExpenseThisMonth();
+    getThisMonthIncome();
+    getThisMonthVsLastMonthIncome();
   }, []);
 
-console.log(expense);
   return (
     <div>
       <h1 className="text-5xl text-white font-bold mb-5">Dashboard</h1>
       <h2 className="text-3xl text-white mb-10">
         Welcome Back <strong>{user && user.name}</strong>
       </h2>
-      <div className="flex items-center justify-center">
-        <div className="flex items-start justify-start relative z-0">
+      <div id="first div" className="flex flex-wrap justify-center bg-white rounded md:w-full md:h-full">
+        <div className="flex items-start m-3 justify-start relative z-0">
           <img src={placeholderImg} alt="" className="w-[1000px] h-[300px] " />
           <div className="p-5 text-white flex flex-col items-center justify-center absolute -top-0 z-0">
             <p className="text-lg font-bold">Earnings</p>
@@ -84,10 +124,9 @@ console.log(expense);
           </div>
         </div>
       </div>
-      <div className="flex m-3 flex-wrap justify-center items-center">
-
-        <div className="flex items-center justify-center relative border bg-gray-500 ">
-          <div className="bg-gray h-44 dark:text-gray-200 dark:bg-secondary-dark-bg md:w-56  p-4 pt-9 rounded-2xl mx-4 ">
+      <div id="second div" className="flex flex-wrap justify-center mt-0.5 bg-white rounded md:w-full md:h-full">
+        <div className="flex items-center justify-center bg-white m-3 border rounded-2xl w-full">
+          <div className="bg-gray h-44  dark:text-gray-200 dark:bg-secondary-dark-bg md:w-56  p-4 pt-9 rounded-2xl mx-4 ">
             <Link to="/users">
               <button
                 type="button"
@@ -98,9 +137,9 @@ console.log(expense);
               </button>
             </Link>
             <p className="mt-3">
-              <span className="text-lg font-semibold text-white">{sumStaffs}</span>
+              <span className="text-lg font-semibold text-black">{sumStaffs}</span>
             </p>
-            <p className="text-sm text-gray-400  mt-1">Employee</p>
+            <p className="text-sm text-black  mt-1">Employee</p>
           </div>
 
           <div className="bg-gray h-44 dark:text-gray-200 dark:bg-secondary-dark-bg md:w-56  p-4 pt-9 rounded-2xl mx-4">
@@ -114,37 +153,22 @@ console.log(expense);
               </button>
             </Link>
             <p className="mt-3">
-              <span className="text-lg font-semibold text-white">{sumItems}</span>
+              <span className="text-lg font-semibold text-black">{sumItems}</span>
             </p>
-            <p className="text-sm text-gray-400 mt-1">Items</p>
+            <p className="text-sm text-black mt-1">Items</p>
           </div>
 
 
-          <div className="bg-gray h-44 dark:text-gray-200 dark:bg-secondary-dark-bg md:w-56  p-4 pt-9 rounded-2xl mx-4">
-            <button
-              type="button"
-              style={{ color: "blue", backgroundColor: "gray" }}
-              className="text-2xl opacity-0.9 rounded-full  p-4 hover:drop-shadow-xl"
-            >
-              <IoIosPhotos />
-            </button>
-            <p className="mt-3">
-              <span className="text-lg font-semibold">20</span>
-              <span className={`text-sm text-$ ml-2`}>
-                10%
-              </span>
-            </p>
-            <p className="text-sm text-gray-400  mt-1">Test</p>
-          </div>
+
         </div>
       </div>
 
-      <div className="flex gap-10 flex-wrap justify-center">
-        <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg m-3 p-4 rounded-2xl md:w-780  ">
+      <div id="third div" className="flex flex-wrap justify-center mt-0.5 bg-white md:w-full md:h-full">
+        <div className="bg-white m-3 p-10 border rounded-2xl w-full">
           <div className="flex justify-between">
             <p className="font-semibold text-xl">Revenue Updates</p>
             <div className="flex items-center gap-4">
-              <p className="flex items-center gap-2 text-gray-600 hover:drop-shadow-xl">
+              <p className="flex items-center gap-2 text-red-600 hover:drop-shadow-xl">
                 <span>
                   <GoPrimitiveDot />
                 </span>
@@ -154,45 +178,45 @@ console.log(expense);
                 <span>
                   <GoPrimitiveDot />
                 </span>
-                <span>Budget</span>
+                <span>Income</span>
               </p>
             </div>
           </div>
-          <div className="mt-10 flex gap-10 flex-wrap justify-center">
-            <div className=" border-r-1 border-color m-4 pr-10">
+          <div className="mt-10 flex flex-col md:flex-row md:gap-10 md:justify-start">
+            <div className="border-r-1 border-color m-4 pr-10">
               <div>
                 <p>
-                  <span className="text-3xl font-semibold">$93,438</span>
-                  <span className="p-1.5 hover:drop-shadow-xl cursor-pointer rounded-full text-white bg-green-400 ml-3 text-xs">
-                    23%
+                  <span className="text-3xl font-semibold">Rp {incomeThisMonth}</span>
+                  <span className={`p-1.5 hover:drop-shadow-xl cursor-pointer rounded-full text-white ${incomeDifferences.isIncrease ? 'bg-green-400' : 'bg-red-400'} ml-3 text-xs`}>
+                    {incomeDifferences.percentageDiff}%
                   </span>
                 </p>
-                <p className="text-gray-500 mt-1">Budget</p>
+                <p className="text-gray-500 mt-1">Income</p>
               </div>
               <div className="mt-8">
-                <p className="text-3xl font-semibold">$48,487</p>
+                <p className="text-3xl font-semibold">RP {expenseThisMonth}</p>
 
                 <p className="text-gray-500 mt-1">Expense</p>
               </div>
-              <div className="mt-5 z-25"  >
-                <SparkLine currentColor="blue" color="blue" id="line-sparkLine" width ='250px' height= '80px' type="Line" data={expense}/>
-
-              </div>
-              <div className="mt-10">
-                <button
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded "
-                >
-                  Download Report
-                </button>
-              </div>
-
-            </div>
-            <div>
-
             </div>
           </div>
+          <div className="flex items-center">
+            <div className="w-full md:w-1/2">
+              <LineChart width={300} height={300} data={expense} />
+            </div>
+            <div className="w-full md:w-1/2">
+              <BarChart width={400} height={440} data={expense} />
+            </div>
+          </div>
+          <div className="flex items-center justify-center mt-5">
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+              View Report
+            </button>
+          </div>
+
         </div>
       </div>
+
     </div>
   );
 };

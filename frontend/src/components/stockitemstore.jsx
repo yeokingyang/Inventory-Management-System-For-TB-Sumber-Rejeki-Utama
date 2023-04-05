@@ -15,7 +15,7 @@ const StockItemstore = () => {
     const { amount } = useSelector((state) => state.stockcart);
     const [items, setItems] = useState([]);
     const [page, setPage] = useState(0);
-    const [limit, setLimit] = useState(30);
+    const [limit, setLimit] = useState(36);
     const [pages, setPages] = useState(0);
     const [rows, setRows] = useState(0);
     const [keyword, setKeyword] = useState("");
@@ -27,16 +27,16 @@ const StockItemstore = () => {
     const props = useSpring({
         color: color,
         textShadow: amount > 0 ? '0px 0px 5px #ff0000' : 'none'
-      });
+    });
 
     useEffect(() => {
         if (amount > 0) {
-          setColor('#ff0000');
-          setTimeout(() => {
-            setColor('#ffffff');
-          }, 250);
+            setColor('#ff0000');
+            setTimeout(() => {
+                setColor('#ffffff');
+            }, 250);
         }
-      }, [amount]);
+    }, [amount]);
 
     useEffect(() => {
         getItems();
@@ -75,7 +75,7 @@ const StockItemstore = () => {
 
     return (
         <div>
-            <div className="sticky  top-0 left-0 w-full bg-gray-800 p-4 z-15">
+            <div className="sticky top-0 bg-gray-800 p-4 z-15 border">
                 <div className="flex justify-between items-center">
                     <div>
                         <h1 className="title text-4xl font-bold text-white">Incoming Items</h1>
@@ -105,7 +105,7 @@ const StockItemstore = () => {
                     </div>
                 </form>
             </div>
-            <div className="fixed top-32 right-0 p-4">
+            <div className="fixed top-32 right-2 p-4">
                 <div className="relative cursor-pointer"
                     onClick={() => dispatch(open())} >
                     <BiShoppingBag className="text-3xl opacity-80 text-white" />
@@ -114,7 +114,7 @@ const StockItemstore = () => {
                     </animated.div>
                 </div>
             </div>
-            <div className="section mt-12 grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-3">
+            <div className="section mt-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-6">
                 {items.map((item) => {
                     return <Stockitemlist key={item.iuid} item={item} />;
                 })}

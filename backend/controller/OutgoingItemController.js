@@ -118,6 +118,11 @@ export const createOutgoingItems = async (req, res) => {
     const { iuid, quantitySold, credit, quantification, date } = req.body;
     const totalCredit = credit * quantitySold;
     const Item = await Items.findOne({ where: { iuid: iuid } });
+    const currentDate = new Date();
+    const year = date.slice(0, 4);
+    const month = date.slice(5, 7) - 1; // subtract 1 from month since it's zero-indexed in Date constructor
+    const day = date.slice(8, 10);
+    const combinedDate = new Date(year, month, day, currentDate.getHours()+8, currentDate.getMinutes(), currentDate.getSeconds());
     if (!Item) {
         return res.status(404).json({ msg: "Item not found" });
     }
@@ -130,7 +135,7 @@ export const createOutgoingItems = async (req, res) => {
             quantification: quantification,
             quantitySold: quantitySold,
             totalCredit: totalCredit,
-            date: date
+            date: combinedDate
         });
         res.status(201).json({ msg: "Item purchased created successfully" });
     } catch (error) {
@@ -305,6 +310,46 @@ export const getThisMonthVsLastMonthIncome = async (req, res) => {
             percentageDiff: percentageDiff,
             isIncrease: isIncrease
         });
+    } catch (error) {
+        res.status(500).json({ msg: error.message });
+    }
+}
+
+
+export const getIncomeChart = async (req, res) => {
+    try {
+        const aYearAgo = new Date();
+        aYearAgo.setMonth(aYearAgo.getMonth() - 5);
+
+        const incomeData = await OutgoingItems.findAll({
+            attributes: [
+                'date',
+                [Sequelize.fn('SUM', Sequelize.col('totalCredit')), 'totalIncome']
+            ],
+            where: {
+                date: {
+                    [Op.gte]: aYearAgo
+                }
+            },
+            group: [Sequelize.fn('MONTH', Sequelize.col('date'))],
+            raw: true
+        });
+        const sortedIncomeData = incomeData.sort((a, b) => {
+            const dateA = new Date(a.date);
+            const dateB = new Date(b.date);
+            const yearDiff = dateA.getFullYear() - dateB.getFullYear();
+            const monthDiff = dateA.getMonth() - dateB.getMonth();
+            return yearDiff !== 0 ? yearDiff : monthDiff;
+        });
+        const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const data = sortedIncomeData.reduce((acc, { date, totalIncome }) => {
+            const month = new Date(date).getMonth();
+            const monthName = monthNames[month];
+            acc[monthName] = totalIncome;
+            return acc;
+        }, {});
+
+        res.status(200).json(data);
     } catch (error) {
         res.status(500).json({ msg: error.message });
     }

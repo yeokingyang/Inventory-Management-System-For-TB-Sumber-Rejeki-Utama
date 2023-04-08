@@ -16,6 +16,7 @@ const Welcome = () => {
   const [sumStaffs, setSumStaffs] = useState(0);
   const [sumItems, setSumItems] = useState(0);
   const [expense, setExpense] = useState(0);
+  const [income, setIncome] = useState(0);
   const [expenseThisMonth, setExpenseThisMonth] = useState(0);
   const [incomeThisMonth, setIncomeThisMonth] = useState(0);
   const [incomeDifferences, setIncomeDifferences] = useState(0);
@@ -64,6 +65,18 @@ const Welcome = () => {
     }
   };
 
+  const getIncome = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/income`
+      );
+      setIncome(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+
   const getExpenseThisMonth = async () => {
     try {
       const response = await axios.get(
@@ -107,6 +120,7 @@ const Welcome = () => {
     getExpenseThisMonth();
     getThisMonthIncome();
     getThisMonthVsLastMonthIncome();
+    getIncome();
   }, []);
 
   return (
@@ -202,10 +216,10 @@ const Welcome = () => {
           </div>
           <div className="flex items-center">
             <div className="w-full md:w-1/2">
-              <LineChart width={300} height={300} data={expense} />
+              <LineChart width={300} height={300} data={{expense,income}} />
             </div>
             <div className="w-full md:w-1/2">
-              <BarChart width={400} height={440} data={expense} />
+              <BarChart width={400} height={440} data={{expense,income}} />
             </div>
           </div>
           <div className="flex items-center justify-center mt-5">

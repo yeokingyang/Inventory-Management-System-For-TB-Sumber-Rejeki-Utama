@@ -122,6 +122,12 @@ export const getIncomingItemsById = async (req, res) => {
 export const createIncomingItems = async (req, res) => {
     const { iuid, debit, quantityPurchased, date } = req.body;
     const totalDebit = debit * quantityPurchased;
+    const currentDate = new Date();
+    const year = date.slice(0, 4);
+    const month = date.slice(5, 7) - 1; // subtract 1 from month since it's zero-indexed in Date constructor
+    const day = date.slice(8, 10);
+    const combinedDate = new Date(year, month, day, currentDate.getHours()+8, currentDate.getMinutes(), currentDate.getSeconds());
+
     try {
         const Item = await Items.findOne({ where: { iuid: iuid } });
         if (!Item) {
@@ -135,7 +141,7 @@ export const createIncomingItems = async (req, res) => {
             debit: debit,
             totalDebit: totalDebit,
             quantityPurchased: quantityPurchased,
-            date: date
+            date: combinedDate
         });
         res.status(201).json({ msg: "Item purchased created successfully" });
     } catch (error) {

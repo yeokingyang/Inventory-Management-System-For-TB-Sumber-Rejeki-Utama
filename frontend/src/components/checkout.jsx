@@ -15,7 +15,7 @@ const Checkout = () => {
     const [customerMoney, setCustomerMoney] = useState("");
     const [exchange, setExchange] = useState("");
     const [isLoading, setIsLoading] = useState(false);
-
+  
     useEffect(() => {
         const exchangeValue = customerMoney - total;
         setExchange(exchangeValue.toFixed(2));

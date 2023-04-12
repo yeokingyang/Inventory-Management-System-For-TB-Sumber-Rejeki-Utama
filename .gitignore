@@ -4,4 +4,7 @@ backend/node_modules/
 backend/public/images/
 backend/migrations/
 backend/config/config.json
-
+backend_django/backend_django/__pycache__/
+backend_django/forecastapi/__pycache__/
+backend_django/forecastapi/migrations/
+backend_django/db.sqlite3

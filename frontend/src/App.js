@@ -18,6 +18,10 @@ import Confirmcheckin from "./pages/confirmcheckin";
 import Editincomingitem from "./pages/editincomingitem";
 import Wishlistitem from "./pages/wishlistitem";
 import Addwishlistitem from "./pages/addwishlistitem";
+import Analytics from "./pages/analytics"
+import Editpreprocessdata from "./pages/forecasting/editpreprocessdata"
+import Editmodelpredict from "./pages/forecasting/editmodelpredict"
+
 function App() {
   return (
     <BrowserRouter>
@@ -41,6 +45,9 @@ function App() {
         <Route path="/sellitem/checkout" element={<Confirmcheckout/>}/>
         <Route path="/stockitem" element={<Stockitem/>}/>
         <Route path="/stockitem/checkin" element={<Confirmcheckin/>}/>
+        <Route path="/analytics" element={<Analytics/>}/>
+        <Route path="/analytics/editpreprocessdata" element={<Editpreprocessdata/>}/>
+        <Route path="/analytics/modelpredict" element={<Editmodelpredict/>}/>
       </Routes>
     </BrowserRouter>
   );

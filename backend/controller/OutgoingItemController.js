@@ -122,7 +122,7 @@ export const createOutgoingItems = async (req, res) => {
     const year = date.slice(0, 4);
     const month = date.slice(5, 7) - 1; // subtract 1 from month since it's zero-indexed in Date constructor
     const day = date.slice(8, 10);
-    const combinedDate = new Date(year, month, day, currentDate.getHours()+8, currentDate.getMinutes(), currentDate.getSeconds());
+    const combinedDate = new Date(year, month, day, currentDate.getHours() + 8, currentDate.getMinutes(), currentDate.getSeconds());
     if (!Item) {
         return res.status(404).json({ msg: "Item not found" });
     }
@@ -348,6 +348,51 @@ export const getIncomeChart = async (req, res) => {
             acc[monthName] = totalIncome;
             return acc;
         }, {});
+
+        res.status(200).json(data);
+    } catch (error) {
+        res.status(500).json({ msg: error.message });
+    }
+}
+
+export const getIncometoForecast = async (req, res) => {
+    try {
+        const currentDate = new Date();
+        const sevenMonthsAgo = new Date(currentDate);
+        sevenMonthsAgo.setMonth(currentDate.getMonth() - 7);
+
+        const data = await OutgoingItems.findAll({
+            attributes: [
+                'date',
+                [Sequelize.fn('SUM', Sequelize.col('totalCredit')), 'totalIncome']
+            ],
+            where: {
+                date: {
+                    [Op.gte]: sevenMonthsAgo
+                }
+            },
+            group: [Sequelize.fn('MONTH', Sequelize.col('date'))],
+            raw: true
+        });
+
+        // Get the current month and year
+        const currentMonth = currentDate.getMonth() + 1; // Months in JavaScript are 0-indexed, so add 1
+        const currentYear = currentDate.getFullYear();
+
+        // Find the index of the newest month's data
+        let newestMonthIndex = -1;
+        data.forEach((item, index) => {
+            const month = new Date(item.date).getMonth() + 1;
+            const year = new Date(item.date).getFullYear();
+            if (month === currentMonth && year === currentYear) {
+                newestMonthIndex = index;
+            }
+        });
+
+        // If the newest month's data is found, remove it from the data array
+        if (newestMonthIndex !== -1) {
+            data.splice(newestMonthIndex, 1);
+        }
 
         res.status(200).json(data);
     } catch (error) {

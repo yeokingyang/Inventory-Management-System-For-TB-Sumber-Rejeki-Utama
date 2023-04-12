@@ -8,7 +8,8 @@ import {
     getOutgoingItemsSumTotalCredit,
     getThisMonthIncome,
     getThisMonthVsLastMonthIncome,
-    getIncomeChart
+    getIncomeChart,
+    getIncometoForecast
 } from "../controller/OutgoingItemController.js";
 
 import { verifyUser, adminOnly } from "../middleware/AuthUser.js";
@@ -20,6 +21,7 @@ router.get('/outgoingItems', verifyUser, getOutgoingItems);
 router.get('/incomeThisMonth', verifyUser, getThisMonthIncome);
 router.get('/incomeDifferences', verifyUser, getThisMonthVsLastMonthIncome);
 router.get('/income', verifyUser, getIncomeChart);
+router.get('/incomeForecast', verifyUser, getIncometoForecast);
 router.post('/outgoingItems', verifyUser, createOutgoingItems);
 router.patch('/outgoingItems/:id', verifyUser, adminOnly, updateOutgoingItems);
 router.delete('/outgoingItems/:id', verifyUser, adminOnly, deleteOutgoingItems);

@@ -20,7 +20,7 @@ const Sidebar = () => {
     { name: "Stocking Items", link: "/stockitem", icon: FiFolder },
     { name: "Outgoing Items", link: "/outgoingitems", icon: FiFolder, margin: true},
     { name: "Sell Items", link: "/sellitem", icon: FiShoppingCart },
-    { name: "analytics", link: "/", icon: TbReportAnalytics, margin: true },
+    { name: "analytics", link: "/analytics", icon: TbReportAnalytics, margin: true },
     { name: "Saved", link: "/", icon: AiOutlineHeart},
     { name: "LogOut", link:"/", icon: RiSettings4Line },
   ];

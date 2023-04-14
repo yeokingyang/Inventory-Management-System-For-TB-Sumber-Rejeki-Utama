@@ -226,3 +226,6 @@ GET http://localhost:5000/incomeThisMonth
 
 ###
 GET http://localhost:5000/incomeDifferences
+
+###
+GET http://localhost:5000/report/incomebyDaily?year=2023&month=1

@@ -125,10 +125,14 @@ const Welcome = () => {
 
   return (
     <div>
-      <h1 className="text-5xl text-white font-bold mb-5">Dashboard</h1>
-      <h2 className="text-3xl text-white mb-10">
-        Welcome Back <strong>{user && user.name}</strong>
-      </h2>
+      <div className="sticky top-0 bg-gray-800 p-5 border z-10">
+        <h1 className="text-5xl text-white font-bold mb-5">Dashboard</h1>
+        <h2 className="text-3xl text-white">
+          Welcome Back <strong>{user && user.name}</strong>
+        </h2>
+
+      </div>
+
       <div id="first div" className="flex flex-wrap justify-center bg-white rounded md:w-full md:h-full">
         <div className="flex items-start m-3 justify-start relative z-0">
           <img src={placeholderImg} alt="" className="w-[1000px] h-[300px] " />
@@ -216,16 +220,17 @@ const Welcome = () => {
           </div>
           <div className="flex items-center">
             <div className="w-full md:w-1/2">
-              <LineChart width={300} height={300} data={{expense,income}} />
+              <LineChart width={300} height={300} data={{ expense, income }} />
             </div>
             <div className="w-full md:w-1/2">
-              <BarChart width={400} height={440} data={{expense,income}} />
+              <BarChart width={400} height={440} data={{ expense, income }} />
             </div>
           </div>
           <div className="flex items-center justify-center mt-5">
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            <Link to={`/report`}
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
               View Report
-            </button>
+            </Link>
           </div>
 
         </div>

@@ -375,7 +375,7 @@ export const getIncometoForecast = async (req, res) => {
             raw: true
         });
 
-        // Get the current month and year
+        // Get the current month an Sequelize.where(Sequelize.fn('MONTH', Sequelize.col('date')), month),      and: Sequelize.where(Sequelize.fn('YEAR', Sequelize.col('date')), year),    });d year
         const currentMonth = currentDate.getMonth() + 1; // Months in JavaScript are 0-indexed, so add 1
         const currentYear = currentDate.getFullYear();
 
@@ -399,3 +399,34 @@ export const getIncometoForecast = async (req, res) => {
         res.status(500).json({ msg: error.message });
     }
 }
+
+export const getReportIncomebyDaily = async (req, res) => {
+    try {
+        const { month, year } = req.query;
+
+        const formattedMonth = month.padStart(2, '0');
+        const formattedYear = year;
+
+         // Query outgoing items based on year and month
+         const data = await OutgoingItems.findAll({
+            where: {
+                date: {
+                    [Sequelize.Op.and]: [
+                        Sequelize.where(Sequelize.fn('YEAR', Sequelize.col('date')), formattedYear),
+                        Sequelize.where(Sequelize.fn('MONTH', Sequelize.col('date')), formattedMonth),
+                    ],
+                },
+            },
+            attributes: [
+                [Sequelize.fn('DATE', Sequelize.col('date')), 'date'], // Extract only the date part
+                [Sequelize.fn('SUM', Sequelize.col('totalCredit')), 'totalIncome'], // Sum of the income column
+            ],
+            group: [Sequelize.fn('DATE', Sequelize.col('date'))], // Group by date part
+            raw: true, // Return raw data
+        });
+
+        res.status(200).json(data);
+    } catch (error) {
+        res.status(500).json({ msg: error.message });
+    }
+};

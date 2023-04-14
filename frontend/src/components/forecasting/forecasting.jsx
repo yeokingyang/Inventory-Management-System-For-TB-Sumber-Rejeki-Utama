@@ -116,6 +116,21 @@ const Forecasting = () => {
                         </button>
                     </div>
                 </form>
+                <div className=" bg-gray-800 p-4 z-15 border mt-10">
+                    <div className="flex justify-between items-center">
+                        <div>
+                            <h1 className="title text-4xl font-bold text-white">Forecasting</h1>
+                            <h2 className="subtitle text-white">Forecast Income </h2>
+                        </div>
+                        <button
+                            onClick={() => forecastIncome("income")}
+                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                        >
+                            Forecast Income
+                        </button>
+                    </div>
+
+                </div>
             </div>
 
 
@@ -200,25 +215,6 @@ const Forecasting = () => {
 
                 )}
             </div>
-
-            <div className=" bg-gray-800 p-4 z-15 border mt-10">
-                <div className="flex justify-between items-center">
-                    <div>
-                        <h1 className="title text-4xl font-bold text-white">Forecasting</h1>
-                        <h2 className="subtitle text-white">Forecast Income </h2>
-                    </div>
-                    <button
-                        onClick={() => forecastIncome("income")}
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    >
-                        Forecast Income
-                    </button>
-                </div>
-
-            </div>
-
-
-
         </div>
     );
 };

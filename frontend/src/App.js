@@ -21,6 +21,7 @@ import Addwishlistitem from "./pages/addwishlistitem";
 import Analytics from "./pages/analytics"
 import Editpreprocessdata from "./pages/forecasting/editpreprocessdata"
 import Editmodelpredict from "./pages/forecasting/editmodelpredict"
+import Report from "./pages/report";
 
 function App() {
   return (
@@ -48,6 +49,7 @@ function App() {
         <Route path="/analytics" element={<Analytics/>}/>
         <Route path="/analytics/editpreprocessdata" element={<Editpreprocessdata/>}/>
         <Route path="/analytics/modelpredict" element={<Editmodelpredict/>}/>
+        <Route path="/report" element={<Report/>}/>
       </Routes>
     </BrowserRouter>
   );

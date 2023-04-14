@@ -131,7 +131,7 @@ const ModelPredict = () => {
     // Render component
     return (
         <div className='relative'>
-            <div className="border">
+            <div className="sticky top-0 bg-gray-800 p-4 border z-10">
                 <Link className="text-white flex items-center" to={`/analytics`}>
                     <HiChevronLeft className="mr-2" />
                     <span className="uppercase text-sm select-none">Go Back</span>

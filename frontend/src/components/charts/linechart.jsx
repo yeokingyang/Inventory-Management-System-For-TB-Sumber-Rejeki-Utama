@@ -32,7 +32,7 @@ const LineChart = ({ data, width, height }) => {
   };
 
   return (
-    <div className="line-chart-container border p-6 mr-5 overflow-hidden max-w-screen-lg">
+    <div className="line-chart-container border p-6 mr-5 overflow-hidden max-w-screen-lg shadow-md">
       <svg ref={svgRef} viewBox={`0 0 ${width} ${height + 30}`}>
         <path d={expensePathData} stroke="red" strokeWidth={2} fill="none" />
         <path d={incomePathData} stroke="green" strokeWidth={2} fill="none" />

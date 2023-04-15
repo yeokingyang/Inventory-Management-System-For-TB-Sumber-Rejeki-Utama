@@ -71,18 +71,21 @@ const Forecasting = () => {
         }
     }
 
-    const forecastIncome = async (data) => {
+    const forecastIncome = async (data2) => {
         const confirmed = window.confirm(`Are you sure you want to forecast income?`);
         if (confirmed) {
             try {
 
+                const response = await axios.get(`http://localhost:5000/incomePrevious`);
+                setForecastItem(response.data);
                 // Navigate to the '/analytics/editpreprocessdata' route with the forecastItem value as state
-                navigate('/analytics/modelpredict', { state: { forecastBy: data } });
+                navigate('/analytics/modelpredict', { state: { forecastItem: response.data, forecastBy: data2 } });
             } catch (error) {
                 console.error(error);
             }
         }
     }
+    
 
 
     return (

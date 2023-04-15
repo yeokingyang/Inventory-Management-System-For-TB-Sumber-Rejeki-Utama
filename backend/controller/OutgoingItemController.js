@@ -1,7 +1,8 @@
 import OutgoingItems from "../models/OutgoingItemModel.js";
-import Items from "../models/ItemModel.js"
+import Items from "../models/ItemModel.js";
 import { Sequelize } from "sequelize";
-import { Op } from "sequelize"
+import { Op } from "sequelize";
+
 
 export const getOutgoingItems = async (req, res) => {
     /*  const page = parseInt(req.query.page) || 0;
@@ -355,7 +356,7 @@ export const getIncomeChart = async (req, res) => {
     }
 }
 
-export const getIncometoForecast = async (req, res) => {
+export const getPrevIncome = async (req, res) => {
     try {
         const currentDate = new Date();
         const sevenMonthsAgo = new Date(currentDate);
@@ -407,8 +408,8 @@ export const getReportIncomebyDaily = async (req, res) => {
         const formattedMonth = month.padStart(2, '0');
         const formattedYear = year;
 
-         // Query outgoing items based on year and month
-         const data = await OutgoingItems.findAll({
+        // Query outgoing items based on year and month
+        const data = await OutgoingItems.findAll({
             where: {
                 date: {
                     [Sequelize.Op.and]: [
@@ -430,3 +431,4 @@ export const getReportIncomebyDaily = async (req, res) => {
         res.status(500).json({ msg: error.message });
     }
 };
+

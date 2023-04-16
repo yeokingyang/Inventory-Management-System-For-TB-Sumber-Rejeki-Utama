@@ -79,6 +79,7 @@ const OutgoingItems = db.define('outgoingItems', {
 });
 
 Items.hasMany(OutgoingItems, {
+    foreignKey: 'iuid',
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE'
 });

@@ -85,6 +85,10 @@ const Items = db.define('items', {
         allowNull: false,
         validate: {
             notEmpty: true,
+        },
+        references: {
+            model: 'users', // Update the reference to the User model
+            key: 'uuid' // Update the key to 'uuid' in the User model
         }
     }
 }, {
@@ -96,6 +100,6 @@ Items.belongsTo(Users, { foreignKey: 'userId' });
 
 export default Items;
 
-//(async()=>{
-  // await db.sync();
-//})();
+(async()=>{
+   await db.sync();
+})();

@@ -46,7 +46,7 @@ export const getUsers = async (req, res) => {
         offset: offset,
         limit: limit,
         order: [
-            ['id', 'ASC']
+            ['createdAt', 'ASC']
         ]
     });
     try {
@@ -68,7 +68,7 @@ export const getUserById = async (req, res) => {
         const response = await User.findOne({
             attributes: ['uuid', 'name', 'email', 'role'],
             where: {
-                uuid: req.params.id
+                uuid: req.params.uuid
             }
         });
         res.status(200).json(response);
@@ -98,7 +98,7 @@ export const createUser = async (req, res) => {
 export const updateUser = async (req, res) => {
     const user = await User.findOne({
         where: {
-            uuid: req.params.id
+            uuid: req.params.uuid
         }
     });
     if (!user) return res.status(404).json({ msg: "User tidak ditemukan" });
@@ -118,7 +118,7 @@ export const updateUser = async (req, res) => {
             role: role
         }, {
             where: {
-                id: user.id
+                uuid: user.uuid
             }
         });
         res.status(200).json({ msg: "User Updated" });
@@ -130,14 +130,14 @@ export const updateUser = async (req, res) => {
 export const deleteUser = async (req, res) => {
     const user = await User.findOne({
         where: {
-            uuid: req.params.id
+            uuid: req.params.uuid
         }
     });
     if (!User) return res.status(404).json({ msg: "user tidak ditemukan" });
     try {
         await User.destroy({
             where: {
-                id: user.id
+                uuid: user.uuid
             }
         });
         res.status(200).json({ msg: "user berhasil di delete" });

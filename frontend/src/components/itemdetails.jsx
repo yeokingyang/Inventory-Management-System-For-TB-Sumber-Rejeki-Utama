@@ -8,12 +8,12 @@ const Itemdetails = () => {
     const [items, setItems] = useState([]);
     const [msg, setMsg] = useState("");
     const navigate = useNavigate();
-    const { id } = useParams();
+    const { iuid } = useParams();
 
     useEffect(() => {
         const getItemById = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/items/${id}`);
+                const response = await axios.get(`http://localhost:5000/items/${iuid}`);
                 setItems(response.data.result);
             } catch (error) {
                 console.error(error);
@@ -22,7 +22,7 @@ const Itemdetails = () => {
         };
     
         getItemById();
-    }, [id]);
+    }, [iuid]);
 
     const goBack = () => {
         navigate(-1);

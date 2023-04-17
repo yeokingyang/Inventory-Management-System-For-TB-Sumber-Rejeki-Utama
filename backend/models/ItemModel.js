@@ -8,6 +8,7 @@ const Items = db.define('items', {
     iuid: {
         type: DataTypes.STRING,
         unique: true,
+        primaryKey: true,
         allowNull: false,
         validate: {
             notEmpty: true,
@@ -80,26 +81,35 @@ const Items = db.define('items', {
         type: DataTypes.STRING,
         allowNull: true,
     },
-    userId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        validate: {
-            notEmpty: true,
-        },
+    uuid: {
+        type: DataTypes.STRING,
+        allowNull: true,
         references: {
-            model: 'users', // Update the reference to the User model
-            key: 'uuid' // Update the key to 'uuid' in the User model
-        }
+          model: 'users',
+          key: 'uuid'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      
     }
 }, {
     freezeTableName: true
 });
 
-Users.hasMany(Items);
-Items.belongsTo(Users, { foreignKey: 'userId' });
+
+Users.hasMany(Items, {
+    foreignKey: 'uuid',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
+});
+Items.belongsTo(Users, { 
+    foreignKey: 'uuid',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
+ });
 
 export default Items;
 
-(async()=>{
-   await db.sync();
-})();
+//(async()=>{
+  // await db.sync();
+//})();

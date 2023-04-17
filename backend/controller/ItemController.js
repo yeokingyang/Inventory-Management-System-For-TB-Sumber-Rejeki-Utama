@@ -156,7 +156,7 @@ export const getItemsById = async (req, res) => {
 
     const items = await Items.findOne({
         where: {
-            id: req.params.id
+            iuid: req.params.iuid
         }
     });
     if (!items) return res.status(404).json({ msg: "Data tidak ditemukan" });
@@ -164,12 +164,8 @@ export const getItemsById = async (req, res) => {
         let response;
         response = await Items.findOne({
             where: {
-                id: req.params.id
-            },
-            include: [{
-                model: User,
-                attributes: ['name', 'email']
-            }]
+                iuid: req.params.iuid
+            }
         });
 
         res.status(200).json({ result: response, msg: "Data item berhasil diambil" });
@@ -214,7 +210,7 @@ export const createItems = async (req, res) => {
 export const updateItems = async (req, res) => {
     const items = await Items.findOne({
         where: {
-            id: req.params.id
+            iuid: req.params.iuid
         }
     });
     if (!items) return res.status(404).json({ msg: "Data tidak ditemukan" });
@@ -243,34 +239,34 @@ export const updateItems = async (req, res) => {
             if (err) return res.status(500).json({ msg: err.message });
         });
     }
-    const { iuid, name, credit, type, quantification, explanation } = req.body;
+    const { name, credit, type, quantification, explanation } = req.body;
     const url = `${req.protocol}://${req.get("host")}/images/${fileName}`;
 
     try {
         if (req.role === "admin") {
-            await items.update({ iuid, name, image: fileName, url: url, credit, type, quantification, explanation }, {
+            await items.update({  name, image: fileName, url: url, credit, type, quantification, explanation }, {
                 where: {
-                    id: req.params.id
+                    iuid: req.params.iuid
                 }
             });
             const incomingItemsUpdated = await IncomingItems.update(
                 {   
-                    iuid: iuid,
+                   
                     name: name,
                     type: type,
                  //   quantification: quantification
                 },
-                { where: { iuid: iuid }}
+                { where: { iuid: req.params.iuid }}
             );
 
             const outgoingItemsUpdated = await OutgoingItems.update(
                 {
-                     iuid: iuid,
+                     
                      name: name,
                      type: type,
                    //  quantification: quantification 
                 },
-                { where: { iuid: iuid } }
+                { where: { iuid: req.params.iuid } }
             );
 
             // Check if child items were updated
@@ -290,7 +286,7 @@ export const updateItems = async (req, res) => {
 export const deleteItems = async (req, res) => {
     const item = await Items.findOne({
         where: {
-            iuid: req.params.id
+            iuid: req.params.iuid
         }
     });
     if (!item) return res.status(404).json({ msg: "Data tidak ditemukan" });
@@ -303,7 +299,7 @@ export const deleteItems = async (req, res) => {
             }
             await item.destroy({
                 where: {
-                    id: item.id
+                    iuid: item.iuid
                 }
             });
         }

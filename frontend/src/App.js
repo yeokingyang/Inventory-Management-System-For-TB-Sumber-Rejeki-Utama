@@ -31,11 +31,11 @@ function App() {
         <Route path="/" element={<Login/>}/>
         <Route path="/users" element={<Users/>}/>
         <Route path="/users/add" element={<Adduser/>}/>
-        <Route path="/users/edit/:id" element={<Edituser/>}/>
+        <Route path="/users/edit/:uuid" element={<Edituser/>}/>
         <Route path="/items" element={<Items/>}/>
         <Route path="/items/add" element={<Additem/>}/>
-        <Route path="/items/edit/:id" element={<Edititem/>}/>
-        <Route path="/itemdetails/:id" element={<Itemdetails/>}/>
+        <Route path="/items/edit/:iuid" element={<Edititem/>}/>
+        <Route path="/itemdetails/:iuid" element={<Itemdetails/>}/>
         <Route path="/wishlistitems" element={<Wishlistitem/>}/>
         <Route path="/wishlistitems/add" element={<Addwishlistitem/>}/>
         <Route path="/incomingitems" element={<Incomingitems/>}/>

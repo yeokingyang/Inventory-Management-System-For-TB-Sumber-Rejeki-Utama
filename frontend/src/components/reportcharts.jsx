@@ -123,7 +123,7 @@ const Reportcharts = () => {
                                 <CartesianGrid strokeDasharray="3 3" />
                                 <XAxis dataKey="date" tick={{ fill: "white" }} />
                                 <YAxis tick={{ fill: "white" }}
-                                    domain={[0, Math.max(...dailyExpense.map(data => data.totalIncome))]} // Set domain based on highest totalIncome value
+                                    domain={[0, Math.max(...dailyExpense.map(data => data.totalExpense))]} // Set domain based on highest totalIncome value
                                 />
                                 <Tooltip />
                                 <Legend />

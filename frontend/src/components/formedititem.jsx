@@ -4,7 +4,6 @@ import { useNavigate, useParams } from "react-router-dom";
 
 const Formedititem = () => {
 
-    const [iuid, setIuid] = useState("");
     const [name, setName] = useState("");
     const [file, setFile] = useState("");
     const [preview, setPreview] = useState("");
@@ -14,15 +13,14 @@ const Formedititem = () => {
     const [explanation, setExplanation] = useState("");
     const [msg, setMsg] = useState("");
     const navigate = useNavigate();
-    const { id } = useParams();
+    const { iuid } = useParams();
 
     useEffect(() => {
         const getItemById = async () => {
             try {
                 const response = await axios.get(
-                    `http://localhost:5000/items/${id}`
+                    `http://localhost:5000/items/${iuid}`
                 );
-                setIuid(response.data.result.iuid);
                 setName(response.data.result.name);
                 setCredit(response.data.result.credit);
                 setType(response.data.result.type);
@@ -37,7 +35,7 @@ const Formedititem = () => {
             }
         };
         getItemById();
-    }, [id]);
+    }, [iuid]);
 
 
     const loadImage = (e) => {
@@ -49,7 +47,6 @@ const Formedititem = () => {
     const editItem = async (e) => {
         e.preventDefault();
         const formData = new FormData();
-        formData.append('iuid', iuid);
         formData.append('name', name);
         formData.append("file", file);
         formData.append('type', type);
@@ -57,7 +54,7 @@ const Formedititem = () => {
         formData.append('quantification', quantification);
         formData.append('explanation', explanation);
         try {
-            await axios.patch(`http://localhost:5000/items/${id}`, formData, {
+            await axios.patch(`http://localhost:5000/items/${iuid}`, formData, {
                 headers: {
                     "Content-type": "multipart/form-data",
                 }
@@ -90,7 +87,7 @@ const Formedititem = () => {
                             onChange={loadImage}
                         />
                     </div>
-                    
+
                     {preview ? (
                         <figure className=" mb-5">
                             <img src={preview} alt="Preview Image" className="w-40 h-40 object-cover rounded-lg shadow-md" />
@@ -98,17 +95,16 @@ const Formedititem = () => {
                     ) : (
                         ""
                     )}
-                            <label htmlFor="fileInput" className="bg-indigo-500 hover:bg-indigo-700 text-white py-2 px-4 rounded cursor-pointer">
-                            Choose a file...
-                        </label>
+                    <label htmlFor="fileInput" className="bg-indigo-500 hover:bg-indigo-700 text-white py-2 px-4 rounded cursor-pointer">
+                        Choose a file...
+                    </label>
                 </div>
 
                 <div className='flex flex-col text-gray-400 font-bold text-2xl py-2'>
                     <label>Code</label>
-                    <input className='rounded-lg bg-white-800 mt-2 p-2 focus:border-blue-500 focus:outline-none text-black'
-                        value={iuid}
-                        onChange={(e) => setIuid(e.target.value)}
-                        placeholder="Item Code" />
+                    <h1 className='rounded-lg bg-white-800 mt-2 p-2 focus:border-blue-500 focus:outline-none text-white'>
+                        {iuid}
+                    </h1>
                 </div>
                 <div className='flex flex-col text-gray-400 font-bold text-2xl py-2'>
                     <label>Name</label>

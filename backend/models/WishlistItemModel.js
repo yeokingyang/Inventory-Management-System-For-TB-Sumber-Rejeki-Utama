@@ -55,22 +55,29 @@ const WishlistItems = db.define('wishlistitems', {
         type: DataTypes.STRING,
         allowNull: true,
     },
-    userId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        validate: {
-            notEmpty: true,
-        }
-    }
+    uuid: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        references: {
+          model: 'users',
+          key: 'uuid'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      }
 }, {
     freezeTableName: true
 });
 
-Users.hasMany(WishlistItems);
-WishlistItems.belongsTo(Users, { foreignKey: 'userId' });
+Users.hasMany(WishlistItems, {
+    foreignKey: 'uuid',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
+  });
+WishlistItems.belongsTo(Users, { foreignKey: 'uuid' });
 
 export default WishlistItems;
 
 //(async()=>{
-   //await db.sync();
+  // await db.sync();
 //})();

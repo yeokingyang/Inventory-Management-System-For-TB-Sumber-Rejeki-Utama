@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import placeholderImg from '../assets/placeholderimg.jpg'
 import { useSpring, animated } from 'react-spring';
+import { FaShoppingCart } from "react-icons/fa";
 
 const StockItemList = ({ item }) => {
 
@@ -16,9 +17,9 @@ const StockItemList = ({ item }) => {
   });
 
   return (
-    <div className="border max-w-[350px]">
-      <Link to={`/itemdetails/${item.id}`} className="block w-full">
-        <div className="bg-grey mt-2 h-[120px] flex items-center justify-center overflow-hidden">
+    <div className="border max-w-[350px] p-2">
+      <Link to={`/itemdetails/${item.iuid}`} className="block w-full">
+        <div className="bg-grey mt-2 h-[120px] flex items-center justify-center overflow-hidden border">
           <img src={item.url} alt="" className="w-[120px]" />
         </div>
       </Link>
@@ -28,7 +29,7 @@ const StockItemList = ({ item }) => {
           <div className="text-sm text-white font-bold mb-3">{type}</div>
         </div>
         <animated.button
-          className={`text-white p-3 ${addedToCart ? 'added-to-cart' : ''}`}
+          className={`text-white p-3 ${addedToCart ? "added-to-cart" : ""} flex items-center`}
           onClick={() => {
             dispatch(add(item));
             setAddedToCart(true);
@@ -36,7 +37,10 @@ const StockItemList = ({ item }) => {
           }}
           style={cartIconProps}
         >
-          Add To Cart
+          <div className="flex-shrink-0">
+            <FaShoppingCart className="mr-2 sm:w-5 sm:h-5" />
+          </div>
+          <span className="flex-grow">Add To Cart</span>
         </animated.button>
       </div>
     </div>

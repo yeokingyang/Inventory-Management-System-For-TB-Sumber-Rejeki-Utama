@@ -432,3 +432,65 @@ export const getReportIncomebyDaily = async (req, res) => {
     }
 };
 
+export const getReportSalesbyDaily = async (req, res) => {
+    try {
+        const { month, year } = req.query;
+        const formattedMonth = month.padStart(2, '0');
+        const formattedYear = year;
+
+        // Query outgoing items based on year and month
+        const data = await OutgoingItems.findAll({
+            where: {
+                date: {
+                    [Sequelize.Op.and]: [
+                        Sequelize.where(Sequelize.fn('YEAR', Sequelize.col('date')), formattedYear),
+                        Sequelize.where(Sequelize.fn('MONTH', Sequelize.col('date')), formattedMonth),
+                    ],
+                },
+            },
+            attributes: [
+                [Sequelize.fn('DATE', Sequelize.col('date')), 'date'], // Extract only the date part
+                [Sequelize.fn('SUM', Sequelize.col('quantitySold')), 'totalSales'],// Sum of the income column
+            ],
+            group: [Sequelize.fn('DATE', Sequelize.col('date'))], // Group by date part
+            raw: true, // Return raw data
+        });
+
+        res.status(200).json(data);
+    } catch (error) {
+        res.status(500).json({ msg: error.message });
+    }
+};
+
+export const getReportItemSalesbyDaily = async (req, res) => {
+    try {
+        const { month, year } = req.query;
+        const formattedMonth = month.padStart(2, '0');
+        const formattedYear = year;
+
+        // Query outgoing items based on year and month
+        const data = await OutgoingItems.findAll({
+            where: {
+                date: {
+                    [Sequelize.Op.and]: [
+                        Sequelize.where(Sequelize.fn('YEAR', Sequelize.col('date')), formattedYear),
+                        Sequelize.where(Sequelize.fn('MONTH', Sequelize.col('date')), formattedMonth),
+                    ],
+                },
+            },
+            attributes: [
+                [Sequelize.fn('DATE', Sequelize.col('date')), 'date'], // Extract only the date part 
+                'name',
+                'quantitySold',
+                'quantification'       
+            ],
+            group: ['name', 'quantification'],//
+            order: [['date', 'ASC']], 
+            raw: true, // Return raw data
+        });
+
+        res.status(200).json(data);
+    } catch (error) {
+        res.status(500).json({ msg: error.message });
+    }
+};

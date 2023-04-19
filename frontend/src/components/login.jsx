@@ -48,8 +48,7 @@ const Login = () => {
                                 type="password" />
                         </div>
                         <div className='flex justify-between text-gray-400 py-2'>
-                            <p className='flex items-center'><input className='mr-2' type="checkbox" />Remember Me</p>
-                            <p>Forgot Password</p>
+                          
                         </div>
                         <button type="submit" className='w-full my-5 mt-10 py-2 text-2xl bg-teal-500 shadow-lg shadow-teal-500/20 group-hover:shadow-teal-500/15 text-white font-semibold rounded-lg
                     '>  {isLoading ? "Loading..." : "Login"}</button>

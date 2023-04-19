@@ -103,7 +103,7 @@ const SellItemstore = () => {
                     </div>
                 </form>
             </div>
-            <div className="fixed top-32 right-2 p-4">
+            <div className="fixed top-32 right-10 p-4">
                 <div className="relative cursor-pointer"
                     onClick={() => dispatch(open())} >
 
@@ -114,7 +114,7 @@ const SellItemstore = () => {
                     </animated.div>
                 </div>
             </div>
-            <div className=" section mt-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-6 ">
+            <div className=" section mt-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-6  ">
                 {items.map((item) => {
                     return <Sellitemlist key={item.iuid} item={item} />;
                 })}

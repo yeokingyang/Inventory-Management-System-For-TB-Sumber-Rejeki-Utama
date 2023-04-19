@@ -105,7 +105,7 @@ const StockItemstore = () => {
                     </div>
                 </form>
             </div>
-            <div className="fixed top-32 right-2 p-4">
+            <div className="fixed top-32 right-10 p-4">
                 <div className="relative cursor-pointer"
                     onClick={() => dispatch(open())} >
                     <BiShoppingBag className="text-3xl opacity-80 text-white" />

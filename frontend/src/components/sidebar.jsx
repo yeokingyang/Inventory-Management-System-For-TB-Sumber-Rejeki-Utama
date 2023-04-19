@@ -20,9 +20,10 @@ const Sidebar = () => {
     { name: "Stocking Items", link: "/stockitem", icon: FiFolder },
     { name: "Outgoing Items", link: "/outgoingitems", icon: FiFolder, margin: true},
     { name: "Sell Items", link: "/sellitem", icon: FiShoppingCart },
-    { name: "analytics", link: "/analytics", icon: TbReportAnalytics, margin: true },
-    { name: "Saved", link: "/", icon: AiOutlineHeart},
-    { name: "LogOut", link:"/", icon: RiSettings4Line },
+    { name: "Forecast", link: "/analytics", icon: TbReportAnalytics, margin: true },
+    { name: "Revenue Report", link: "/report", icon: FiFolder},
+    { name: "Sales Report", link: "/reportSales", icon: FiFolder},
+    { name: "LogOut", link:"/", icon: RiSettings4Line,  margin: true  },
   ];
 
   const [open, setOpen] = useState(true);

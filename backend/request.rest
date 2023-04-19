@@ -236,3 +236,6 @@ GET http://localhost:5000/report/incomebyDaily?year=2023&month=1
 
 ###
 GET http://localhost:5000/incomeForecast
+
+###
+GET http://localhost:5000/report/salesbyDaily

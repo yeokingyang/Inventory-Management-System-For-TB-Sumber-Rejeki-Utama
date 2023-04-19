@@ -13,7 +13,7 @@ export const getWishlistItems = async (req, res) => {
         where: {
             [Op.or]: [{
                 name: {
-                    [Op.like]: search + '%'
+                    [Op.like]: '%' + search + '%'
                 }
             }, {
             }]

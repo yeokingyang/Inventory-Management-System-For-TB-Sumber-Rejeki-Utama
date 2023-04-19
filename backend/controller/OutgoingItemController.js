@@ -5,64 +5,20 @@ import { Op } from "sequelize";
 
 
 export const getOutgoingItems = async (req, res) => {
-    /*  const page = parseInt(req.query.page) || 0;
-      const limit = parseInt(req.query.limit) || 10;
-      const search = req.query.search_query || "";
-      const offset = Math.max(limit * page, 0);
-      const totalRows = await OutgoingItems.count({
-          where: {
-              [Op.or]: [{
-                  name: {
-                      [Op.like]: '%' + search + '%'
-                  }
-              }, {
-                  iuid: {
-                      [Op.like]: '%' + search + '%'
-                  }
-              }]
-          }
-      });
-      const totalPage = Math.ceil(totalRows / limit);
-      const result = await OutgoingItems.findAll({
-          where: {
-              [Op.or]: [{
-                  name: {
-                      [Op.like]: '%' + search + '%'
-                  }
-              }, {
-                  iuid: {
-                      [Op.like]: '%' + search + '%'
-                  }
-              }]
-          },
-          offset: offset,
-          limit: limit,
-          order: [
-              ['createdAt', 'DESC']
-          ]
-      });
-      try {
-          res.json({
-              result: result,
-              page: page,
-              limit: limit,
-              totalRows: totalRows,
-              totalPage: totalPage
-          });
-      } catch (error) {
-          console.error(error);
-          res.status(500).json({ msg: error.message });
-      }*/
 
     const page = parseInt(req.query.page) || 0;
     const limit = parseInt(req.query.limit) || 10;
     const search = req.query.search_query || "";
     const offset = Math.max(limit * page, 0);
+    const orderBy = req.query.orderBy || "name";
+    const orderType = req.query.orderType || "asc";
+    const order = [[orderBy, orderType.toUpperCase()]];
+
     const { count, rows } = await OutgoingItems.findAndCountAll({
         where: {
             [Op.or]: [{
                 name: {
-                    [Op.like]: search + '%'
+                    [Op.like]: '%' + search + '%'
                 }
             }, {
                 iuid: {
@@ -73,7 +29,7 @@ export const getOutgoingItems = async (req, res) => {
         offset: offset,
         limit: limit,
         order: [
-            ['date', 'DESC']
+            [order]
         ]
     });
     const totalPage = Math.ceil(count / limit);

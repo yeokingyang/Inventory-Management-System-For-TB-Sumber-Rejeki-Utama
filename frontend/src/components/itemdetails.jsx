@@ -42,9 +42,7 @@ const Itemdetails = () => {
                     <p className="max-w-[400px] mb-4 text-gray-800">
                         {items.explanation}
                     </p>
-                    <button className="bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-indigo-600 transition-colors duration-300">
-                        Add to cart
-                    </button>
+                  
                 </div>
             </div>
             <button className="bg-blue-500 text-white py-2 px-4 rounded mt-10" onClick={goBack}>Go Back</button>

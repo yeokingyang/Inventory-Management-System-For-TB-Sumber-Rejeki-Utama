@@ -6,47 +6,20 @@ import { Op } from "sequelize"
 import path from "path";
 import fs from "fs";
 
-
-/*
-export const getProducts = async (req, res) =>{
-    try {
-        let response;
-        if(req.role === "admin"){
-            response = await Product.findAll({
-                attributes:['uuid','name','price'],
-                include:[{
-                    model: User,
-                    attributes:['name','email']
-                }]
-            });
-        }else{
-            response = await Product.findAll({
-                attributes:['uuid','name','price'],
-                where:{
-                    userId: req.userId
-                },
-                include:[{
-                    model: User,
-                    attributes:['name','email']
-                }]
-            });
-        }
-        res.status(200).json(response);
-    } catch (error) {
-        res.status(500).json({msg: error.message});
-    }
-}
-*/
 export const getItems = async (req, res) => {
     const page = parseInt(req.query.page) || 0;
     const limit = parseInt(req.query.limit) || 10;
     const search = req.query.search_query || "";
     const offset = Math.max(limit * page, 0);
+    const orderBy = req.query.orderBy || "name";
+    const orderType = req.query.orderType || "asc";
+    const order = [[orderBy, orderType.toUpperCase()]];
+
     const { count, rows } = await Items.findAndCountAll({
         where: {
             [Op.or]: [{
                 name: {
-                    [Op.like]: search + '%'
+                    [Op.like]: '%' + search + '%'
                 }
             }, {
                 iuid: {
@@ -57,7 +30,7 @@ export const getItems = async (req, res) => {
         offset: offset,
         limit: limit,
         order: [
-            ['name', 'ASC']
+            [order]
         ]
     });
     const totalPage = Math.ceil(count / limit);

@@ -7,14 +7,14 @@ import placeholderImg from '../assets/placeholderimg.jpg'
 const StockItemConfirmList = ({ cartItem }) => {
 
     const dispatch = useDispatch();
-    const { id, amount, name } = cartItem;
+    const { iuid, amount, name } = cartItem;
     const [debit, setDebit] = useState("");
     const [intervalId, setIntervalId] = useState(null);
 
     const handleDebitChange = async (e) => {
         e.preventDefault();
         setDebit(e.target.value);
-        dispatch(updateDebit({ id, debit: e.target.value }));
+        dispatch(updateDebit({ iuid, debit: e.target.value }));
     };
 
     const handleDecreaseMouseDown = () => {

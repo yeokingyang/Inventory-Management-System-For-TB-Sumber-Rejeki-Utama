@@ -35,7 +35,7 @@ const StockItemConfirm = () => {
                         <>
                             {cartItems.map((cartItem) => {
                                 return (
-                                    <Stockitemconfirmlist key={cartItem.id}
+                                    <Stockitemconfirmlist key={cartItem.iuid}
                                         cartItem={cartItem}
                                     />
 

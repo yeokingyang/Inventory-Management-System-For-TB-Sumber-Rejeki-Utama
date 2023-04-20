@@ -132,7 +132,7 @@ const ModelPredict = () => {
     return (
         <div className='relative'>
             <div className="sticky top-0 bg-gray-800 p-4 border z-10">
-                <Link className="text-white flex items-center" to={`/analytics`}>
+                <Link className="text-white flex items-center mb-2" to={`/analytics`}>
                     <HiChevronLeft className="mr-2" />
                     <span className="uppercase text-sm select-none">Go Back</span>
                 </Link>
@@ -170,13 +170,13 @@ const ModelPredict = () => {
                         </div>
                     </div>
                     <div>
-                        <h1 className="text-4xl font-bold text-white mt-10 items-center">Preprocess Data</h1>
+                        <h1 className="text-4xl font-bold text-white mt-10 items-center">Predicting</h1>
                         {forecastBy === "income" && (<div className='mt-5'>
                             <button
                                 onClick={() => sendForecastIncomeToBackend(forecastBy, income)}
                                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                             >
-                                Check Connection to Backend
+                                Start Forecasting
                             </button>
                         </div>)}
                     </div>
@@ -214,7 +214,7 @@ const ModelPredict = () => {
                             onClick={() => sendForecastDataToBackend(forecastBy, forecastItemConfirm, time)}
                             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                         >
-                            Check Connection to Backend
+                                  Start Forecasting
                         </button>
                     </div>
 

@@ -13,7 +13,7 @@ const StockSlice = createSlice({
         add: (state, action) => {
             state.amount++;
             const cartItem = state.cartItems.find(
-                (cartItem) => cartItem.id === action.payload.id
+                (cartItem) => cartItem.iuid === action.payload.iuid
             );
             cartItem
                 ? (cartItem.amount = cartItem.amount + 1)
@@ -22,7 +22,7 @@ const StockSlice = createSlice({
         increase: (state, action) => {
             state.amount++;
             const itemIndex = state.cartItems.findIndex(
-                (cartItem) => cartItem.id === action.payload.id
+                (cartItem) => cartItem.iuid === action.payload.iuid
             );
             state.cartItems[itemIndex].amount += 1;
             state.cartItems[itemIndex].debit = state.debit;
@@ -32,7 +32,7 @@ const StockSlice = createSlice({
         },
         decrease: (state, action) => {
             const itemIndex = state.cartItems.findIndex(
-                (cartItem) => cartItem.id === action.payload.id
+                (cartItem) => cartItem.iuid === action.payload.iuid
             );
             state.cartItems[itemIndex].amount > 0 &&
                 state.cartItems[itemIndex].amount-- &&
@@ -41,9 +41,9 @@ const StockSlice = createSlice({
         },
         remove: (state, action) => {
             state.cartItems.map((cartItem) => {
-                if (cartItem.id === action.payload.id) {
+                if (cartItem.iuid === action.payload.iuid) {
                     state.cartItems = state.cartItems.filter(
-                        (item) => item.id !== cartItem.id
+                        (item) => item.iuid !== cartItem.iuid
                     );
                     state.amount = state.amount - cartItem.amount;
                 }
@@ -57,9 +57,9 @@ const StockSlice = createSlice({
             state.total = total;
         },
         updateDebit: (state, action) => {
-            const { id, debit } = action.payload;
+            const { iuid, debit } = action.payload;
             const itemIndex = state.cartItems.findIndex(
-                (cartItem) => cartItem.id === id
+                (cartItem) => cartItem.iuid === iuid
             );
             if (itemIndex !== -1) {
                 state.cartItems[itemIndex].debit = Number(debit);

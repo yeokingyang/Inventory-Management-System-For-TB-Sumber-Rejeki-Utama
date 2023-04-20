@@ -4,6 +4,7 @@ import { FiUsers } from 'react-icons/fi';
 import { BsCurrencyDollar } from 'react-icons/bs';
 import { GoPrimitiveDot } from 'react-icons/go';
 import { IoIosMore, IoIosPhotos } from 'react-icons/io';
+import { IoPerson, IoPricetag, IoHome, IoLogOut } from "react-icons/io5";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import placeholderImg from '../assets/bannerearning.jpg'
@@ -132,23 +133,14 @@ const Welcome = () => {
         </h2>
 
       </div>
-
-      <div id="first div" className="flex flex-wrap justify-center bg-white rounded md:w-full md:h-full">
-        <div className="flex items-start m-3 justify-start relative z-0">
-          <img src={placeholderImg} alt="" className="w-[1000px] h-[300px] " />
-          <div className="p-5 text-white flex flex-col items-center justify-center absolute -top-0 z-0">
-            <p className="text-lg font-bold">Earnings</p>
-            <p className="text-lg font-bold">Rp {sumTotalPrice}</p>
-          </div>
-        </div>
-      </div>
+      
       <div id="second div" className="flex flex-wrap justify-center mt-0.5 bg-white rounded md:w-full md:h-full">
-        <div className="flex items-center justify-center bg-white m-3 border rounded-2xl w-full">
-          <div className="bg-gray h-44  dark:text-gray-200 dark:bg-secondary-dark-bg md:w-56  p-4 pt-9 rounded-2xl mx-4 ">
+        <div className="flex items-center justify-start bg-white m-3 border rounded-2xl w-full">
+          <div className="bg-gray h-44  dark:text-gray-200 dark:bg-secondary-dark-bg md:w-56  p-4 pt-9 rounded-2xl mx-2 ">
             <Link to="/users">
               <button
                 type="button"
-                style={{ color: "white", backgroundColor: "gray" }}
+                style={{ color: "white", backgroundColor: "black" }}
                 className="text-2xl opacity-0.9 rounded-full  p-4 hover:drop-shadow-xl"
               >
                 <FiUsers />
@@ -159,15 +151,14 @@ const Welcome = () => {
             </p>
             <p className="text-sm text-black  mt-1">Employee</p>
           </div>
-
-          <div className="bg-gray h-44 dark:text-gray-200 dark:bg-secondary-dark-bg md:w-56  p-4 pt-9 rounded-2xl mx-4">
+          <div className="bg-gray h-44 dark:text-gray-200 dark:bg-secondary-dark-bg md:w-56  pt-9 rounded-2xl ">
             <Link to="/items">
               <button
                 type="button"
-                style={{ color: "blue", backgroundColor: "gray" }}
+                style={{ color: "white", backgroundColor: "black" }}
                 className="text-2xl opacity-0.9 rounded-full  p-4 hover:drop-shadow-xl"
               >
-                <IoIosPhotos />
+                <IoPricetag />
               </button>
             </Link>
             <p className="mt-3">
@@ -175,9 +166,6 @@ const Welcome = () => {
             </p>
             <p className="text-sm text-black mt-1">Items</p>
           </div>
-
-
-
         </div>
       </div>
 
@@ -186,6 +174,7 @@ const Welcome = () => {
           <div className="flex justify-between">
             <p className="font-semibold text-xl">Revenue Updates</p>
             <div className="flex items-center gap-4">
+
               <p className="flex items-center gap-2 text-red-600 hover:drop-shadow-xl">
                 <span>
                   <GoPrimitiveDot />
@@ -199,7 +188,9 @@ const Welcome = () => {
                 <span>Income</span>
               </p>
             </div>
+
           </div>
+
           <div className="mt-10 flex flex-col md:flex-row md:gap-10 md:justify-start">
             <div className="border-r-1 border-color m-4 pr-10">
               <div>

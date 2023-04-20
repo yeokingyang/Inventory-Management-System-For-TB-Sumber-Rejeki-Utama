@@ -12,7 +12,7 @@ const CartSlice = createSlice({
     add: (state, action) => {
       state.amount++;
       const cartItem = state.cartItems.find(
-        (cartItem) => cartItem.id === action.payload.id
+        (cartItem) => cartItem.iuid === action.payload.iuid
       );
       cartItem
         ? (cartItem.amount = cartItem.amount + 1)
@@ -21,7 +21,7 @@ const CartSlice = createSlice({
     increase: (state, action) => {
       state.amount++;
       const itemIndex = state.cartItems.findIndex(
-        (cartItem) => cartItem.id === action.payload.id
+        (cartItem) => cartItem.iuid === action.payload.iuid
       );
       state.cartItems[itemIndex].amount += 1;
       let total = 0;
@@ -29,7 +29,7 @@ const CartSlice = createSlice({
     },
     decrease: (state, action) => {
       const itemIndex = state.cartItems.findIndex(
-        (cartItem) => cartItem.id === action.payload.id
+        (cartItem) => cartItem.iuid === action.payload.iuid
       );
       state.cartItems[itemIndex].amount > 0 &&
         state.cartItems[itemIndex].amount-- &&
@@ -37,18 +37,18 @@ const CartSlice = createSlice({
     },
     remove: (state, action) => {
       state.cartItems.map((cartItem) => {
-        if (cartItem.id === action.payload.id) {
+        if (cartItem.iuid === action.payload.iuid) {
           state.cartItems = state.cartItems.filter(
-            (item) => item.id !== cartItem.id
+            (item) => item.iuid !== cartItem.iuid
           );
           state.amount = state.amount - cartItem.amount;
         }
       });
     },
     updateCredit: (state, action) => {
-      const { id, credit } = action.payload;
+      const { iuid, credit } = action.payload;
       const itemIndex = state.cartItems.findIndex(
-        (cartItem) => cartItem.id === id
+        (cartItem) => cartItem.iuid === iuid
       );
       if (itemIndex !== -1) {
         state.cartItems[itemIndex].credit = Number(credit);
@@ -56,9 +56,9 @@ const CartSlice = createSlice({
       }
     },
     updateQuantification: (state, action) => {
-      const { id, quantification } = action.payload;
+      const { iuid, quantification } = action.payload;
       const itemIndex = state.cartItems.findIndex(
-        (cartItem) => cartItem.id === id
+        (cartItem) => cartItem.iuid === iuid
       );
       if (itemIndex !== -1) {
         state.cartItems[itemIndex].quantification = String(quantification);

@@ -6,7 +6,7 @@ import placeholderImg from '../assets/placeholderimg.jpg'
 
 const SellItemConfirmList = ({ cartItem }) => {
   const dispatch = useDispatch();
-  const { id, credit, amount, name, quantification } = cartItem;
+  const { iuid, credit, amount, name, quantification } = cartItem;
   const [itemCredit, setItemCredit] = useState(credit);
   const [itemQuantification, setItemQuantification] = useState(credit);
   const [intervalId, setIntervalId] = useState(null);
@@ -14,13 +14,13 @@ const SellItemConfirmList = ({ cartItem }) => {
   const handleCreditChange = async (e) => {
     e.preventDefault();
     setItemCredit(e.target.value);
-    dispatch(updateCredit({ id, credit: e.target.value }));
+    dispatch(updateCredit({ iuid, credit: e.target.value }));
   };
 
   const handleQuantificationChange = async (e) => {
     e.preventDefault();
     setItemQuantification(e.target.value);
-    dispatch(updateQuantification({ id, quantification: e.target.value }));
+    dispatch(updateQuantification({ iuid, quantification: e.target.value }));
   };
 
 

@@ -62,13 +62,14 @@ const Formeditoutgoingitem = () => {
   }, [id]);
 
   return (
-    <div className="bg-gray-800 h-screen flex flex-col justify-top pt-10 pl-10">
+    <div className="bg-gray-800 h-screen flex flex-col justify-top pt-10 pl-10 pr-10 border rounded-2xl overflow-auto">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="title text-4xl font-bold text-white">Items</h1>
-          <h2 className="subtitle text-white">Update Items</h2>
+          <h1 className="title text-4xl font-bold text-white">Outgoing Items</h1>
+          <h2 className="subtitle text-white">Update Outgoing Item</h2>
         </div>
       </div>
+      <hr className="my-6 border-gray-300" />
       <form onSubmit={editOutgoingItem}>
         <p className="text-center text-white">{msg}</p>
         <div className='flex flex-col text-gray-400 font-bold text-2xl py-2'>

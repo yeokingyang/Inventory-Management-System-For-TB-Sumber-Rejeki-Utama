@@ -34,7 +34,7 @@ const SellItemConfirm = () => {
                         <>
                             {cartItems.map((cartItem) => {
                                 return (
-                                    <Sellitemconfirmlist key={cartItem.id} cartItem={cartItem} />
+                                    <Sellitemconfirmlist key={cartItem.iuid} cartItem={cartItem} />
                                 );
                             })}
                             <div className="flex justify-between items-center mt-12 mb-8">

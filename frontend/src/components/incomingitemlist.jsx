@@ -17,8 +17,8 @@ const Incomingitemlist = () => {
     const [keyword, setKeyword] = useState("");
     const [query, setQuery] = useState("");
     const [msg, setMsg] = useState("");
-    const [orderBy, setOrderBy] = useState('name');
-    const [orderType, setOrderType] = useState('asc');
+    const [orderBy, setOrderBy] = useState('date');
+    const [orderType, setOrderType] = useState('desc');
     const role = useSelector((state) => state.auth.user?.role);
 
     useEffect(() => {
@@ -207,7 +207,7 @@ const Incomingitemlist = () => {
                                 <td className="px-4 py-2 border">{incomingitem.quantityPurchased}</td>
                                 <td className="px-4 py-2 border">{incomingitem.quantification}</td>
                                 <td className="px-4 py-2 border">{incomingitem.totalDebit}</td>
-                                <td className="px-4 py-2 border">{incomingitem.date.slice(0, 10)}</td>
+                                <td className="px-4 py-2 border">{incomingitem.date ? incomingitem.date.slice(0, 10) : "No date available"}</td>
                                 {role === "admin" && (<td className="px-4 py-2 border">
                                     <Link to={`/incomingItems/edit/${incomingitem.id}`} className="inline-block align-middle px-4 py-2 mx-2 bg-gray-300 hover:text-red-700 leading-tight uppercase rounded shadow-md hover:bg-gray-500 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-700 active:shadow-lg transition duration-150 ease-in-out group"
                                     >

@@ -3,7 +3,8 @@ import { HiMenuAlt3 } from "react-icons/hi";
 import { MdOutlineDashboard } from "react-icons/md";
 import { RiSettings4Line } from "react-icons/ri";
 import { TbReportAnalytics } from "react-icons/tb";
-import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
+import { AiOutlineUser, AiOutlineHeart, AiOutlineLogout, AiOutlineDropbox } from "react-icons/ai";
+import { FaChartBar, FaBox, FaDropbox, FaUserFriends } from "react-icons/fa";
 import { FiMessageSquare, FiFolder, FiShoppingCart } from "react-icons/fi";
 import { IoPerson, IoPricetag, IoHome, IoLogOut } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
@@ -13,17 +14,17 @@ import { LogOut, reset } from "../features/authslice";
 const Sidebar = () => {
   const menus = [
     { name: "Dashboard", link: "/dashboard", icon: MdOutlineDashboard },
-    { name: "User", link: "/users", icon: AiOutlineUser },
+    { name: "User", link: "/users", icon: FaUserFriends },
     { name: "Items", link: "/items", icon: IoPricetag },
-    { name: "Wishlist Items", link: "/wishlistitems", icon: IoPricetag },
-    { name: "Incoming Items", link: "/incomingitems", icon: TbReportAnalytics, margin: true },
-    { name: "Stocking Items", link: "/stockitem", icon: FiFolder },
-    { name: "Outgoing Items", link: "/outgoingitems", icon: FiFolder, margin: true},
+    { name: "Wishlist Items", link: "/wishlistitems", icon: AiOutlineHeart },
+    { name: "Incoming Items", link: "/incomingitems", icon: FaDropbox, margin: true },
+    { name: "Stocking Items", link: "/stockitem", icon: FiShoppingCart },
+    { name: "Outgoing Items", link: "/outgoingitems", icon: FaBox, margin: true},
     { name: "Sell Items", link: "/sellitem", icon: FiShoppingCart },
     { name: "Forecast", link: "/analytics", icon: TbReportAnalytics, margin: true },
-    { name: "Revenue Report", link: "/report", icon: FiFolder},
-    { name: "Sales Report", link: "/reportSales", icon: FiFolder},
-    { name: "LogOut", link:"/", icon: RiSettings4Line,  margin: true  },
+    { name: "Revenue Report", link: "/report", icon: FaChartBar},
+    { name: "Sales Report", link: "/reportSales", icon: FaChartBar},
+    { name: "LogOut", link:"/", icon: AiOutlineLogout,  margin: true  },
   ];
 
   const [open, setOpen] = useState(true);

@@ -119,7 +119,7 @@ const Preprocessdata = () => {
   return (
 
     <div>
-      {isLoading && <div className="fixed top-0 left-0 right-0 bottom-0 bg-gray-500 opacity-50 z-50"></div>}
+      {isLoading && <div className="fixed top-0 left-0 right-0 bottom-0 bg-gray-500 opacity-50 z-20"></div>}
       {isLoading && <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white font-bold text-2xl z-50">Loading...</div>}
       <div className="sticky top-0 bg-gray-800 p-4 z-15 border">
         <div className="flex items-center">
@@ -129,7 +129,7 @@ const Preprocessdata = () => {
               Go Back
             </span>
           </Link>
-          <h1 className="text-4xl font-bold text-white mt-10">Preprocess Data</h1>
+          <h1 className="text-4xl font-bold text-white p-10">Preprocess Data</h1>
 
         </div>
       </div>
@@ -221,9 +221,7 @@ const Preprocessdata = () => {
                         onChange={handleForecastByChange}
                         className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                       >
-                        <option value="">-- Select Operation --</option>
-                        <option value="totalCredit">Total Income for next months</option>
-                        <option value="quantitySold">total Quantity item sold for next months</option>
+                        <option value="quantitySold">total Quantity item sold</option>
                       </select>
                       <button onClick={() => gotoNextpage()} className="inline-block align-middle px-4 py-2 mx-2 bg-gray-300 hover:text-red-700 leading-tight uppercase rounded shadow-md hover:bg-gray-500 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-700 active:shadow-lg transition duration-150 ease-in-out group"
                       >
@@ -272,10 +270,10 @@ const Preprocessdata = () => {
           </div>
         )}
       </div>
-      <div id="second part">
+      <div id="second part" className='p-4 border'>
         {convertedItems.length > 0 && (
           <div className="w-full max-w-2xl ml-4">
-            <div className="sticky top-0 bg-gray-800 p-4 z-15 border">
+            <div className=" bg-gray-800 p-4 border">
               <h2 className="text-2xl font-bold mb-4 text-white">Converted Forecast Item</h2>
               <label htmlFor="forecastByselect" className="block text-white mt-4">
                 Select What to Forecast:
@@ -286,11 +284,9 @@ const Preprocessdata = () => {
                 onChange={handleForecastByChange}
                 className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               >
-                <option value="">-- Select Operation --</option>
-                <option value="totalCredit">Total Income for next months</option>
-                <option value="quantitySold">total Quantity item sold for next months</option>
+                <option value="quantitySold">Total quantity item sold</option>
               </select>
-              <button onClick={() => gotoNextpage()} className="inline-block align-middle px-4 py-2 mx-2 bg-gray-300 hover:text-red-700 leading-tight uppercase rounded shadow-md hover:bg-gray-500 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-700 active:shadow-lg transition duration-150 ease-in-out group"
+              <button onClick={() => gotoNextpage()} className="inline-block align-middle px-4 py-2 mx-2 bg-gray-300 hover:text-red-700 leading-tight uppercase rounded shadow-md hover:bg-gray-500 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-700 active:shadow-lg transition duration-150 ease-in-out group mt-5"
               >
                 <span className="text-white tooltip-text border bg-green-400 -mt-12 -ml-16 rounded-xl hidden group-hover:block absolute text-center py-2 px-6 z-50">Confirm untuk pindah ke step selanjutnya</span>
                 Confirm

@@ -140,7 +140,7 @@ const Itemlist = () => {
                         <option value="quantityPurchased">Quantity Purchased</option>
                         <option value="quantitySold">Quantity Sold</option>
                         <option value="quantityOnHand">Quantity On Hand</option>
-                        <option value="date">Date</option>
+                        <option value="createdAt">Date</option>
 
                     </select>
                     <div>

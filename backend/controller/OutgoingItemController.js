@@ -10,8 +10,8 @@ export const getOutgoingItems = async (req, res) => {
     const limit = parseInt(req.query.limit) || 10;
     const search = req.query.search_query || "";
     const offset = Math.max(limit * page, 0);
-    const orderBy = req.query.orderBy || "name";
-    const orderType = req.query.orderType || "asc";
+    const orderBy = req.query.orderBy || "date";
+    const orderType = req.query.orderType || "desc";
     const order = [[orderBy, orderType.toUpperCase()]];
 
     const { count, rows } = await OutgoingItems.findAndCountAll({

@@ -17,8 +17,8 @@ const Outgoingitemlist = () => {
     const [keyword, setKeyword] = useState("");
     const [query, setQuery] = useState("");
     const [msg, setMsg] = useState("");
-    const [orderBy, setOrderBy] = useState('name');
-    const [orderType, setOrderType] = useState('asc');
+    const [orderBy, setOrderBy] = useState('date');
+    const [orderType, setOrderType] = useState('desc');
     const role = useSelector((state) => state.auth.user?.role);
 
     useEffect(() => {

@@ -26,6 +26,8 @@ const ModelPredict = () => {
             const response = await axios.post('http://localhost:8000/forecast/', {
                 forecastBy: data1,
                 forecastItemConfirm: data2,
+                forecastTime: time,
+                forecastModelType: modeltype,
             }, {
                 headers: {
                     'Content-Type': 'application/json'
@@ -149,8 +151,6 @@ const ModelPredict = () => {
                             >
                                 <option value="">-- Select Operation --</option>
                                 <option value="linearregression"> Linear Regression</option>
-                                <option value="es">Exponential Smoothing</option>
-                                <option value="prophet">Fb Prophet</option>
                                 <option value="arima">Arima</option>
                             </select>
                         </div>
@@ -179,6 +179,17 @@ const ModelPredict = () => {
                                 Start Forecasting
                             </button>
                         </div>)}
+
+                        {forecastBy === "quantitySold" && (
+                        <div className='mt-5'>
+                            <button
+                                onClick={() => sendForecastDataToBackend(forecastBy, forecastItemConfirm)}
+                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                            >
+                                Start Forecasting
+                            </button>  
+                             </div>)}
+
                     </div>
                     {errorMessage && (
                         <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-red-500 text-white text-center py-2 px-4 rounded border z-25">
@@ -193,31 +204,14 @@ const ModelPredict = () => {
                         <h2 className="text-2xl font-bold mt-4 mb-4 text-white">History of {forecastBy} from {forecastItemConfirm[0].name}</h2>
                         <LineChart width={800} height={400} data={prevData}>
                             <CartesianGrid strokeDasharray="3 3" />
-                            <XAxis
-                                dataKey="date"
-                                tick={{ fill: "white" }}
-                                tickFormatter={(dateStr) => {
-                                    const date = new Date(dateStr);
-                                    const year = date.getFullYear();
-                                    const month = date.getMonth() + 1;
-                                    return `${year}-${month}`;
-                                }}
-                            />
+                            <XAxis dataKey="date" tick={{ fill: "white" }} />
                             <YAxis tick={{ fill: "white" }} />
                             <Tooltip />
                             <Legend />
                             <Line type="monotone" dataKey="quantitySold" stroke="#8884d8" />
                         </LineChart>
                     </div>
-                    <div className='flex items-center justify-center mb-5 mt-5'>
-                        <button
-                            onClick={() => sendForecastDataToBackend(forecastBy, forecastItemConfirm, time)}
-                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                        >
-                                  Start Forecasting
-                        </button>
-                    </div>
-
+        
                     <div>
                         <div className='border'>
                             <h2 className="text-2xl font-bold mt-4 text-white">MSE: {mse}</h2>

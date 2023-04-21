@@ -8,7 +8,7 @@ import { getMe } from "../features/authslice";
 const Editoutgoingitem = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { isError } = useSelector((state) => state.auth);
+    const { isError, user } = useSelector((state) => state.auth);
 
     useEffect(() => {
         dispatch(getMe());
@@ -18,8 +18,10 @@ const Editoutgoingitem = () => {
         if (isError) {
             navigate("/");
         }
-    }, [isError, navigate]);
-
+        if (user && user.role !== "admin") {
+            navigate("/dashboard");
+        }
+    }, [isError, user, navigate]);
     return (
         <Layout>
             <Formeditoutgoingitem />

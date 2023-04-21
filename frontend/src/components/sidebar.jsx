@@ -19,12 +19,12 @@ const Sidebar = () => {
     { name: "Wishlist Items", link: "/wishlistitems", icon: AiOutlineHeart },
     { name: "Incoming Items", link: "/incomingitems", icon: FaDropbox, margin: true },
     { name: "Stocking Items", link: "/stockitem", icon: FiShoppingCart },
-    { name: "Outgoing Items", link: "/outgoingitems", icon: FaBox, margin: true},
+    { name: "Outgoing Items", link: "/outgoingitems", icon: FaBox, margin: true },
     { name: "Sell Items", link: "/sellitem", icon: FiShoppingCart },
     { name: "Forecast", link: "/analytics", icon: TbReportAnalytics, margin: true },
-    { name: "Revenue Report", link: "/report", icon: FaChartBar},
-    { name: "Sales Report", link: "/reportSales", icon: FaChartBar},
-    { name: "LogOut", link:"/", icon: AiOutlineLogout,  margin: true  },
+    { name: "Revenue Report", link: "/report", icon: FaChartBar },
+    { name: "Sales Report", link: "/reportSales", icon: FaChartBar },
+    { name: "LogOut", link: "/", icon: AiOutlineLogout, margin: true },
   ];
 
   const [open, setOpen] = useState(true);
@@ -54,8 +54,7 @@ const Sidebar = () => {
         </div>
         <div className="mt-4 flex flex-col gap-4 relative">
           {menus?.map((menu, i) => (
-
-            (menu?.name === "user" && !isAdmin) ? null : (
+            (menu?.name === "User" && !isAdmin) || (menu?.name === "Revenue Report" && !isAdmin) || (menu?.name === "Forecast" && !isAdmin) || (menu?.name === "Sales Report" && !isAdmin) ? null : (
               <Link
                 to={menu?.link}
                 key={i}

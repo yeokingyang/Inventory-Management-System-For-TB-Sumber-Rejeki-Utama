@@ -21,6 +21,7 @@ const Welcome = () => {
   const [expenseThisMonth, setExpenseThisMonth] = useState(0);
   const [incomeThisMonth, setIncomeThisMonth] = useState(0);
   const [incomeDifferences, setIncomeDifferences] = useState(0);
+  const role = useSelector((state) => state.auth.user?.role);
 
   const getOutgoingItemsSumTotalCredit = async () => {
     try {
@@ -133,99 +134,102 @@ const Welcome = () => {
         </h2>
 
       </div>
-      
-      <div id="second div" className="flex flex-wrap justify-center mt-0.5 bg-white rounded md:w-full md:h-full">
-        <div className="flex items-center justify-start bg-white m-3 border rounded-2xl w-full">
-          <div className="bg-gray h-44  dark:text-gray-200 dark:bg-secondary-dark-bg md:w-56  p-4 pt-9 rounded-2xl mx-2 ">
-            <Link to="/users">
-              <button
-                type="button"
-                style={{ color: "white", backgroundColor: "black" }}
-                className="text-2xl opacity-0.9 rounded-full  p-4 hover:drop-shadow-xl"
-              >
-                <FiUsers />
-              </button>
-            </Link>
-            <p className="mt-3">
-              <span className="text-lg font-semibold text-black">{sumStaffs}</span>
-            </p>
-            <p className="text-sm text-black  mt-1">Employee</p>
-          </div>
-          <div className="bg-gray h-44 dark:text-gray-200 dark:bg-secondary-dark-bg md:w-56  pt-9 rounded-2xl ">
-            <Link to="/items">
-              <button
-                type="button"
-                style={{ color: "white", backgroundColor: "black" }}
-                className="text-2xl opacity-0.9 rounded-full  p-4 hover:drop-shadow-xl"
-              >
-                <IoPricetag />
-              </button>
-            </Link>
-            <p className="mt-3">
-              <span className="text-lg font-semibold text-black">{sumItems}</span>
-            </p>
-            <p className="text-sm text-black mt-1">Items</p>
-          </div>
-        </div>
-      </div>
-
-      <div id="third div" className="flex flex-wrap justify-center mt-0.5 bg-white md:w-full md:h-full">
-        <div className="bg-white m-3 p-10 border rounded-2xl w-full">
-          <div className="flex justify-between">
-            <p className="font-semibold text-xl">Revenue Updates</p>
-            <div className="flex items-center gap-4">
-
-              <p className="flex items-center gap-2 text-red-600 hover:drop-shadow-xl">
-                <span>
-                  <GoPrimitiveDot />
-                </span>
-                <span>Expense</span>
-              </p>
-              <p className="flex items-center gap-2 text-green-400 hover:drop-shadow-xl">
-                <span>
-                  <GoPrimitiveDot />
-                </span>
-                <span>Income</span>
-              </p>
-            </div>
-
-          </div>
-
-          <div className="mt-10 flex flex-col md:flex-row md:gap-10 md:justify-start">
-            <div className="border-r-1 border-color m-4 pr-10">
-              <div>
-                <p>
-                  <span className="text-3xl font-semibold">Rp {incomeThisMonth}</span>
-                  <span className={`p-1.5 hover:drop-shadow-xl cursor-pointer rounded-full text-white ${incomeDifferences.isIncrease ? 'bg-green-400' : 'bg-red-400'} ml-3 text-xs`}>
-                    {incomeDifferences.percentageDiff}%
-                  </span>
+      {role === "admin" && (
+        <div>
+          <div id="second div" className="flex flex-wrap justify-center mt-0.5 bg-white rounded md:w-full md:h-full">
+            <div className="flex items-center justify-start bg-white m-3 border rounded-2xl w-full">
+              <div className="bg-gray h-44  dark:text-gray-200 dark:bg-secondary-dark-bg md:w-56  p-4 pt-9 rounded-2xl mx-2 ">
+                <Link to="/users">
+                  <button
+                    type="button"
+                    style={{ color: "white", backgroundColor: "black" }}
+                    className="text-2xl opacity-0.9 rounded-full  p-4 hover:drop-shadow-xl"
+                  >
+                    <FiUsers />
+                  </button>
+                </Link>
+                <p className="mt-3">
+                  <span className="text-lg font-semibold text-black">{sumStaffs}</span>
                 </p>
-                <p className="text-gray-500 mt-1">Income</p>
+                <p className="text-sm text-black  mt-1">Employee</p>
               </div>
-              <div className="mt-8">
-                <p className="text-3xl font-semibold">RP {expenseThisMonth}</p>
-
-                <p className="text-gray-500 mt-1">Expense</p>
+              <div className="bg-gray h-44 dark:text-gray-200 dark:bg-secondary-dark-bg md:w-56  pt-9 rounded-2xl ">
+                <Link to="/items">
+                  <button
+                    type="button"
+                    style={{ color: "white", backgroundColor: "black" }}
+                    className="text-2xl opacity-0.9 rounded-full  p-4 hover:drop-shadow-xl"
+                  >
+                    <IoPricetag />
+                  </button>
+                </Link>
+                <p className="mt-3">
+                  <span className="text-lg font-semibold text-black">{sumItems}</span>
+                </p>
+                <p className="text-sm text-black mt-1">Items</p>
               </div>
             </div>
-          </div>
-          <div className="flex items-center">
-            <div className="w-full md:w-1/2">
-              <LineChart width={300} height={300} data={{ expense, income }} />
-            </div>
-            <div className="w-full md:w-1/2">
-              <BarChart width={400} height={440} data={{ expense, income }} />
-            </div>
-          </div>
-          <div className="flex items-center justify-center mt-5">
-            <Link to={`/report`}
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-              View Report
-            </Link>
           </div>
 
+          <div id="third div" className="flex flex-wrap justify-center mt-0.5 bg-white md:w-full md:h-full">
+            <div className="bg-white m-3 p-10 border rounded-2xl w-full">
+              <div className="flex justify-between">
+                <p className="font-semibold text-xl">Revenue Updates</p>
+                <div className="flex items-center gap-4">
+
+                  <p className="flex items-center gap-2 text-red-600 hover:drop-shadow-xl">
+                    <span>
+                      <GoPrimitiveDot />
+                    </span>
+                    <span>Expense</span>
+                  </p>
+                  <p className="flex items-center gap-2 text-green-400 hover:drop-shadow-xl">
+                    <span>
+                      <GoPrimitiveDot />
+                    </span>
+                    <span>Income</span>
+                  </p>
+                </div>
+
+              </div>
+
+              <div className="mt-10 flex flex-col md:flex-row md:gap-10 md:justify-start">
+                <div className="border-r-1 border-color m-4 pr-10">
+                  <div>
+                    <p>
+                      <span className="text-3xl font-semibold">Rp {incomeThisMonth}</span>
+                      <span className={`p-1.5 hover:drop-shadow-xl cursor-pointer rounded-full text-white ${incomeDifferences.isIncrease ? 'bg-green-400' : 'bg-red-400'} ml-3 text-xs`}>
+                        {incomeDifferences.percentageDiff}%
+                      </span>
+                    </p>
+                    <p className="text-gray-500 mt-1">Income</p>
+                  </div>
+                  <div className="mt-8">
+                    <p className="text-3xl font-semibold">RP {expenseThisMonth}</p>
+
+                    <p className="text-gray-500 mt-1">Expense</p>
+                  </div>
+                </div>
+              </div>
+              <div className="flex items-center">
+                <div className="w-full md:w-1/2">
+                  <LineChart width={300} height={300} data={{ expense, income }} />
+                </div>
+                <div className="w-full md:w-1/2">
+                  <BarChart width={400} height={440} data={{ expense, income }} />
+                </div>
+              </div>
+              <div className="flex items-center justify-center mt-5">
+                <Link to={`/report`}
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                  View Report
+                </Link>
+              </div>
+
+            </div>
+          </div>
         </div>
-      </div>
+      )}
 
     </div>
   );

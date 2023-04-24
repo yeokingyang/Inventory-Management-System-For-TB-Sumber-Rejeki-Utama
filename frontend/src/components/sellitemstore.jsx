@@ -27,8 +27,9 @@ const SellItemstore = () => {
 
     const props = useSpring({
         color: color,
-        textShadow: amount > 0 ? '0px 0px 5px #ff0000' : 'none'
+        textShadow: amount > 0 ? '0px 0px 5px #ff0000' : '#ffffff'
     });
+
 
     useEffect(() => {
         if (amount > 0) {

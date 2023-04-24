@@ -64,7 +64,7 @@ const Checkin = () => {
                     <>
                         {cartItems.map((cartItem) => {
                             return (
-                                <div key={cartItem.id} className="flex justify-between items-center border border-solid border-glass p-4 mb-6">
+                                <div key={cartItem.iuid} className="flex justify-between items-center border border-solid border-glass p-4 mb-6">
                                     <div className="flex items-center gap-4">
                                         <img src={cartItem.url} alt="" className="w-20 h-20 object-cover" />
                                     </div>

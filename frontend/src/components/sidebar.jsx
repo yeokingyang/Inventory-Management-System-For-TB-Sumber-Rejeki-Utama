@@ -18,7 +18,7 @@ const Sidebar = () => {
     { name: "Items", link: "/items", icon: IoPricetag },
     { name: "Wishlist Items", link: "/wishlistitems", icon: AiOutlineHeart },
     { name: "Incoming Items", link: "/incomingitems", icon: FaDropbox, margin: true },
-    { name: "Stocking Items", link: "/stockitem", icon: FiShoppingCart },
+    { name: "Stock Items", link: "/stockitem", icon: FiShoppingCart },
     { name: "Outgoing Items", link: "/outgoingitems", icon: FaBox, margin: true },
     { name: "Sell Items", link: "/sellitem", icon: FiShoppingCart },
     { name: "Forecast", link: "/analytics", icon: TbReportAnalytics, margin: true },

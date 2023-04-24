@@ -8,7 +8,7 @@ const Formadduser = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confPassword, setConfPassword] = useState("");
-    const [role, setRole] = useState("");
+    const [role, setRole] = useState("admin");
     const [msg, setMsg] = useState("");
     const navigate = useNavigate();
 

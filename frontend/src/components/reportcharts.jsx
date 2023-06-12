@@ -98,7 +98,7 @@ const Reportcharts = () => {
 
                     {dailyIncome.length > 0 ? (
                         <ResponsiveContainer width="100%" height={400}>
-                            <LineChart data={dailyIncome} >
+                            <LineChart data={dailyIncome} margin={{ left: 20, right: 20 }}>
                                 <CartesianGrid strokeDasharray="3 3" />
                                 <XAxis dataKey="date" tick={{ fill: "white" }} />
                                 <YAxis tick={{ fill: "white" }}
@@ -119,7 +119,7 @@ const Reportcharts = () => {
 
                     {dailyExpense.length > 0 ? (
                         <ResponsiveContainer width="100%" height={400}>
-                            <LineChart data={dailyExpense} >
+                            <LineChart data={dailyExpense} margin={{ left: 20, right: 20 }} >
                                 <CartesianGrid strokeDasharray="3 3" />
                                 <XAxis dataKey="date" tick={{ fill: "white" }} />
                                 <YAxis tick={{ fill: "white" }}

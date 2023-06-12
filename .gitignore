@@ -9,4 +9,5 @@ backend_django/forecastapi/__pycache__/
 backend_django/forecastapi/migrations/
 backend_django/db.sqlite3
 backend_django/
+backend/.env copy
 frontend/src/components/forecasting/modelpredict copy

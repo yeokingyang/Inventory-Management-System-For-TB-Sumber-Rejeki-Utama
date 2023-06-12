@@ -9,8 +9,7 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { user, isError, isSuccess, isLoading, message } = useSelector(
-        (state) => state.auth);
+    const { user, isError, isSuccess, isLoading, message } = useSelector((state) => state.auth);
     useEffect(() => {
         if (user || isSuccess) {
             navigate("/dashboard");
@@ -48,15 +47,15 @@ const Login = () => {
                                 type="password" />
                         </div>
                         <div className='flex justify-between text-gray-400 py-2'>
-                          
+
                         </div>
                         <button type="submit" className='w-full my-5 mt-10 py-2 text-2xl bg-teal-500 shadow-lg shadow-teal-500/20 group-hover:shadow-teal-500/15 text-white font-semibold rounded-lg
                     '>  {isLoading ? "Loading..." : "Login"}</button>
                     </form>
                 </div>
             </div>
-            </div>
-            )
+        </div>
+    )
 }
 
-            export default Login;
+export default Login;
